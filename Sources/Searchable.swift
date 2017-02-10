@@ -11,13 +11,13 @@ import UIKit
 
 // MARK: - Searchable (entities)
 
-protocol Searchable {
+public protocol Searchable {
 	var searchTags: [String] { get }
 	func match(predicateStr: String, caseInsensitive: Bool) -> Bool
 }
 
-extension Searchable {
-	func match(predicateStr: String, caseInsensitive: Bool = true) -> Bool {
+public extension Searchable {
+	public func match(predicateStr: String, caseInsensitive: Bool = true) -> Bool {
 		guard !predicateStr.isEmpty else { return true }
 		let whithoutWhitespaces = predicateStr.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 		
@@ -31,19 +31,19 @@ extension Searchable {
 
 // MARK: - Convenience for searchable entity collection
 
-extension Array where Element: Searchable {
-	func match(predicate: String, caseInsensitive: Bool = true) -> Array {
+public extension Array where Element: Searchable {
+	public func match(predicate: String, caseInsensitive: Bool = true) -> Array {
 		return filter { $0.match(predicateStr: predicate, caseInsensitive: caseInsensitive) }
 	}
 }
 
 // MARK: - SearchHandler
 
-class SearchHandler: NSObject {
+public class SearchHandler: NSObject {
 	
 	fileprivate let searchController: UISearchController
 
-	init(_ closure: () -> UISearchController) {
+	public init(_ closure: () -> UISearchController) {
 		self.searchController = closure()
 		super.init()
 		self.searchController.delegate = self
@@ -61,31 +61,31 @@ class SearchHandler: NSObject {
 	// MARK: Configuring
 	
 	@discardableResult
-	func onWillAppear(_ closure: @escaping () -> Void) -> SearchHandler {
+	public func onWillAppear(_ closure: @escaping () -> Void) -> SearchHandler {
 		willAppearClosure = closure
 		return self
 	}
 	
 	@discardableResult
-	func onDidAppear(_ closure: @escaping () -> Void) -> SearchHandler {
+	public func onDidAppear(_ closure: @escaping () -> Void) -> SearchHandler {
 		didAppearClosure = closure
 		return self
 	}
 	
 	@discardableResult
-	func onWillDisappear(_ closure: @escaping () -> Void) -> SearchHandler {
+	public func onWillDisappear(_ closure: @escaping () -> Void) -> SearchHandler {
 		willDisappearClosure = closure
 		return self
 	}
 	
 	@discardableResult
-	func onDidDisappear(_ closure: @escaping () -> Void) -> SearchHandler {
+	public func onDidDisappear(_ closure: @escaping () -> Void) -> SearchHandler {
 		didDisappearClosure = closure
 		return self
 	}
 	
 	@discardableResult
-	func onUpdate(_ closure: @escaping (String) -> Void) -> SearchHandler {
+	public func onUpdate(_ closure: @escaping (String) -> Void) -> SearchHandler {
 		updateClosure = closure
 		return self
 	}
@@ -93,7 +93,7 @@ class SearchHandler: NSObject {
 	// will be called only once
 	
 	@discardableResult
-	@nonobjc func configure(with tableView: UITableView) -> SearchHandler {
+	@nonobjc public  func configure(with tableView: UITableView) -> SearchHandler {
 		let someView = UIView(frame: searchController.searchBar.bounds)
 		someView.addSubview(searchController.searchBar)
 		tableView.tableHeaderView = someView
@@ -101,7 +101,7 @@ class SearchHandler: NSObject {
 	}
 	
 	@discardableResult
-	@nonobjc func configure(with controller: UITableViewController) -> SearchHandler {
+	@nonobjc public func configure(with controller: UITableViewController) -> SearchHandler {
 		// TODO: add search bar
 		return self
 	}
@@ -111,16 +111,16 @@ class SearchHandler: NSObject {
 // TODO: - add method presentSearchController(_ :UISearchController)
 
 extension SearchHandler: UISearchControllerDelegate {
-	func willPresentSearchController(_ searchController: UISearchController) { willAppearClosure?()    }
-	func didPresentSearchController(_ searchController: UISearchController)  { didAppearClosure?()     }
-	func willDismissSearchController(_ searchController: UISearchController) { willDisappearClosure?() }
-	func didDismissSearchController(_ searchController: UISearchController)  { didDisappearClosure?()  }
+	public func willPresentSearchController(_ searchController: UISearchController) { willAppearClosure?()    }
+	public func didPresentSearchController(_ searchController: UISearchController)  { didAppearClosure?()     }
+	public func willDismissSearchController(_ searchController: UISearchController) { willDisappearClosure?() }
+	public func didDismissSearchController(_ searchController: UISearchController)  { didDisappearClosure?()  }
 }
 
 // MARK: - Wrap UISearchResultsUpdating
 
 extension SearchHandler: UISearchResultsUpdating {
-	func updateSearchResults(for searchController: UISearchController) {
+	public func updateSearchResults(for searchController: UISearchController) {
 		guard let searchString = searchController.searchBar.text else { return }
 		updateClosure?(searchString)
 	}
@@ -129,7 +129,7 @@ extension SearchHandler: UISearchResultsUpdating {
 // MARK: - Wrap UISearchController attributes
 
 extension SearchHandler {
-	var isActive: Bool {
+	public var isActive: Bool {
 		get { return searchController.isActive }
 		set { searchController.isActive = newValue }
 	}

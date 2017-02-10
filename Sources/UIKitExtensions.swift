@@ -9,7 +9,7 @@
 import UIKit
 
 extension UIColor {
-    convenience init(red: Int, green: Int, blue: Int) {
+    public convenience init(red: Int, green: Int, blue: Int) {
         
         assert(red >= 0 && red <= 255, "Invalid red component")
         assert(green >= 0 && green <= 255, "Invalid green component")
@@ -21,11 +21,11 @@ extension UIColor {
                   alpha: 1.0)
     }
     
-    convenience init(hexColor: Int) {
+    public convenience init(hexColor: Int) {
         self.init(red: (hexColor >> 16) & 0xff, green: (hexColor >> 8) & 0xff, blue: hexColor & 0xff)
     }
     
-    func hexCode() -> Int {
+    public func hexCode() -> Int {
 		let coreImageColor = CIColor(color: self)
 		
 		let r = Int(coreImageColor.red * 255 + 0.5)
@@ -39,7 +39,7 @@ extension UIColor {
 // MARK: Color detection
 
 extension UIColor {
-    func isLight() -> Bool {
+    public func isLight() -> Bool {
 		
 		let coreImageColor = CIColor(color: self)
         let red   = coreImageColor.red
@@ -50,7 +50,7 @@ extension UIColor {
 		return !(brightness < 0.5)
     }
 	
-    func appropriateTopColor() -> UIColor {
+    public func appropriateTopColor() -> UIColor {
         
         if self.isLight() {
             return UIColor.darkText
@@ -59,18 +59,10 @@ extension UIColor {
             return UIColor.white
         }
     }
-    
-    func appropiateBorderColor() -> UIColor {
-        return appropriateTopColor().withAlphaComponent(0.15)
-    }
-	
-	func appropriateStatusBarStyle() -> UIStatusBarStyle {
-		return isLight() ? .default : .lightContent
-	}
 }
 
 extension UIImage {
-    convenience init(color: UIColor, size: CGSize = CGSize(width: 1, height: 1)) {
+    public convenience init(color: UIColor, size: CGSize = CGSize(width: 1, height: 1)) {
         
         let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
         UIGraphicsBeginImageContextWithOptions(rect.size, false, 0)
@@ -87,7 +79,7 @@ extension UIImage {
 		}
     }
 	
-	func averageColor() -> UIColor {
+	public func averageColor() -> UIColor {
 		let rgba       = UnsafeMutablePointer<CUnsignedChar>.allocate(capacity: 4)
 		let colorSpace = CGColorSpaceCreateDeviceRGB()
 		let info       = CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue)
@@ -114,11 +106,11 @@ extension UIImage {
 }
 
 extension UIScreen {
-    var onePixelWidth: CGFloat {
+    public var onePixelWidth: CGFloat {
         return 1.0 / self.scale
     }
     
-    var twoPixelWidth: CGFloat {
+    public var twoPixelWidth: CGFloat {
         return 2 * onePixelWidth
     }
 }
@@ -128,9 +120,9 @@ extension UIScreen {
 extension UIView {
 
     @discardableResult
-    func addPinConstraint(toSubview subview: UIView,
-                          attribute: NSLayoutAttribute,
-                          withSpacing spacing: CGFloat) -> NSLayoutConstraint {
+    public func addPinConstraint(toSubview subview: UIView,
+                                 attribute: NSLayoutAttribute,
+                                 withSpacing spacing: CGFloat) -> NSLayoutConstraint {
         
         subview.translatesAutoresizingMaskIntoConstraints = false
         let constraint = NSLayoutConstraint(item: subview, attribute: attribute, relatedBy: .equal,
@@ -141,26 +133,26 @@ extension UIView {
     }
 
     @discardableResult
-    func addPinConstraints(toSubview subview: UIView, withSpacing spacing: CGFloat = 0.0) -> [NSLayoutConstraint] {
+    public func addPinConstraints(toSubview subview: UIView, withSpacing spacing: CGFloat = 0.0) -> [NSLayoutConstraint] {
         return [ addPinConstraint(toSubview: subview, attribute: .left, withSpacing: spacing),
                  addPinConstraint(toSubview: subview, attribute: .top, withSpacing: spacing),
                  addPinConstraint(toSubview: subview, attribute: .right, withSpacing: -spacing),
                  addPinConstraint(toSubview: subview, attribute: .bottom, withSpacing: -spacing) ]
     }
     
-    func addPinnedSubview(_ subview: UIView, withSpacing spacing: CGFloat = 0.0) {
+    public func addPinnedSubview(_ subview: UIView, withSpacing spacing: CGFloat = 0.0) {
         addSubview(subview)
         translatesAutoresizingMaskIntoConstraints = false
         addPinConstraints(toSubview: subview, withSpacing: spacing)
     }
 
     @discardableResult
-    func pinToSuperview(attribute: NSLayoutAttribute, spacing: CGFloat = 0) -> NSLayoutConstraint? {
+    public func pinToSuperview(attribute: NSLayoutAttribute, spacing: CGFloat = 0) -> NSLayoutConstraint? {
         return superview?.addPinConstraint(toSubview: self, attribute: attribute, withSpacing: spacing)
     }
 
     @discardableResult
-    func pinToSuperview(insets: UIEdgeInsets) -> [NSLayoutConstraint] {
+    public func pinToSuperview(insets: UIEdgeInsets) -> [NSLayoutConstraint] {
         return [ pinToSuperview(attribute: .left, spacing: insets.left),
                  pinToSuperview(attribute: .top, spacing: insets.top),
                  pinToSuperview(attribute: .right, spacing: -insets.right),
@@ -170,7 +162,7 @@ extension UIView {
 
 // MARK: - Roundable
 
-protocol Roundable {
+public protocol Roundable {
     func roundCorners(radius radiusOrNil: CGFloat?)
     func roundTopCorners(radius radiusOrNil: CGFloat?)
     func roundBottomCorners(radius radiusOrNil: CGFloat?)
@@ -182,7 +174,7 @@ extension UIView: Roundable {
     /// default value adopt to rounding to make circle from square
     /// pass 0 to remove rounding
 
-    func roundCorners(radius radiusOrNil: CGFloat? = nil) {
+    public func roundCorners(radius radiusOrNil: CGFloat? = nil) {
 
         let radius = radiusOrNil ?? 0.5 * min(bounds.width, bounds.height)
         layer.cornerRadius  = radius
@@ -191,7 +183,7 @@ extension UIView: Roundable {
 
     /// round only top-left & top-right corners
 
-    func roundTopCorners(radius radiusOrNil: CGFloat? = nil) {
+    public func roundTopCorners(radius radiusOrNil: CGFloat? = nil) {
         let radius = radiusOrNil ?? 0.5 * min(bounds.width, bounds.height)
         layer.mask = mask(by: [.topLeft, .topRight], radius: radius)
         layer.masksToBounds = layer.mask != nil
@@ -199,7 +191,7 @@ extension UIView: Roundable {
 
     /// round only bottom-left & bottom-right corners
 
-    func roundBottomCorners(radius radiusOrNil: CGFloat? = nil) {
+    public func roundBottomCorners(radius radiusOrNil: CGFloat? = nil) {
         let radius = radiusOrNil ?? 0.5 * min(bounds.width, bounds.height)
         layer.mask = mask(by: [.bottomLeft, .bottomRight], radius: radius)
         layer.masksToBounds = layer.mask != nil
@@ -222,7 +214,7 @@ extension UIView: Roundable {
 
 // MARK: - OnEventClosures
 
-protocol OnEventClosures: class {
+public protocol OnEventClosures: class {
 	var onWillAppear:    () -> Void { get set }
 	var onDidAppear:     () -> Void { get set }
 	var onWillDisappear: () -> Void { get set }
@@ -231,30 +223,30 @@ protocol OnEventClosures: class {
 	var onDidLoad:       () -> Void { get set }
 }
 
-class DeclarativeViewController: UIViewController, OnEventClosures {
+open class DeclarativeViewController: UIViewController, OnEventClosures {
 	
 	// MARK: OnEventClosures
 	
-	var onWillAppear:    () -> Void = {}
-	var onDidAppear:     () -> Void = {}
-	var onWillDisappear: () -> Void = {}
-	var onDidDisappear:  () -> Void = {}
-	var onClose:         () -> Void = {}
-	var onDidLoad:       () -> Void = {}
+	open var onWillAppear:    () -> Void = {}
+	open var onDidAppear:     () -> Void = {}
+	open var onWillDisappear: () -> Void = {}
+	open var onDidDisappear:  () -> Void = {}
+	open var onClose:         () -> Void = {}
+	open var onDidLoad:       () -> Void = {}
 	
 	// MARK: Overrides
 	
-	override func viewDidLoad()                       { super.viewDidLoad();               onDidLoad()       }
-	override func viewWillAppear(_ animated: Bool)    { super.viewWillAppear(animated);    onWillAppear()    }
-	override func viewDidAppear(_ animated: Bool)     { super.viewDidAppear(animated);     onDidAppear()     }
-	override func viewWillDisappear(_ animated: Bool) { super.viewWillDisappear(animated); onWillDisappear() }
-	override func viewDidDisappear(_ animated: Bool)  { super.viewDidDisappear(animated);  onDidDisappear()  }
+	override open func viewDidLoad()                       { super.viewDidLoad();               onDidLoad()       }
+	override open func viewWillAppear(_ animated: Bool)    { super.viewWillAppear(animated);    onWillAppear()    }
+	override open func viewDidAppear(_ animated: Bool)     { super.viewDidAppear(animated);     onDidAppear()     }
+	override open func viewWillDisappear(_ animated: Bool) { super.viewWillDisappear(animated); onWillDisappear() }
+	override open func viewDidDisappear(_ animated: Bool)  { super.viewDidDisappear(animated);  onDidDisappear()  }
 }
 
 // MARK: - Empty Header/Footer view
 
 extension UIView {
-	static var transparentView: UIView {
+	public static var transparentView: UIView {
 		let view = UIView(frame: CGRect.zero)
 		view.backgroundColor = UIColor.clear
 		return view
@@ -263,7 +255,7 @@ extension UIView {
 
 extension UITextField {
     @discardableResult
-    func onTextChanges(_ closure: @escaping (Notification) -> Void) -> Self {
+    public func onTextChanges(_ closure: @escaping (Notification) -> Void) -> Self {
         NotificationCenter.default.addObserver(forName: .UITextFieldTextDidChange,
                                                object: self,
                                                queue: .main,
@@ -273,7 +265,7 @@ extension UITextField {
 }
 
 extension CGRect {
-    func expanded(by offset: CGFloat) -> CGRect {
+    public func expanded(by offset: CGFloat) -> CGRect {
         return CGRect(x: origin.x - offset,
                       y: origin.y - offset,
                       width: size.width + 2 * offset,

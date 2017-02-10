@@ -138,7 +138,7 @@ extension Animation {
     }
 }
 
-struct Block<T> {
+public struct Block<T> {
     var execute: (T) -> Void
 
     init(_ closure: @escaping (T) -> Void = { _ in }) {
