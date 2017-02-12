@@ -5,20 +5,20 @@
 ## Features
 
 - [x] Carthage support
-- [] CocoaPods support
-- [] Swift PM support
-- [] Refactor UIView animation convenience
-- [] Add all permissions requests
-- [] Material like UITextField
-- [] Refactor AlertDispatcher
-- [] Declarative block-based UITableView & UICollectionView
+- [ ] CocoaPods support
+- [ ] Swift PM support
+- [ ] Refactor UIView animation convenience
+- [ ] Add all permissions requests
+- [ ] Material like UITextField
+- [ ] Refactor AlertDispatcher
+- [ ] Declarative block-based UITableView & UICollectionView
 
 ## Repo organization
 
-- [] Usage section
-- [] Separate UIKit extensions and swift crossplatform features
-- [] Documentation
-- [] Separate AlertDispatcher
+- [ ] Usage section
+- [ ] Separate UIKit extensions and swift crossplatform features
+- [ ] Documentation
+- [ ] Separate AlertDispatcher
 
 ## Usage
 
