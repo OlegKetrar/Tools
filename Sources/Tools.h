@@ -2,7 +2,7 @@
 //  Tools.h
 //  Tools
 //
-//  Created by Oleg Ketrar on 2/10/17.
+//  Created by Oleg Ketrar on 10.02.17.
 //  Copyright © 2017 Oleg Ketrar. All rights reserved.
 //
 
@@ -15,5 +15,3 @@ FOUNDATION_EXPORT double ToolsVersionNumber;
 FOUNDATION_EXPORT const unsigned char ToolsVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <Tools/PublicHeader.h>
-
-

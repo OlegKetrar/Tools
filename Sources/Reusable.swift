@@ -2,12 +2,11 @@
 //  Reusable.swift
 //  Tools
 //
-//  Created by Oleg Ketrar on 2/10/17.
+//  Created by Oleg Ketrar on 10.02.17.
 //  Copyright © 2017 Oleg Ketrar. All rights reserved.
 //
 
 import UIKit
-import MapKit
 
 public protocol Reusable: class {
     static var reuseIdentifier: String { get }
@@ -163,18 +162,3 @@ public extension StoryboardInitable where Self: UIViewController {
         return storyboard.instantiateViewController() as Self
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

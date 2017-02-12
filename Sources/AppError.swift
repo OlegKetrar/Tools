@@ -2,17 +2,17 @@
 //  Error.swift
 //  Tools
 //
-//  Created by Oleg Ketrar on 2/10/17.
+//  Created by Oleg Ketrar on 10.02.17.
 //  Copyright © 2017 Oleg Ketrar. All rights reserved.
 //
 
 import Foundation
 
-protocol CustomLocalizedStringConvertible {
+public protocol CustomLocalizedStringConvertible {
 	var localizedDescription: String { get }
 }
 
-enum AppError: Swift.Error {
+public enum AppError: Swift.Error {
 	case network
 	case backend(statusCode: Int, reason: String)
 	case authentication(reason: String)
@@ -35,7 +35,7 @@ enum AppError: Swift.Error {
 
 extension AppError: CustomStringConvertible, Equatable {
 	
-	var description: String {
+	public var description: String {
 		switch self {
 		case .network:									return "network unavailable"
 		case .backend(let statusCode, let reason):		return "backend(\(statusCode)) -> \(reason)"
@@ -51,12 +51,12 @@ extension AppError: CustomStringConvertible, Equatable {
 	}
 }
 
-func ==(lfs: AppError, rfs: AppError) -> Bool {
+public func ==(lfs: AppError, rfs: AppError) -> Bool {
 	return lfs.description == rfs.description
 }
 
 extension AppError {
-	init(unexpected: Error) {
+	public init(unexpected: Error) {
 		switch unexpected {
 		// FIXME: permission error recognition
 		case let nsError as NSError where nsError.domain == "AVFoundationErrorDomain":
@@ -71,7 +71,7 @@ extension AppError {
 // MARK: - Print to user
 
 extension AppError: CustomLocalizedStringConvertible {
-	var isUserPrintable: Bool {
+	public var isUserPrintable: Bool {
 		switch self {
 		case .network(reason: _),
 		     .localized(reason: _),
@@ -84,7 +84,7 @@ extension AppError: CustomLocalizedStringConvertible {
 		}
 	}
 	
-	var localizedDescription: String {
+	public var localizedDescription: String {
 		switch self {
 		case .network:								return ""
 		case .authentication(reason: _):			return "ERROR_NOT_AUTHED".localized
@@ -96,8 +96,3 @@ extension AppError: CustomLocalizedStringConvertible {
 		}
 	}
 }
-
-
-
-
-

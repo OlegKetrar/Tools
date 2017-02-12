@@ -2,7 +2,7 @@
 //  StandartLibraryExtensions.swift
 //  Tools
 //
-//  Created by Oleg Ketrar on 2/10/17.
+//  Created by Oleg Ketrar on 10.02.17.
 //  Copyright © 2017 Oleg Ketrar. All rights reserved.
 //
 
@@ -101,11 +101,3 @@ extension Strideable where Self: SignedNumber {
 		return bounded(min: -abs(value), max: abs(value))
 	}
 }
-
-
-
-
-
-
-
-

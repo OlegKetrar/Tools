@@ -77,8 +77,8 @@
 		555B2CE51E4DD587005E9686 = {
 			isa = PBXGroup;
 			children = (
-				555B2D0E1E4DD711005E9686 /* Sources */,
 				555B2D0D1E4DD6EC005E9686 /* Metadata */,
+				555B2D0E1E4DD711005E9686 /* Sources */,
 				555B2CFC1E4DD587005E9686 /* ToolsTests */,
 				555B2CF01E4DD587005E9686 /* Products */,
 			);
@@ -114,21 +114,37 @@
 		555B2D0E1E4DD711005E9686 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				555B2D281E4DDFE3005E9686 /* AlertUIKit.swift */,
-				555B2D2A1E4DDFF7005E9686 /* Permission.swift */,
-				555B2D241E4DDFC6005E9686 /* AppError.swift */,
-				555B2D221E4DDFB7005E9686 /* AlertDispatcher.swift */,
-				555B2D261E4DDFDB005E9686 /* AppErrorAlert.swift */,
+				BA01DBFB1E50852600F16755 /* AlertDispatcher */,
 				555B2D1A1E4DD9A7005E9686 /* UIKitAnimationConveniences.swift */,
 				555B2D181E4DD96B005E9686 /* CocoaObservers.swift */,
 				555B2D161E4DD94A005E9686 /* Searchable.swift */,
 				555B2D201E4DDA22005E9686 /* UIKitExtensions.swift */,
 				555B2D141E4DD92A005E9686 /* Reusable.swift */,
 				555B2D2C1E4DE2A6005E9686 /* StandartLibraryExtensions.swift */,
+				BA01DBF91E5084DF00F16755 /* Supporting Files */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		BA01DBF91E5084DF00F16755 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
 				555B2D0F1E4DD711005E9686 /* Info-iOS.plist */,
 				555B2D101E4DD711005E9686 /* Tools.h */,
 			);
-			path = Sources;
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		BA01DBFB1E50852600F16755 /* AlertDispatcher */ = {
+			isa = PBXGroup;
+			children = (
+				555B2D281E4DDFE3005E9686 /* AlertUIKit.swift */,
+				555B2D2A1E4DDFF7005E9686 /* Permission.swift */,
+				555B2D241E4DDFC6005E9686 /* AppError.swift */,
+				555B2D221E4DDFB7005E9686 /* AlertDispatcher.swift */,
+				555B2D261E4DDFDB005E9686 /* AppErrorAlert.swift */,
+			);
+			name = AlertDispatcher;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

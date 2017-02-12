@@ -2,7 +2,7 @@
 //  AppErrorAlert.swift
 //  Tools
 //
-//  Created by Oleg Ketrar on 2/10/17.
+//  Created by Oleg Ketrar on 10.02.17.
 //  Copyright © 2017 Oleg Ketrar. All rights reserved.
 //
 
@@ -12,7 +12,7 @@ import UIKit
 // MARK: Bridge to Alert sequence dispatching
 
 extension AppError {
-	var alert: Alert {
+	public var alert: Alert {
 		
 		/// non-printable errors produce empty alert
 		guard isUserPrintable else { debugPrint(description); return Alert.empty }
@@ -34,17 +34,17 @@ extension AppError {
 	
 	/// present error alert now if can otherwise ignore
 	/// if alert queue overflowed alert will never be shown
-	func present(delay: TimeInterval = 0, onClose: @escaping () -> Void = {}) {
+	public func present(delay: TimeInterval = 0, onClose: @escaping () -> Void = {}) {
 		alert.waitOnAppear(delay).onCompletion(onClose).present()
 	}
 	
 	/// send error alert to alert queue
 	/// alert will be shown guaranteed
-	func enqueue(delay: TimeInterval = 0, onClose: @escaping () -> Void = {}) {
+	public func enqueue(delay: TimeInterval = 0, onClose: @escaping () -> Void = {}) {
 		alert.waitOnAppear(delay).onCompletion(onClose).enqueue()
 	}
 	
-	func dispatch(delay: TimeInterval = 0, onClose: @escaping () -> Void = {}) {
+	public func dispatch(delay: TimeInterval = 0, onClose: @escaping () -> Void = {}) {
 		alert.waitOnAppear(delay).onCompletion(onClose).dispatch()
 	}
 }
@@ -59,10 +59,3 @@ private extension Alert {
 		                    actionClosure: { _ = UIApplication.shared.openURL(URL(string: UIApplicationOpenSettingsURLString)!) })
 	}
 }
-
-
-
-
-
-
-

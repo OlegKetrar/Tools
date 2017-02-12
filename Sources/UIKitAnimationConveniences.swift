@@ -2,7 +2,7 @@
 //  UIKitAnimationConveniences.swift
 //  Tools
 //
-//  Created by Oleg Ketrar on 2/10/17.
+//  Created by Oleg Ketrar on 10.02.17.
 //  Copyright © 2017 Oleg Ketrar. All rights reserved.
 //
 
@@ -10,7 +10,7 @@ import UIKit
 
 // MARK: - UIView Animation Convenience
 
-struct Animation {
+public struct Animation {
 
     fileprivate enum AnimationType {
         case `default`
@@ -20,9 +20,9 @@ struct Animation {
 
     fileprivate let type: AnimationType
 
-    var delay: TimeInterval    = 0
-    var duration: TimeInterval = 0.33
-    var options: UIViewAnimationOptions = []
+    public var delay: TimeInterval    = 0
+    public var duration: TimeInterval = 0.33
+    public var options: UIViewAnimationOptions = []
 
     fileprivate var animation  = Block<Void>()
     fileprivate var completion = Block<Void>()
@@ -33,33 +33,33 @@ struct Animation {
 
     // MARK: - Creation
 
-    init(duration: TimeInterval = 0.33) {
+    public init(duration: TimeInterval = 0.33) {
         self.init(type: .default)
         self.duration = duration
     }
 
-    static func spring(damping: CGFloat, initialVelocity velocity: CGFloat) -> Animation {
+    public static func spring(damping: CGFloat, initialVelocity velocity: CGFloat) -> Animation {
         return Animation(type: .spring(damping: damping, initialVelocity: velocity))
     }
 
-    static func keyFrame(options: UIViewKeyframeAnimationOptions) -> Animation {
+    public static func keyFrame(options: UIViewKeyframeAnimationOptions) -> Animation {
         return Animation(type: .keyFrame(options: options))
     }
 }
 
 // MARK: Animate
 
-extension Animation {
+public extension Animation {
 
     // MARK: Append closures
 
-    func addAnimation(_ closure: @escaping () -> Void) -> Animation {
+    public func addAnimation(_ closure: @escaping () -> Void) -> Animation {
         var copy = self
         copy.animation.add(closure)
         return copy
     }
 
-    func addCompletion(_ closure: @escaping () -> Void) -> Animation {
+    public func addCompletion(_ closure: @escaping () -> Void) -> Animation {
         var copy = self
         copy.completion.add(closure)
         return copy
@@ -67,15 +67,15 @@ extension Animation {
 
     // MARK: Perform
 
-    func animate(_ closure: @escaping () -> Void, completion: @escaping () -> Void) {
+    public func animate(_ closure: @escaping () -> Void, completion: @escaping () -> Void) {
         addAnimation(closure).addCompletion(completion).perform()
     }
 
-    func animate(_ closure: @escaping () -> Void) {
+    public func animate(_ closure: @escaping () -> Void) {
         addAnimation(closure).perform()
     }
 
-    func performWithCompletion(_ closure: @escaping () -> Void) {
+    public func performWithCompletion(_ closure: @escaping () -> Void) {
         addCompletion(closure).perform()
     }
 
@@ -119,26 +119,26 @@ extension Animation {
 
     // MARK: Convenience non-mutating methods
 
-    func setDelay(_ newDelay: TimeInterval) -> Animation {
+    public func setDelay(_ newDelay: TimeInterval) -> Animation {
         var copy = self
         copy.delay = newDelay
         return copy
     }
     
-    func setDuration(_ newDuration: TimeInterval) -> Animation {
+    public func setDuration(_ newDuration: TimeInterval) -> Animation {
         var copy = self
         copy.duration = newDuration
         return copy
     }
     
-    func setOptions(_ newOptions: UIViewAnimationOptions) -> Animation {
+    public func setOptions(_ newOptions: UIViewAnimationOptions) -> Animation {
         var copy = self
         copy.options = newOptions
         return copy
     }
 }
 
-public struct Block<T> {
+private struct Block<T> {
     var execute: (T) -> Void
 
     init(_ closure: @escaping (T) -> Void = { _ in }) {
@@ -156,18 +156,3 @@ public struct Block<T> {
         return copy
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

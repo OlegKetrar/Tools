@@ -2,7 +2,7 @@
 //  AlertDispatcher.swift
 //  Tools
 //
-//  Created by Oleg Ketrar on 2/10/17.
+//  Created by Oleg Ketrar on 10.02.17.
 //  Copyright © 2017 Oleg Ketrar. All rights reserved.
 //
 
@@ -10,15 +10,15 @@ import Foundation
 
 // MARK: - Alert
 
-struct Alert {
-	typealias Handler = (@escaping () -> Void) -> Void
+public struct Alert {
+	public typealias Handler = (@escaping () -> Void) -> Void
 	
-	var beforeDelay: TimeInterval = 0
-	var afterDelay:  TimeInterval = 0
-	var priority:    Operation.QueuePriority = .normal
+	public var beforeDelay: TimeInterval = 0
+	public var afterDelay:  TimeInterval = 0
+	public var priority:    Operation.QueuePriority = .normal
 	
-	var isDispatchable: Bool = true
-	var isIgnorable:    Bool = false
+	public var isDispatchable: Bool = true
+	public var isIgnorable:    Bool = false
 	
 	private var presentationClosure: Alert.Handler
 	private var conditionClosure:    () -> Bool = { return true }
@@ -36,11 +36,11 @@ struct Alert {
 	
 	// MARK: Init
 	
-	init(_ closure: @escaping Alert.Handler) {
+	public init(_ closure: @escaping Alert.Handler) {
 		self.presentationClosure = closure
 	}
 	
-	init(presentNow closure: @escaping Alert.Handler) {
+	public init(presentNow closure: @escaping Alert.Handler) {
 		self.isDispatchable      = false
 		self.presentationClosure = closure
 	}
@@ -48,49 +48,49 @@ struct Alert {
 	// MARK: Configuring
 	
 	@discardableResult
-	func waitOnAppear(_ delay: TimeInterval) -> Alert {
+	public func waitOnAppear(_ delay: TimeInterval) -> Alert {
 		var copy = self
 		copy.beforeDelay = delay
 		return copy
 	}
 	
 	@discardableResult
-	func waitOnDisappear(_ delay: TimeInterval) -> Alert {
+	public func waitOnDisappear(_ delay: TimeInterval) -> Alert {
 		var copy = self
 		copy.afterDelay = delay
 		return copy
 	}
 	
 	@discardableResult
-	func onCompletion(_ closure: @escaping () -> Void) -> Alert {
+	public func onCompletion(_ closure: @escaping () -> Void) -> Alert {
 		var copy = self
 		copy.completionClosure = closure
 		return copy
 	}
 	
 	@discardableResult
-	func priority(_ newPriority: Operation.QueuePriority) -> Alert {
+	public func priority(_ newPriority: Operation.QueuePriority) -> Alert {
 		var copy = self
 		copy.priority = newPriority
 		return copy
 	}
 	
 	@discardableResult
-	func dispatched(_ dispatch: Bool = true) -> Alert {
+	public func dispatched(_ dispatch: Bool = true) -> Alert {
 		var copy = self
 		copy.isDispatchable = dispatch
 		return copy
 	}
 	
 	@discardableResult
-	func ignored() -> Alert {
+	public func ignored() -> Alert {
 		var copy = self
 		copy.isIgnorable = true
 		return copy
 	}
 	
 	@discardableResult
-	func addCondition(_ closure: @escaping () -> Bool) -> Alert {
+	public func addCondition(_ closure: @escaping () -> Bool) -> Alert {
 		var copy = self
 		copy.conditionClosure = closure
 		return copy
@@ -98,7 +98,7 @@ struct Alert {
 	
 	/// append completion closure to existing completion
 	@discardableResult
-	func addCompletion(_ closure: @escaping () -> Void) -> Alert {
+	public func addCompletion(_ closure: @escaping () -> Void) -> Alert {
 		var copy = self
 		let oldClosure = self.completionClosure
 		copy.completionClosure = { oldClosure(); closure() }
@@ -107,7 +107,7 @@ struct Alert {
 }
 
 extension Alert {
-	static var empty: Alert { return Alert { $0() }.ignored() }
+	public static var empty: Alert { return Alert { $0() }.ignored() }
 }
 
 // MARK: - Dispatcher
@@ -129,7 +129,7 @@ private struct AlertDispatcher {
 	
 	// MARK: Dispatch
 	
-	fileprivate static func dispatch(alert: Alert) {
+    static func dispatch(alert: Alert) {
 		
 		// ignore ignorable alerts)
 		guard !alert.isIgnorable else { return }
@@ -209,8 +209,8 @@ private final class AsyncBlockOperation: Operation {
 	
 	// MARK:
 	
-	fileprivate var delayAfter: TimeInterval  = 0
-	fileprivate var delayBefore: TimeInterval = 0
+    var delayAfter: TimeInterval  = 0
+	var delayBefore: TimeInterval = 0
 	
 	private let executionClosure: Alert.Handler
 	
@@ -260,8 +260,7 @@ private extension Operation {
 				existing()
 				block()
 			}
-		}
-		else {
+		} else {
 			completionBlock = block
 		}
 	}
@@ -300,38 +299,19 @@ extension Alert {
 	
 	/// dispatch alert with alert dispatch rules
 	/// enqueue() if alert dispatchable otherwise present()
-	func dispatch(_ completion: (() -> Void)? = nil) {
+	public func dispatch(_ completion: (() -> Void)? = nil) {
 		AlertDispatcher.dispatch(alert: self.addCompletion { completion?() })
 	}
 	
 	/// present alert now if alert queue is empty
 	/// otherwise alert will be ignored
-	func present(_ completion: (() -> Void)? = nil) {
+	public func present(_ completion: (() -> Void)? = nil) {
 		AlertDispatcher.dispatch(alert: self.dispatched(false).addCompletion { completion?() })
 	}
 	
 	/// send alert to alert queue 
 	/// will be dispatched guaranteed
-	func enqueue(_ completion: (() -> Void)? = nil) {
+	public func enqueue(_ completion: (() -> Void)? = nil) {
 		AlertDispatcher.dispatch(alert: self.dispatched().addCompletion { completion?() })
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

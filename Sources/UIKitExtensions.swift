@@ -2,7 +2,7 @@
 //  UIKitExtension.swift
 //  Tools
 //
-//  Created by Oleg Ketrar on 2/10/17.
+//  Created by Oleg Ketrar on 10.02.17.
 //  Copyright © 2017 Oleg Ketrar. All rights reserved.
 //
 
@@ -14,7 +14,7 @@ extension UIColor {
         assert(red >= 0 && red <= 255, "Invalid red component")
         assert(green >= 0 && green <= 255, "Invalid green component")
         assert(blue >= 0 && blue <= 255, "Invalid blue component")
-        
+
         self.init(red: CGFloat(red) / CGFloat(255.0),
                   green: CGFloat(green) / CGFloat(255.0),
                   blue: CGFloat(blue) / CGFloat(255.0),
@@ -54,15 +54,14 @@ extension UIColor {
         
         if self.isLight() {
             return UIColor.darkText
-        }
-        else {
+        } else {
             return UIColor.white
         }
     }
 }
 
 extension UIImage {
-    public convenience init(color: UIColor, size: CGSize = CGSize(width: 1, height: 1)) {
+    public convenience init?(color: UIColor, size: CGSize = CGSize(width: 1, height: 1)) {
         
         let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
         UIGraphicsBeginImageContextWithOptions(rect.size, false, 0)
@@ -71,12 +70,8 @@ extension UIImage {
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
 		
-		if let patternImage = image?.cgImage {
-			self.init(cgImage: patternImage)
-		}
-		else {
-			fatalError("")
-		}
+        guard let patternImage = image?.cgImage else { return nil }
+        self.init(cgImage: patternImage)
     }
 	
 	public func averageColor() -> UIColor {
@@ -95,8 +90,7 @@ extension UIImage {
 			               green: CGFloat(rgba[1]) * multiplier,
 			               blue: CGFloat(rgba[2]) * multiplier,
 			               alpha: alpha)
-		}
-		else {
+		} else {
 			return UIColor(red: CGFloat(rgba[0]) / 255.0,
 			               green: CGFloat(rgba[1]) / 255.0,
 			               blue: CGFloat(rgba[2]) / 255.0,
@@ -128,7 +122,6 @@ extension UIView {
         let constraint = NSLayoutConstraint(item: subview, attribute: attribute, relatedBy: .equal,
                                             toItem: self, attribute: attribute, multiplier: 1.0, constant: spacing)
         addConstraint(constraint)
-
         return constraint
     }
 
@@ -197,7 +190,7 @@ extension UIView: Roundable {
         layer.masksToBounds = layer.mask != nil
     }
 
-    fileprivate func mask(by roundingCorners: UIRectCorner, radius: CGFloat) -> CAShapeLayer? {
+    private func mask(by roundingCorners: UIRectCorner, radius: CGFloat) -> CAShapeLayer? {
         guard radius != 0 else { return nil }
 
         let maskLayer  = CAShapeLayer()
@@ -272,16 +265,3 @@ extension CGRect {
                       height: size.height + 2 * offset)
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

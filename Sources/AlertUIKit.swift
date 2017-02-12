@@ -2,7 +2,7 @@
 //  AlertUIKit.swift
 //  Tools
 //
-//  Created by Oleg Ketrar on 2/10/17.
+//  Created by Oleg Ketrar on 10.02.17.
 //  Copyright © 2017 Oleg Ketrar. All rights reserved.
 //
 
@@ -13,7 +13,7 @@ import UIKit
 extension Alert {
 	
 	/// recursivelly find top UIViewController
-	static var topViewController: UIViewController {
+	public static var topViewController: UIViewController {
 		guard let rootVC = UIApplication.shared.keyWindow?.rootViewController else {
 			fatalError("UIApplication.keyWindow does not have rootViewController")
 		}
@@ -30,7 +30,7 @@ extension Alert {
 	}
 	
 	/// simple alert with ok button
-	static func alert(title: String,
+	public static func alert(title: String,
 	                  message: String? = nil,
 	                  cancelTitle: String = "Ok".localized(with: .UIKit),
 	                  completion: @escaping () -> Void = {}) -> Alert {
@@ -45,7 +45,7 @@ extension Alert {
 	}
 	
 	/// dialog with action & cancel buttons (perform action with UI request)
-	static func dialog(title: String,
+	public static func dialog(title: String,
 	                   message: String? = nil,
 	                   cancelTitle: String = "Cancel".localized(with: .UIKit),
 	                   actionTitle: String = "Ok".localized(with: .UIKit),
@@ -74,11 +74,11 @@ extension Alert {
 /// onFinish will be called before animation
 /// (standart dismiss animation delay is 0.33 seconds = 330 milliseconds)
 
-func delayed(_ closure: @escaping () -> Void) -> () -> Void {
+private func delayed(_ closure: @escaping () -> Void) -> () -> Void {
 	return { DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(350)) { closure() } }
 }
 
-func delay(_ closure: @escaping () -> Void) {
+private func delay(_ closure: @escaping () -> Void) {
 	delayed(closure)()
 }
 
@@ -87,13 +87,3 @@ private extension Bundle {
         return Bundle(identifier: "com.apple.UIKit")
     }
 }
-
-
-
-
-
-
-
-
-
-

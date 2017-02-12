@@ -2,11 +2,12 @@
 //  CocoaObservers.swift
 //  Tools
 //
-//  Created by Oleg Ketrar on 2/10/17.
+//  Created by Oleg Ketrar on 10.02.17.
 //  Copyright © 2017 Oleg Ketrar. All rights reserved.
 //
 
 import Foundation
+import UIKit
 
 public class EventObserver {
     private var observers: [NSObjectProtocol] = []
@@ -67,6 +68,3 @@ public extension Notification {
         return (userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
     }
 }
-
-
-

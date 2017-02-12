@@ -2,7 +2,7 @@
 //  Permissions.swift
 //  Tools
 //
-//  Created by Oleg Ketrar on 2/10/17.
+//  Created by Oleg Ketrar on 10.02.17.
 //  Copyright © 2017 Oleg Ketrar. All rights reserved.
 //
 
@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: - Permissions
 
-enum Permission: String {
+public enum Permission: String {
 	case camera         = "camera"
 	case photo          = "photo"
 	case location       = "location when in use"
@@ -18,11 +18,11 @@ enum Permission: String {
 }
 
 extension Permission: CustomDebugStringConvertible {
-	var debugDescription: String { return "permission denied \(rawValue)" }
+	public var debugDescription: String { return "permission denied \(rawValue)" }
 }
 
 extension Permission: CustomLocalizedStringConvertible {
-	var localizedDescription: String {
+	public var localizedDescription: String {
 		switch self {
 		case .camera:			return "PERMISSION_CAMERA_NEEDED".localized
 		case .photo:			return "PERMISSION_PHOTO_NEEDED".localized
