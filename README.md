@@ -5,7 +5,7 @@
 ## Features
 
 - [x] Carthage support
-- [ ] CocoaPods support
+- [x] CocoaPods support
 - [ ] Swift PM support
 - [ ] Refactor UIView animation convenience
 - [ ] Add all permissions requests
@@ -46,3 +46,36 @@ To integrate NumberPad into your Xcode project using Carthage, specify it in you
 github "OlegKetrar/Tools"
 ```
 Run `carthage update` to build the framework and drag the built `Tools.framework` into your Xcode project.
+
+### CocoaPods
+
+[CocoaPods](http://cocoapods.org) is a dependency manager for Cocoa projects. You can install it with the following command:
+
+```bash
+$ brew update
+$ brew install cocoapods
+```
+
+or 
+
+```bash
+$ gem install cocoapods
+```
+
+To integrate Tools into your Xcode project using CocoaPods, specify it in your `Podfile`:
+
+```ruby
+platform :ios, '10.0'
+use_frameworks!
+
+target '<Your Target Name>' do
+pod 'Tools', :git => 'https://github.com/OlegKetrar/Tools.git', :tag => '0.1.4'
+end
+```
+
+Then, run the following command:
+
+```bash
+$ pod install
+```
+
