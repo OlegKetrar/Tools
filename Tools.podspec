@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'Tools'
-  s.version = '0.1.3'
+  s.version = '0.1.4'
   s.license = 'MIT'
   s.summary = 'Some ios development tools'
   s.homepage = 'https://github.com/OlegKetrar/Tools'
