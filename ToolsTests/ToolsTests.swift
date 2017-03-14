@@ -7,29 +7,90 @@
 //
 
 import XCTest
+import Tools
 
-class ToolsTests: XCTestCase {
-    
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+class TaskTests: XCTestCase {
+
+    // MARK: - Input, Task.convert, Task.then(closure:)
+
+    func testInput() {
+        Input(now: "My Name")
+            .convert { $0 + " is Oleg" }
+            .then { XCTAssertEqual("My Name is Oleg", $0) }
     }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
-    
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+
+    func testLazyInput() {
+        class PersonMock {
+            var isNameCreated: Bool = false
+            var lazyName: String {
+                isNameCreated = true
+                return "Oleg"
+            }
+        }
+
+        let person = PersonMock()
+        let input  = Input(lazy: person.lazyName).convert { "name is \($0)" }
+
+        // check lazy
+        XCTAssertFalse(person.isNameCreated)
+
+        input.then { _ in
+            XCTAssertTrue(person.isNameCreated)
         }
     }
-    
+
+    // MARK: - Convert
+
+    func testConvertTask() {
+        XCTFail()
+    }
+
+    func testConvertEachTask() {
+        XCTFail()
+    }
+
+    func testConvertFailableTask() {
+        XCTFail()
+    }
+
+    func testConvertEachFailableTask() {
+        XCTFail()
+    }
+
+    // MARK: - Chaining
+
+    func testTaskChaining() {
+        XCTFail()
+    }
+
+    func testFailableTaskChaining() {
+        XCTFail()
+    }
+
+    // MARK: - Awaiting
+
+    func testTaskAwaiting() {
+        XCTFail()
+    }
+
+    // MAKR: - 
+
+    func testOnSuccess() {
+        XCTFail()
+    }
+
+    func testCatchingError() {
+        XCTFail()
+    }
 }
+
+
+
+
+
+
+
+
+
+
+

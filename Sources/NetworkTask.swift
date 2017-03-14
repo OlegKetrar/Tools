@@ -6,10 +6,8 @@
 //  Copyright © 2017 Oleg Ketrar. All rights reserved.
 //
 
+/*
 import Foundation
-
-/* 
-
 import Alamofire
 import SwiftyJSON
 
@@ -73,7 +71,7 @@ private extension Result {
         case .failure(_):
 
             // TODO: convert error to AppError
-            return .failure(.none)
+            return .failure(TaskError.empty)
         }
     }
 }
@@ -97,5 +95,4 @@ extension FailableTask where SuccessOutput == Array<JSON> {
         return convert { $0.flatMap { T($0) } }
     }
 }
-
- */
+*/

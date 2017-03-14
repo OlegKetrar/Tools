@@ -16,17 +16,17 @@ enum TaskError: Error {
 
 // MARK: - Result
 
-enum Result<T> {
+public enum Result<T> {
     case success(T)
     case failure(Error)
 }
 
 extension Result {
-    static var emptySuccess: Result<Void> {
+    public static var emptySuccess: Result<Void> {
         return Result<Void>.success(Void())
     }
 
-    var isSuccess: Bool {
+    public var isSuccess: Bool {
         if case .success = self {
             return true
         } else {
@@ -37,7 +37,7 @@ extension Result {
 
 // MARK: - Task
 
-protocol Task {
+public protocol Task {
     associatedtype Input
     associatedtype Output
 
@@ -47,9 +47,9 @@ protocol Task {
     var execute: (Input) -> Void      { get }
 }
 
-extension Task {
+public extension Task {
     @discardableResult
-    func onCompletion(_ closure: @escaping Completion) -> Self {
+    public func onCompletion(_ closure: @escaping Completion) -> Self {
         var copy = self
         copy.completionClosure = closure
         return copy
@@ -58,22 +58,22 @@ extension Task {
 
 // MARK: - FailableTask
 
-protocol FailableTask: Task {
+public protocol FailableTask: Task {
     typealias Output = Result<SuccessOutput>
     associatedtype SuccessOutput
 }
 
 // MARK: - ConditionalTask
 
-protocol ConditionalTask: FailableTask {
+public protocol ConditionalTask: FailableTask {
     typealias Condition  = () -> Bool
-    typealias Handler    = (Input, @escaping Completion) -> Void
+    typealias Handler    = (Input, @escaping (Result<SuccessOutput>) -> Void) -> Void
 
     var conditionClosure: Condition { get set }
     var workClosure: Handler        { get }
 }
 
-extension ConditionalTask {
+public extension ConditionalTask {
     var execute: (Input) -> Void {
         let copy = self
         return { (input) in
@@ -86,7 +86,7 @@ extension ConditionalTask {
     }
 
     @discardableResult
-    func withCondition(_ closure: @escaping Condition) -> Self {
+    public func withCondition(_ closure: @escaping Condition) -> Self {
         var copy = self
         copy.conditionClosure = closure
         return copy
@@ -95,48 +95,48 @@ extension ConditionalTask {
 
 // MARK: SimpleTask
 
-struct SimpleTask<In, Out>: Task {
-    typealias Input         = In
-    typealias Output = Out
+public struct SimpleTask<In, Out>: Task {
+    public typealias Input  = In
+    public typealias Output = Out
 
-    var workClosure: (In, @escaping (Out) -> Void) -> Void
-    var completionClosure: (Out) -> Void = { _ in }
+    private var workClosure: (In, @escaping (Out) -> Void) -> Void
+    public var completionClosure: (Out) -> Void = { _ in }
 
-    var execute: (In) -> Void {
+    public var execute: (In) -> Void {
         return { self.workClosure($0, self.completionClosure) }
     }
 
-    init(_ closure: @escaping (In, @escaping (Out) -> Void) -> Void) {
+    fileprivate init(_ closure: @escaping (In, @escaping (Out) -> Void) -> Void) {
         workClosure = closure
     }
 }
 
-struct FailableSimpleTask<In, Out>: FailableTask {
-    typealias Input         = In
-    typealias SuccessOutput = Out
+public struct FailableSimpleTask<In, Out>: FailableTask {
+    public typealias Input         = In
+    public typealias SuccessOutput = Out
 
-    var workClosure: (In, @escaping (Result<Out>) -> Void) -> Void
-    var completionClosure: (Result<Out>) -> Void = { _ in }
+    private var workClosure: (In, @escaping (Result<Out>) -> Void) -> Void
+    public var completionClosure: (Result<Out>) -> Void = { _ in }
 
-    var execute: (In) -> Void {
+    public var execute: (In) -> Void {
         return { self.workClosure($0, self.completionClosure) }
     }
 
-    init(_ closure: @escaping (In, @escaping (Result<Out>) -> Void) -> Void) {
+    fileprivate init(_ closure: @escaping (In, @escaping (Result<Out>) -> Void) -> Void) {
         workClosure = closure
     }
 }
 
 /// TODO: Abstract Chaining
 
-struct Chain<In, Out>: Task {
-    typealias Input  = In
-    typealias Output = Out
+public struct Chain<In, Out>: Task {
+    public typealias Input  = In
+    public typealias Output = Out
 
-    var workClosure: (In, @escaping (Out) -> Void) -> Void
-    var completionClosure: (Out) -> Void = { _ in }
+    private var workClosure: (In, @escaping (Out) -> Void) -> Void
+    public var completionClosure: (Out) -> Void = { _ in }
 
-    var execute: (In) -> Void {
+    public var execute: (In) -> Void {
         return { self.workClosure($0, self.completionClosure) }
     }
 
@@ -152,14 +152,14 @@ struct Chain<In, Out>: Task {
     }
 }
 
-struct FailableChain<In, Out>: FailableTask {
-    typealias Input         = In
-    typealias SuccessOutput = Out
+public struct FailableChain<In, Out>: FailableTask {
+    public typealias Input         = In
+    public typealias SuccessOutput = Out
 
-    var workClosure: (In, @escaping (Result<Out>) -> Void) -> Void
-    var completionClosure: (Result<Out>) -> Void = { _ in }
+    private var workClosure: (In, @escaping (Result<Out>) -> Void) -> Void
+    public var completionClosure: (Result<Out>) -> Void = { _ in }
 
-    var execute: (In) -> Void {
+    public var execute: (In) -> Void {
         return { self.workClosure($0, self.completionClosure) }
     }
 
@@ -182,42 +182,42 @@ struct FailableChain<In, Out>: FailableTask {
     }
 }
 
-extension Task {
-    func then<T: Task>(_ nextTask: T) -> Chain<Input, T.Output> where T.Input == Output {
+public extension Task {
+    public func then<T: Task>(_ nextTask: T) -> Chain<Input, T.Output> where T.Input == Output {
         return Chain(firstTask: self, secondTask: nextTask)
     }
 
-    func then<T: Task>(_ nextTask: () -> T) -> Chain<Input, T.Output> where T.Input == Output {
+    public func then<T: Task>(_ nextTask: () -> T) -> Chain<Input, T.Output> where T.Input == Output {
         return then(nextTask())
     }
 }
 
-extension FailableTask {
-    func then<T: FailableTask>(_ nextTask: T) -> FailableChain<Input, T.SuccessOutput> where T.Input == SuccessOutput {
+public extension FailableTask {
+    public func then<T: FailableTask>(_ nextTask: T) -> FailableChain<Input, T.SuccessOutput> where T.Input == SuccessOutput {
         return FailableChain(firstTask: self, secondTask: nextTask)
     }
 
-    func then<T: FailableTask>(_ nextTask: () -> T) -> FailableChain<Input, T.SuccessOutput> where T.Input == SuccessOutput {
+    public func then<T: FailableTask>(_ nextTask: () -> T) -> FailableChain<Input, T.SuccessOutput> where T.Input == SuccessOutput {
         return then(nextTask())
     }
 }
 
 // MARK: - Convertion
 
-extension Task {
-    func convert<T>(_ closure: @escaping (Output) -> T) -> Chain<Input, T> {
+public extension Task {
+    public func convert<T>(_ closure: @escaping (Output) -> T) -> Chain<Input, T> {
         return then( SimpleTask { $1( closure($0) ) })
     }
 }
 
-extension Task where Output: Sequence {
-    func convertEach<T>(_ closure: @escaping (Output.Iterator.Element) -> T) -> Chain<Input, Array<T>> {
+public extension Task where Output: Sequence {
+    public func convertEach<T>(_ closure: @escaping (Output.Iterator.Element) -> T) -> Chain<Input, Array<T>> {
         return then ( SimpleTask { $1( $0.flatMap { closure($0) }) })
     }
 }
 
-extension FailableTask {
-    func convert<T>(_ closure: @escaping (SuccessOutput) -> Optional<T>) -> FailableChain<Input, T> {
+public extension FailableTask {
+    public func convert<T>(_ closure: @escaping (SuccessOutput) -> Optional<T>) -> FailableChain<Input, T> {
         return then( FailableSimpleTask { (input, onCompletion) in
             if let converted = closure(input) {
                 onCompletion(.success(converted))
@@ -228,38 +228,38 @@ extension FailableTask {
     }
 }
 
-extension FailableTask where SuccessOutput: Sequence {
-    func convertEach<T>(_ closure: @escaping (SuccessOutput.Iterator.Element) -> Optional<T>) -> FailableChain<Input, Array<T>> {
+public extension FailableTask where SuccessOutput: Sequence {
+    public func convertEach<T>(_ closure: @escaping (SuccessOutput.Iterator.Element) -> Optional<T>) -> FailableChain<Input, Array<T>> {
         return then( FailableSimpleTask { $1(.success( $0.flatMap { closure($0) })) })
     }
 }
 
 // MARK: - Provide data
 
-struct Input<Data>: Task {
-    typealias Input  = Void
-    typealias Output = Data
+public struct Input<Data>: Task {
+    public typealias Input  = Void
+    public typealias Output = Data
 
-    var workClosure: (Void, @escaping (Data) -> Void) -> Void
-    var completionClosure: (Data) -> Void = { _ in }
+    private var workClosure: (Void, @escaping (Data) -> Void) -> Void
+    public var completionClosure: (Data) -> Void = { _ in }
 
-    var execute: () -> Void {
+    public var execute: () -> Void {
         return { self.workClosure($0, self.completionClosure) }
     }
 
-    init(now data: Data) {
+    public init(now data: Data) {
         workClosure = { $1(data) }
     }
 
-    init(lazy dataClosure: @autoclosure @escaping () -> Data) {
+    public init(lazy dataClosure: @autoclosure @escaping () -> Data) {
         workClosure = { $1(dataClosure()) }
     }
 }
 
-// MAKR: - Parallel Execution
+// MAKR: - Awaiting
 
-extension Task where Input == Void {
-    func awaitForResult<T: Task>(from task: T) -> SimpleTask<Void, (Output, T.Output)> where T.Input == Void {
+public extension Task where Input == Void {
+    public func awaitForResult<T: Task>(from task: T) -> SimpleTask<Void, (Output, T.Output)> where T.Input == Void {
         return SimpleTask { (input, onCompletion) in
             let group = DispatchGroup()
 
@@ -271,7 +271,7 @@ extension Task where Input == Void {
 
             group.notify(queue: .main) {
                 guard case let .some(first) = firstResult,
-                    case let .some(second) = secondResult else { fatalError("") }
+                    case let .some(second) = secondResult else { fatalError("awaitingError") }
 
                 onCompletion((first, second))
             }
@@ -284,18 +284,18 @@ extension Task where Input == Void {
 
 // MAKR: - Execution
 
-extension Task where Input == Void {
+public extension Task where Input == Void {
 
     /// execute with completion
-    func then(_ closure: @escaping (Output) -> Void) {
+    public func then(_ closure: @escaping (Output) -> Void) {
         onCompletion(closure).execute()
     }
 }
 
-extension FailableTask where Input == Void {
+public extension FailableTask where Input == Void {
 
     /// execute with completion only on success
-    func onSuccess(_ closure: @escaping (SuccessOutput) -> Void) {
+    public func onSuccess(_ closure: @escaping (SuccessOutput) -> Void) {
         onCompletion { (result) in
             guard case .success(let output) = result else { return }
             closure(output)
@@ -303,10 +303,10 @@ extension FailableTask where Input == Void {
     }
 }
 
-extension FailableTask {
+public extension FailableTask {
 
     /// handle error with specified closure
-    func `catch`(_ closure: @escaping (Error) -> Void) -> SimpleTask<Input, SuccessOutput> {
+    public func `catch`(_ closure: @escaping (Error) -> Void) -> SimpleTask<Input, SuccessOutput> {
         return SimpleTask { (input, onCompletion) in
             self.onCompletion { (result) in
                 switch result {
