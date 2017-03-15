@@ -240,24 +240,45 @@ public extension Task {
     }
 }
 
-public extension Task where Output: Sequence {
-    public func convertEach<T>(_ closure: @escaping (Output.Iterator.Element) -> T) -> Chain<Input, Array<T>> {
-        return then ( SimpleTask { $1( $0.map { closure($0) }) })
-    }
-
-    public func convertEach<T>(_ closure: @escaping (Output.Iterator.Element) -> Optional<T>) -> Chain<Input, Array<T>> {
-        return then( SimpleTask { $1( $0.flatMap { closure($0) }) })
-    }
-}
-
 public extension FailableTask {
     public func convert<T>(_ closure: @escaping (SuccessOutput) -> T) -> FailableChain<Input, T> {
         return then( FailableSimpleTask { $1(.success(closure($0))) })
     }
+
+    public func convert<T>(_ closure: @escaping (SuccessOutput) -> Optional<T>) -> FailableChain<Input, T> {
+        return then( FailableSimpleTask { (inputResult, onCompletion) in
+            switch inputResult {
+            case let .success(input):
+                if let converted = closure(input) {
+                    onCompletion(.success(converted))
+                } else {
+                    onCompletion(.failure(TaskError.empty))
+                }
+            case let .failure(error):
+                onCompletion(.failure(error))
+            }
+        })
+    }
+}
+
+// MARK: - ConvertEach (map & flatMap)
+
+public extension Task where Output: Sequence {
+    public func map<T>(_ closure: @escaping (Output.Iterator.Element) -> T) -> Chain<Input, Array<T>> {
+        return then ( SimpleTask { $1( $0.map { closure($0) }) })
+    }
+
+    public func flatMap<T>(_ closure: @escaping (Output.Iterator.Element) -> Optional<T>) -> Chain<Input, Array<T>> {
+        return then( SimpleTask { $1( $0.flatMap { closure($0) }) })
+    }
 }
 
 public extension FailableTask where SuccessOutput: Sequence {
-    public func convertEach<T>(_ closure: @escaping (SuccessOutput.Iterator.Element) -> Optional<T>) -> FailableChain<Input, Array<T>> {
+    public func map<T>(_ closure: @escaping (SuccessOutput.Iterator.Element) -> T) -> FailableChain<Input, Array<T>> {
+        return then( FailableSimpleTask { $1(.success( $0.flatMap { closure($0) })) })
+    }
+
+    public func flatMap<T>(_ closure: @escaping (SuccessOutput.Iterator.Element) -> Optional<T>) -> FailableChain<Input, Array<T>> {
         return then( FailableSimpleTask { $1(.success( $0.flatMap { closure($0) })) })
     }
 }
@@ -286,27 +307,121 @@ public struct Input<Data>: Task {
 
 // MAKR: - Awaiting
 
-public extension Task where Input == Void {
-    public func awaitForResult<T: Task>(from task: T) -> SimpleTask<Void, (Output, T.Output)> where T.Input == Void {
-        return SimpleTask { (input, onCompletion) in
+public extension FailableTask where Input == Void {
+    public func await<T: FailableTask>(for task: T)
+        -> FailableSimpleTask<Void, (SuccessOutput, T.SuccessOutput)> where T.Input == Void {
+
+        return FailableSimpleTask { (input, onCompletion) in
             let group = DispatchGroup()
 
-            var firstResult: Optional<Output>    = .none
-            var secondResult: Optional<T.Output> = .none
+            var firstOutput: Optional<Result<SuccessOutput>>    = .none
+            var secondOutput: Optional<Result<T.SuccessOutput>> = .none
 
             group.enter()
             group.enter()
 
             group.notify(queue: .main) {
-                guard case let .some(first) = firstResult,
-                    case let .some(second) = secondResult else { fatalError("awaitingError") }
+                guard case let .some(firstResult) = firstOutput,
+                    case let .some(secondResult) = secondOutput else { fatalError("awaitingError") }
 
-                onCompletion((first, second))
+                switch (firstResult, secondResult) {
+                case let (.success(first), .success(second)):
+                    onCompletion(.success((first, second)))
+
+                default:
+                    onCompletion(.failure(TaskError.empty))
+                }
             }
 
-            self.onCompletion { firstResult = .some($0); group.leave() }.execute(input)
-            task.onCompletion { secondResult = .some($0); group.leave() }.execute(input)
+            self.onCompletion { firstOutput = .some($0); group.leave() }.execute(input)
+            task.onCompletion { secondOutput = .some($0); group.leave() }.execute(input)
         }
+    }
+
+    public func await<T: Task>(for task: T)
+        -> FailableSimpleTask<Void, (SuccessOutput, T.Output)> where T.Input == Void {
+
+            return FailableSimpleTask { (input, onCompletion) in
+                let group = DispatchGroup()
+
+                var firstOutput: Optional<Result<SuccessOutput>>    = .none
+                var secondOutput: Optional<T.Output> = .none
+
+                group.enter()
+                group.enter()
+
+                group.notify(queue: .main) {
+                    guard case let .some(firstResult) = firstOutput,
+                        case let .some(secondResult) = secondOutput else { fatalError("awaitingError") }
+
+                    switch firstResult {
+                    case let .success(first):
+                        onCompletion(.success((first, secondResult)))
+
+                    default:
+                        onCompletion(.failure(TaskError.empty))
+                    }
+                }
+
+                self.onCompletion { firstOutput = .some($0); group.leave() }.execute(input)
+                task.onCompletion { secondOutput = .some($0); group.leave() }.execute(input)
+            }
+    }
+}
+
+public extension Task where Input == Void {
+    public func await<T: Task>(for task: T)
+        -> SimpleTask<Void, (Output, T.Output)> where T.Input == Void {
+
+            return SimpleTask { (input, onCompletion) in
+                let group = DispatchGroup()
+
+                var firstOutput: Optional<Output>    = .none
+                var secondOutput: Optional<T.Output> = .none
+
+                group.enter()
+                group.enter()
+
+                group.notify(queue: .main) {
+                    guard case let .some(firstResult) = firstOutput,
+                        case let .some(secondResult) = secondOutput else { fatalError("awaitingError") }
+
+                    onCompletion((firstResult, secondResult))
+                }
+
+                self.onCompletion { firstOutput = .some($0); group.leave() }.execute(input)
+                task.onCompletion { secondOutput = .some($0); group.leave() }.execute(input)
+            }
+    }
+
+    public func await<T: FailableTask>(for task: T)
+        -> FailableSimpleTask<Void, (Output, T.SuccessOutput)> where T.Input == Void {
+
+            return FailableSimpleTask { (input, onCompletion) in
+                let group = DispatchGroup()
+
+                var firstOutput: Optional<Output>                   = .none
+                var secondOutput: Optional<Result<T.SuccessOutput>> = .none
+
+                group.enter()
+                group.enter()
+
+                group.notify(queue: .main) {
+                    guard case let .some(firstResult) = firstOutput,
+                        case let .some(secondResult) = secondOutput else { fatalError("awaitingError") }
+
+                    switch secondResult {
+                    case let .success(second):
+                        onCompletion(.success((firstResult, second)))
+
+                    default:
+                        onCompletion(.failure(TaskError.empty))
+                    }
+                }
+
+                self.onCompletion { firstOutput = .some($0); group.leave() }.execute(input)
+                task.onCompletion { secondOutput = .some($0); group.leave() }.execute(input)
+            }
     }
 }
 
