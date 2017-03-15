@@ -21,6 +21,9 @@
 		555B2D291E4DDFE3005E9686 /* AlertUIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555B2D281E4DDFE3005E9686 /* AlertUIKit.swift */; };
 		555B2D2B1E4DDFF7005E9686 /* Permission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555B2D2A1E4DDFF7005E9686 /* Permission.swift */; };
 		555B2D2D1E4DE2A6005E9686 /* StandartLibraryExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555B2D2C1E4DE2A6005E9686 /* StandartLibraryExtensions.swift */; };
+		559F608C1E78757200047487 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559F608B1E78757200047487 /* Task.swift */; };
+		559F608F1E78767300047487 /* NetworkTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559F608E1E78767300047487 /* NetworkTask.swift */; };
+		559F60911E7878E600047487 /* SliderAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559F60901E7878E600047487 /* SliderAdapter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +56,9 @@
 		555B2D281E4DDFE3005E9686 /* AlertUIKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertUIKit.swift; sourceTree = "<group>"; };
 		555B2D2A1E4DDFF7005E9686 /* Permission.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Permission.swift; sourceTree = "<group>"; };
 		555B2D2C1E4DE2A6005E9686 /* StandartLibraryExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StandartLibraryExtensions.swift; sourceTree = "<group>"; };
+		559F608B1E78757200047487 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
+		559F608E1E78767300047487 /* NetworkTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkTask.swift; sourceTree = "<group>"; };
+		559F60901E7878E600047487 /* SliderAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SliderAdapter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +120,8 @@
 		555B2D0E1E4DD711005E9686 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				559F60921E7878EB00047487 /* DeclarativeUIKit */,
+				559F608D1E78757600047487 /* Task */,
 				BA01DBFB1E50852600F16755 /* AlertDispatcher */,
 				555B2D1A1E4DD9A7005E9686 /* UIKitAnimationConveniences.swift */,
 				555B2D181E4DD96B005E9686 /* CocoaObservers.swift */,
@@ -124,6 +132,23 @@
 				BA01DBF91E5084DF00F16755 /* Supporting Files */,
 			);
 			path = Sources;
+			sourceTree = "<group>";
+		};
+		559F608D1E78757600047487 /* Task */ = {
+			isa = PBXGroup;
+			children = (
+				559F608B1E78757200047487 /* Task.swift */,
+				559F608E1E78767300047487 /* NetworkTask.swift */,
+			);
+			name = Task;
+			sourceTree = "<group>";
+		};
+		559F60921E7878EB00047487 /* DeclarativeUIKit */ = {
+			isa = PBXGroup;
+			children = (
+				559F60901E7878E600047487 /* SliderAdapter.swift */,
+			);
+			name = DeclarativeUIKit;
 			sourceTree = "<group>";
 		};
 		BA01DBF91E5084DF00F16755 /* Supporting Files */ = {
@@ -165,6 +190,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 555B2D031E4DD587005E9686 /* Build configuration list for PBXNativeTarget "Tools" */;
 			buildPhases = (
+				559F60931E787AED00047487 /* Mark TODO & FIXME as warnings */,
 				555B2CEA1E4DD587005E9686 /* Sources */,
 				555B2CEB1E4DD587005E9686 /* Frameworks */,
 				555B2CEC1E4DD587005E9686 /* Headers */,
@@ -255,16 +281,36 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		559F60931E787AED00047487 /* Mark TODO & FIXME as warnings */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Mark TODO & FIXME as warnings";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "TAGS=\"TODO:|FIXME:\"\necho \"searching ${SRCROOT} for ${TAGS}\"\nfind \"${SRCROOT}/Sources\" \\( -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$\" | perl -p -e \"s/($TAGS)/ warning: \\$1/\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		555B2CEA1E4DD587005E9686 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				555B2D2D1E4DE2A6005E9686 /* StandartLibraryExtensions.swift in Sources */,
+				559F608F1E78767300047487 /* NetworkTask.swift in Sources */,
+				559F60911E7878E600047487 /* SliderAdapter.swift in Sources */,
 				555B2D151E4DD92A005E9686 /* Reusable.swift in Sources */,
 				555B2D271E4DDFDB005E9686 /* AppErrorAlert.swift in Sources */,
 				555B2D191E4DD96B005E9686 /* CocoaObservers.swift in Sources */,
 				555B2D231E4DDFB7005E9686 /* AlertDispatcher.swift in Sources */,
+				559F608C1E78757200047487 /* Task.swift in Sources */,
 				555B2D2B1E4DDFF7005E9686 /* Permission.swift in Sources */,
 				555B2D251E4DDFC6005E9686 /* AppError.swift in Sources */,
 				555B2D1B1E4DD9A7005E9686 /* UIKitAnimationConveniences.swift in Sources */,
