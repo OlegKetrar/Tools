@@ -56,8 +56,8 @@ class TaskTests: XCTestCase {
 
     func testConvertEachTask() {
         Input(now: ["1", "2", "3"])
-            .convertEach { $0 + "1" }
-            .convertEach { Int($0) }
+            .map { $0 + "1" }
+            .flatMap { Int($0) }
             .convert { (array: [Int]) -> Int in array.reduce(0, +) }
             .then { (sum: Int) in
                 XCTAssertEqual(sum, 11 + 21 + 31)

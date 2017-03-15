@@ -240,24 +240,45 @@ public extension Task {
     }
 }
 
-public extension Task where Output: Sequence {
-    public func convertEach<T>(_ closure: @escaping (Output.Iterator.Element) -> T) -> Chain<Input, Array<T>> {
-        return then ( SimpleTask { $1( $0.map { closure($0) }) })
-    }
-
-    public func convertEach<T>(_ closure: @escaping (Output.Iterator.Element) -> Optional<T>) -> Chain<Input, Array<T>> {
-        return then( SimpleTask { $1( $0.flatMap { closure($0) }) })
-    }
-}
-
 public extension FailableTask {
     public func convert<T>(_ closure: @escaping (SuccessOutput) -> T) -> FailableChain<Input, T> {
         return then( FailableSimpleTask { $1(.success(closure($0))) })
     }
+
+    public func convert<T>(_ closure: @escaping (SuccessOutput) -> Optional<T>) -> FailableChain<Input, T> {
+        return then( FailableSimpleTask { (inputResult, onCompletion) in
+            switch inputResult {
+            case let .success(input):
+                if let converted = closure(input) {
+                    onCompletion(.success(converted))
+                } else {
+                    onCompletion(.failure(TaskError.empty))
+                }
+            case let .failure(error):
+                onCompletion(.failure(error))
+            }
+        })
+    }
+}
+
+// MARK: - ConvertEach (map & flatMap)
+
+public extension Task where Output: Sequence {
+    public func map<T>(_ closure: @escaping (Output.Iterator.Element) -> T) -> Chain<Input, Array<T>> {
+        return then ( SimpleTask { $1( $0.map { closure($0) }) })
+    }
+
+    public func flatMap<T>(_ closure: @escaping (Output.Iterator.Element) -> Optional<T>) -> Chain<Input, Array<T>> {
+        return then( SimpleTask { $1( $0.flatMap { closure($0) }) })
+    }
 }
 
 public extension FailableTask where SuccessOutput: Sequence {
-    public func convertEach<T>(_ closure: @escaping (SuccessOutput.Iterator.Element) -> Optional<T>) -> FailableChain<Input, Array<T>> {
+    public func map<T>(_ closure: @escaping (SuccessOutput.Iterator.Element) -> T) -> FailableChain<Input, Array<T>> {
+        return then( FailableSimpleTask { $1(.success( $0.flatMap { closure($0) })) })
+    }
+
+    public func flatMap<T>(_ closure: @escaping (SuccessOutput.Iterator.Element) -> Optional<T>) -> FailableChain<Input, Array<T>> {
         return then( FailableSimpleTask { $1(.success( $0.flatMap { closure($0) })) })
     }
 }
