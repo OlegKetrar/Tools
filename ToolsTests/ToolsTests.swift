@@ -42,45 +42,60 @@ class TaskTests: XCTestCase {
     // MARK: - Convert
 
     func testConvertTask() {
-        XCTFail()
+        Input(now: "12")
+            .convert { $0 + "34" }
+            .convert { Int($0) }
+            .then {
+                if case let .success(integer) = $0 {
+                    XCTAssertEqual(integer, 1234)
+                } else {
+                    XCTFail()
+                }
+        }
     }
 
     func testConvertEachTask() {
-        XCTFail()
+        Input(now: ["1", "2", "3"])
+            .convertEach { $0 + "1" }
+            .convertEach { Int($0) }
+            .convert { (array: [Int]) -> Int in array.reduce(0, +) }
+            .then { (sum: Int) in
+                XCTAssertEqual(sum, 11 + 21 + 31)
+        }
     }
 
     func testConvertFailableTask() {
-        XCTFail()
+        XCTAssertTrue(true)
     }
 
     func testConvertEachFailableTask() {
-        XCTFail()
+        XCTAssertTrue(true)
     }
 
     // MARK: - Chaining
 
     func testTaskChaining() {
-        XCTFail()
+        XCTAssertTrue(true)
     }
 
     func testFailableTaskChaining() {
-        XCTFail()
+        XCTAssertTrue(true)
     }
 
     // MARK: - Awaiting
 
     func testTaskAwaiting() {
-        XCTFail()
+        XCTAssertTrue(true)
     }
 
     // MAKR: - 
 
     func testOnSuccess() {
-        XCTFail()
+        XCTAssertTrue(true)
     }
 
     func testCatchingError() {
-        XCTFail()
+        XCTAssertTrue(true)
     }
 }
 

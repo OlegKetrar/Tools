@@ -93,7 +93,7 @@ public extension ConditionalTask {
     }
 }
 
-// MARK: SimpleTask
+////
 
 public struct SimpleTask<In, Out>: Task {
     public typealias Input  = In
@@ -106,7 +106,7 @@ public struct SimpleTask<In, Out>: Task {
         return { self.workClosure($0, self.completionClosure) }
     }
 
-    fileprivate init(_ closure: @escaping (In, @escaping (Out) -> Void) -> Void) {
+    public init(_ closure: @escaping (In, @escaping (Out) -> Void) -> Void) {
         workClosure = closure
     }
 }
@@ -122,7 +122,7 @@ public struct FailableSimpleTask<In, Out>: FailableTask {
         return { self.workClosure($0, self.completionClosure) }
     }
 
-    fileprivate init(_ closure: @escaping (In, @escaping (Result<Out>) -> Void) -> Void) {
+    public init(_ closure: @escaping (In, @escaping (Result<Out>) -> Void) -> Void) {
         workClosure = closure
     }
 }
@@ -140,7 +140,7 @@ public struct Chain<In, Out>: Task {
         return { self.workClosure($0, self.completionClosure) }
     }
 
-    /// failableChain from non failable tasks
+    /// Task -> Task
     fileprivate init<T: Task, V: Task>(firstTask: T, secondTask: V)
         where T.Input == In, T.Output == V.Input, V.Output == Out {
 
@@ -165,6 +165,7 @@ public struct FailableChain<In, Out>: FailableTask {
 
     // MAKR: - Task Chaining
 
+    /// Failable -> Failable
     fileprivate init<T: FailableTask, V: FailableTask>(firstTask: T, secondTask: V)
         where T.Input == In, T.SuccessOutput == V.Input, V.SuccessOutput == Out {
 
@@ -180,6 +181,17 @@ public struct FailableChain<In, Out>: FailableTask {
                 }.execute(input)
             }
     }
+
+    /// Task -> Failable
+    fileprivate init<T: Task, V: FailableTask>(firstTask: T, secondTask: V)
+        where T.Input == In, T.Output == V.Input, V.SuccessOutput == Out {
+
+            workClosure = { (input, onCompletion) in
+                firstTask.onCompletion { (firstOutput) in
+                    secondTask.onCompletion { onCompletion($0) }.execute(firstOutput)
+                }.execute(input)
+            }
+    }
 }
 
 public extension Task {
@@ -188,6 +200,14 @@ public extension Task {
     }
 
     public func then<T: Task>(_ nextTask: () -> T) -> Chain<Input, T.Output> where T.Input == Output {
+        return then(nextTask())
+    }
+
+    public func then<T: FailableTask>(_ nextTask: T) -> FailableChain<Input, T.SuccessOutput> where T.Input == Output {
+        return FailableChain(firstTask: self, secondTask: nextTask)
+    }
+
+    public func then<T: FailableTask>(_ nextTask: () -> T) -> FailableChain<Input, T.SuccessOutput> where T.Input == Output {
         return then(nextTask())
     }
 }
@@ -208,16 +228,8 @@ public extension Task {
     public func convert<T>(_ closure: @escaping (Output) -> T) -> Chain<Input, T> {
         return then( SimpleTask { $1( closure($0) ) })
     }
-}
 
-public extension Task where Output: Sequence {
-    public func convertEach<T>(_ closure: @escaping (Output.Iterator.Element) -> T) -> Chain<Input, Array<T>> {
-        return then ( SimpleTask { $1( $0.flatMap { closure($0) }) })
-    }
-}
-
-public extension FailableTask {
-    public func convert<T>(_ closure: @escaping (SuccessOutput) -> Optional<T>) -> FailableChain<Input, T> {
+    public func convert<T>(_ closure: @escaping (Output) -> Optional<T>) -> FailableChain<Input, T> {
         return then( FailableSimpleTask { (input, onCompletion) in
             if let converted = closure(input) {
                 onCompletion(.success(converted))
@@ -225,6 +237,22 @@ public extension FailableTask {
                 onCompletion(.failure(TaskError.empty))
             }
         })
+    }
+}
+
+public extension Task where Output: Sequence {
+    public func convertEach<T>(_ closure: @escaping (Output.Iterator.Element) -> T) -> Chain<Input, Array<T>> {
+        return then ( SimpleTask { $1( $0.map { closure($0) }) })
+    }
+
+    public func convertEach<T>(_ closure: @escaping (Output.Iterator.Element) -> Optional<T>) -> Chain<Input, Array<T>> {
+        return then( SimpleTask { $1( $0.flatMap { closure($0) }) })
+    }
+}
+
+public extension FailableTask {
+    public func convert<T>(_ closure: @escaping (SuccessOutput) -> T) -> FailableChain<Input, T> {
+        return then( FailableSimpleTask { $1(.success(closure($0))) })
     }
 }
 
