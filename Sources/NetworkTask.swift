@@ -6,6 +6,64 @@
 //  Copyright © 2017 Oleg Ketrar. All rights reserved.
 //
 
+import Foundation
+
+
+// MARK: - Provide Data
+
+public struct Input<Data>: Task {
+    public typealias Input  = Void
+    public typealias Output = Data
+
+    public var execute: ((), @escaping (Data) -> Void) -> Void
+
+    public init(now data: Data) {
+        execute = { $1(data) }
+    }
+
+    public init(lazy dataClosure: @autoclosure @escaping () -> Data) {
+        execute = { $1(dataClosure()) }
+    }
+}
+
+/// MARK: - Send
+
+struct JSON {
+    var value: String = ""
+}
+
+/// T -> Result(JSON)
+struct Send<T>: Task {
+    typealias Input  = T
+    typealias Output = Result<JSON>
+    var execute: (T, @escaping (Result<JSON>) -> Void) -> Void
+
+    init() {
+        execute = { $1(.success(JSON(value: "a"))) }
+    }
+}
+
+/// JSON -> Int
+struct Parse: Task {
+    typealias Input  = JSON
+    typealias Output = Int
+    var execute: (JSON, @escaping (Int) -> Void) -> Void
+
+    init() {
+        execute = { $1(10) }
+    }
+}
+
+struct OptinalParse: Task {
+    typealias Input  = JSON
+    typealias Output = Result<Int>
+    var execute: (JSON, @escaping (Result<Int>) -> Void) -> Void
+
+    init() {
+        execute = { $1(.success(10)) }
+    }
+}
+
 /*
 import Foundation
 import Alamofire
