@@ -8,6 +8,7 @@
 
 import UIKit
 
+/*
 // MARK: - UIView Animation Convenience
 
 public struct Animation {
@@ -156,3 +157,5 @@ private struct Block<T> {
         return copy
     }
 }
+
+*/
