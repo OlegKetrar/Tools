@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		552C3FD91F0BA1A8003343EB /* MailComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552C3FD81F0BA1A8003343EB /* MailComposeViewController.swift */; };
+		552C3FDB1F0BA23A003343EB /* Switch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552C3FDA1F0BA23A003343EB /* Switch.swift */; };
+		552C3FDD1F0BA395003343EB /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552C3FDC1F0BA395003343EB /* Router.swift */; };
+		552C3FDF1F0BA3EA003343EB /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552C3FDE1F0BA3EA003343EB /* Button.swift */; };
+		552C3FE31F0BBE76003343EB /* TemplatedFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552C3FE21F0BBE76003343EB /* TemplatedFormatter.swift */; };
 		555B2CF91E4DD587005E9686 /* Tools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555B2CEF1E4DD587005E9686 /* Tools.framework */; };
 		555B2D131E4DD8C6005E9686 /* Tools.h in Headers */ = {isa = PBXBuildFile; fileRef = 555B2D101E4DD711005E9686 /* Tools.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		555B2D151E4DD92A005E9686 /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555B2D141E4DD92A005E9686 /* Reusable.swift */; };
@@ -15,7 +20,6 @@
 		555B2D1B1E4DD9A7005E9686 /* UIKitAnimationConveniences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555B2D1A1E4DD9A7005E9686 /* UIKitAnimationConveniences.swift */; };
 		555B2D211E4DDA22005E9686 /* UIKitExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555B2D201E4DDA22005E9686 /* UIKitExtensions.swift */; };
 		555B2D2D1E4DE2A6005E9686 /* StandartLibraryExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555B2D2C1E4DE2A6005E9686 /* StandartLibraryExtensions.swift */; };
-		559F608C1E78757200047487 /* OldTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559F608B1E78757200047487 /* OldTask.swift */; };
 		559F60911E7878E600047487 /* SliderAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559F60901E7878E600047487 /* SliderAdapter.swift */; };
 /* End PBXBuildFile section */
 
@@ -30,6 +34,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		552C3FD81F0BA1A8003343EB /* MailComposeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MailComposeViewController.swift; sourceTree = "<group>"; };
+		552C3FDA1F0BA23A003343EB /* Switch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Switch.swift; sourceTree = "<group>"; };
+		552C3FDC1F0BA395003343EB /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		552C3FDE1F0BA3EA003343EB /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
+		552C3FE21F0BBE76003343EB /* TemplatedFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TemplatedFormatter.swift; sourceTree = "<group>"; };
 		555B2CEF1E4DD587005E9686 /* Tools.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Tools.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		555B2CF81E4DD587005E9686 /* ToolsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ToolsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		555B2CFF1E4DD587005E9686 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -43,7 +52,6 @@
 		555B2D1A1E4DD9A7005E9686 /* UIKitAnimationConveniences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIKitAnimationConveniences.swift; sourceTree = "<group>"; };
 		555B2D201E4DDA22005E9686 /* UIKitExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIKitExtensions.swift; sourceTree = "<group>"; };
 		555B2D2C1E4DE2A6005E9686 /* StandartLibraryExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StandartLibraryExtensions.swift; sourceTree = "<group>"; };
-		559F608B1E78757200047487 /* OldTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OldTask.swift; sourceTree = "<group>"; };
 		559F60901E7878E600047487 /* SliderAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SliderAdapter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -105,8 +113,9 @@
 		555B2D0E1E4DD711005E9686 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				559F608B1E78757200047487 /* OldTask.swift */,
 				555B2D2C1E4DE2A6005E9686 /* StandartLibraryExtensions.swift */,
+				552C3FDC1F0BA395003343EB /* Router.swift */,
+				552C3FE21F0BBE76003343EB /* TemplatedFormatter.swift */,
 				559F60921E7878EB00047487 /* DeclarativeUIKit */,
 				BA01DBF91E5084DF00F16755 /* Supporting Files */,
 			);
@@ -122,6 +131,9 @@
 				555B2D1A1E4DD9A7005E9686 /* UIKitAnimationConveniences.swift */,
 				555B2D181E4DD96B005E9686 /* CocoaObservers.swift */,
 				555B2D161E4DD94A005E9686 /* Searchable.swift */,
+				552C3FD81F0BA1A8003343EB /* MailComposeViewController.swift */,
+				552C3FDA1F0BA23A003343EB /* Switch.swift */,
+				552C3FDE1F0BA3EA003343EB /* Button.swift */,
 			);
 			name = DeclarativeUIKit;
 			sourceTree = "<group>";
@@ -269,12 +281,16 @@
 			files = (
 				555B2D2D1E4DE2A6005E9686 /* StandartLibraryExtensions.swift in Sources */,
 				559F60911E7878E600047487 /* SliderAdapter.swift in Sources */,
+				552C3FDD1F0BA395003343EB /* Router.swift in Sources */,
+				552C3FD91F0BA1A8003343EB /* MailComposeViewController.swift in Sources */,
+				552C3FDB1F0BA23A003343EB /* Switch.swift in Sources */,
 				555B2D151E4DD92A005E9686 /* Reusable.swift in Sources */,
 				555B2D191E4DD96B005E9686 /* CocoaObservers.swift in Sources */,
-				559F608C1E78757200047487 /* OldTask.swift in Sources */,
 				555B2D1B1E4DD9A7005E9686 /* UIKitAnimationConveniences.swift in Sources */,
 				555B2D211E4DDA22005E9686 /* UIKitExtensions.swift in Sources */,
 				555B2D171E4DD94A005E9686 /* Searchable.swift in Sources */,
+				552C3FDF1F0BA3EA003343EB /* Button.swift in Sources */,
+				552C3FE31F0BBE76003343EB /* TemplatedFormatter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

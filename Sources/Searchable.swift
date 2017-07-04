@@ -40,7 +40,6 @@ public extension Array where Element: Searchable {
 // MARK: - SearchHandler
 
 public class SearchHandler: NSObject {
-	
 	fileprivate let searchController: UISearchController
 
 	public init(_ closure: () -> UISearchController) {
@@ -134,32 +133,3 @@ extension SearchHandler {
 		set { searchController.isActive = newValue }
 	}
 }
-
-// MARK: - Realm support
-
-/*
-@objc protocol SearchableRealmType {
-	var searchTags: String { get }
-}
-
-extension Results where T: SearchableRealmType {
-	func match(searchStr: String, caseInsensitive: Bool = true) -> Results {
-		
-		// remove punctuations & whitespaces
-		let disallowedChars = CharacterSet.whitespacesAndNewlines.union(.punctuationCharacters)
-		let predicateStr    = searchStr.trimmingCharacters(in: disallowedChars)
-		
-		// validate search str
-		guard !predicateStr.isEmpty else { return self }
-		
-		// form predicate
-		let searchPredicate = NSComparisonPredicate(leftExpression: NSExpression(forKeyPath: #keyPath(SearchableRealmType.searchTags)),
-		                                            rightExpression: NSExpression(forConstantValue: predicateStr),
-		                                            modifier: .direct,
-		                                            type: .contains,
-		                                            options: caseInsensitive ? [.caseInsensitive] : [])
-		// search
-		return self.filter(searchPredicate)
-	}
-}
-*/

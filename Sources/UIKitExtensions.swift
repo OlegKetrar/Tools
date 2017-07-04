@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension UIColor {
+public extension UIColor {
     public convenience init(red: Int, green: Int, blue: Int) {
         
         assert(red >= 0 && red <= 255, "Invalid red component")
@@ -38,7 +38,8 @@ extension UIColor {
 
 // MARK: Color detection
 
-extension UIColor {
+/*
+public extension UIColor {
     public func isLight() -> Bool {
 		
 		let coreImageColor = CIColor(color: self)
@@ -59,8 +60,9 @@ extension UIColor {
         }
     }
 }
+*/
 
-extension UIImage {
+public extension UIImage {
     public convenience init?(color: UIColor, size: CGSize = CGSize(width: 1, height: 1)) {
         
         let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
@@ -73,7 +75,8 @@ extension UIImage {
         guard let patternImage = image?.cgImage else { return nil }
         self.init(cgImage: patternImage)
     }
-	
+
+	/*
 	public func averageColor() -> UIColor {
 		let rgba       = UnsafeMutablePointer<CUnsignedChar>.allocate(capacity: 4)
 		let colorSpace = CGColorSpaceCreateDeviceRGB()
@@ -97,6 +100,7 @@ extension UIImage {
 			               alpha: CGFloat(rgba[3]) / 255.0)
 		}
 	}
+	*/
 }
 
 extension UIScreen {
@@ -109,50 +113,7 @@ extension UIScreen {
     }
 }
 
-// MARK: - UIView + AutoLayout
-
-extension UIView {
-
-    @discardableResult
-    public func addPinConstraint(toSubview subview: UIView,
-                                 attribute: NSLayoutAttribute,
-                                 withSpacing spacing: CGFloat) -> NSLayoutConstraint {
-        
-        subview.translatesAutoresizingMaskIntoConstraints = false
-        let constraint = NSLayoutConstraint(item: subview, attribute: attribute, relatedBy: .equal,
-                                            toItem: self, attribute: attribute, multiplier: 1.0, constant: spacing)
-        addConstraint(constraint)
-        return constraint
-    }
-
-    @discardableResult
-    public func addPinConstraints(toSubview subview: UIView, withSpacing spacing: CGFloat = 0.0) -> [NSLayoutConstraint] {
-        return [ addPinConstraint(toSubview: subview, attribute: .left, withSpacing: spacing),
-                 addPinConstraint(toSubview: subview, attribute: .top, withSpacing: spacing),
-                 addPinConstraint(toSubview: subview, attribute: .right, withSpacing: -spacing),
-                 addPinConstraint(toSubview: subview, attribute: .bottom, withSpacing: -spacing) ]
-    }
-    
-    public func addPinnedSubview(_ subview: UIView, withSpacing spacing: CGFloat = 0.0) {
-        addSubview(subview)
-        translatesAutoresizingMaskIntoConstraints = false
-        addPinConstraints(toSubview: subview, withSpacing: spacing)
-    }
-
-    @discardableResult
-    public func pinToSuperview(attribute: NSLayoutAttribute, spacing: CGFloat = 0) -> NSLayoutConstraint? {
-        return superview?.addPinConstraint(toSubview: self, attribute: attribute, withSpacing: spacing)
-    }
-
-    @discardableResult
-    public func pinToSuperview(insets: UIEdgeInsets) -> [NSLayoutConstraint] {
-        return [ pinToSuperview(attribute: .left, spacing: insets.left),
-                 pinToSuperview(attribute: .top, spacing: insets.top),
-                 pinToSuperview(attribute: .right, spacing: -insets.right),
-                 pinToSuperview(attribute: .bottom, spacing: -insets.bottom) ].flatMap { $0 }
-    }
-}
-
+/*
 // MARK: - Roundable
 
 public protocol Roundable {
@@ -236,7 +197,7 @@ open class DeclarativeViewController: UIViewController, OnEventClosures {
 	override open func viewDidDisappear(_ animated: Bool)  { super.viewDidDisappear(animated);  onDidDisappear()  }
 }
 
-// MARK: - Empty Header/Footer view
+ MARK: - Empty Header/Footer view
 
 extension UIView {
 	public static var transparentView: UIView {
@@ -256,12 +217,72 @@ extension UITextField {
         return self
     }
 }
+*/
 
-extension CGRect {
+public extension CGRect {
     public func expanded(by offset: CGFloat) -> CGRect {
         return CGRect(x: origin.x - offset,
                       y: origin.y - offset,
                       width: size.width + 2 * offset,
                       height: size.height + 2 * offset)
     }
+}
+
+public extension UIEdgeInsets {
+	public mutating func insetedBy(top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0) {
+		self.top    += top
+		self.left   += left
+		self.bottom += bottom
+		self.right  += right
+	}
+}
+
+// MARK: - UIView + AutoLayout
+
+public extension UIView {
+
+	@discardableResult
+	public func addPinConstraint(toSubview subview: UIView,
+	                             attribute: NSLayoutAttribute,
+	                             withSpacing spacing: CGFloat) -> NSLayoutConstraint {
+
+		subview.translatesAutoresizingMaskIntoConstraints = false
+		let constraint = NSLayoutConstraint(item: subview, attribute: attribute, relatedBy: .equal,
+		                                    toItem: self, attribute: attribute, multiplier: 1.0, constant: spacing)
+		addConstraint(constraint)
+		return constraint
+	}
+
+	@discardableResult
+	public func addPinConstraints(toSubview subview: UIView, withSpacing spacing: CGFloat = 0.0) -> [NSLayoutConstraint] {
+		return [ addPinConstraint(toSubview: subview, attribute: .left, withSpacing: spacing),
+		         addPinConstraint(toSubview: subview, attribute: .top, withSpacing: spacing),
+		         addPinConstraint(toSubview: subview, attribute: .right, withSpacing: -spacing),
+		         addPinConstraint(toSubview: subview, attribute: .bottom, withSpacing: -spacing) ]
+	}
+
+	public func addPinnedSubview(_ subview: UIView, withSpacing spacing: CGFloat = 0.0) {
+		addSubview(subview)
+		translatesAutoresizingMaskIntoConstraints = false
+		addPinConstraints(toSubview: subview, withSpacing: spacing)
+	}
+
+	public func addPinnedSubview(_ subview: UIView, withInsets insets: UIEdgeInsets) {
+		addSubview(subview)
+		translatesAutoresizingMaskIntoConstraints = false
+		subview.pinToSuperview(insets: insets)
+	}
+
+	@discardableResult
+	public func pinToSuperview(attribute: NSLayoutAttribute, spacing: CGFloat = 0) -> NSLayoutConstraint? {
+		return superview?.addPinConstraint(toSubview: self, attribute: attribute, withSpacing: spacing)
+	}
+
+	@discardableResult
+	public func pinToSuperview(insets: UIEdgeInsets) -> [NSLayoutConstraint] {
+		return [ pinToSuperview(attribute: .left, spacing: insets.left),
+		         pinToSuperview(attribute: .top, spacing: insets.top),
+		         pinToSuperview(attribute: .right, spacing: -insets.right),
+		         pinToSuperview(attribute: .bottom, spacing: -insets.bottom) ].flatMap { $0 }
+	}
 }

@@ -8,23 +8,22 @@
 - [ ] CocoaPods support
 - [ ] Swift PM support
 - [ ] Refactor UIView animation convenience
-- [ ] Add all permissions requests
 - [ ] Material like UITextField
-- [ ] Refactor AlertDispatcher
 - [ ] Declarative block-based UITableView & UICollectionView
+- [ ] Provide abstract AppError
+- [ ] implement Action
 
 ## Repo organization
 
 - [ ] Usage section
 - [ ] Separate UIKit extensions and swift crossplatform features
-- [ ] Documentation
-- [ ] Separate AlertDispatcher
+- [ ] Documentation in code
 
 ## Usage
 
 ## Requirements
 
-- Swift 3.0+
+- Swift 3.1+
 - xCode 8.0+
 - iOS 8.0+
 
