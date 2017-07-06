@@ -12,7 +12,11 @@ import UIKit
 // MARK: - Common NotificationCenter observer
 
 public class EventObserver {
-	private var observers: [NSObjectProtocol] = []
+	private var observers: [NSObjectProtocol]
+
+	public init() {
+		observers = []
+	}
 
 	deinit {
 		removeAll()
