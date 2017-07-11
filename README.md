@@ -4,19 +4,27 @@
 
 ## Features
 
-- [x] Carthage support
-- [x] CocoaPods support
-- [ ] Swift PM support
-- [ ] Refactor UIView animation convenience
-- [ ] Material like UITextField
-- [ ] Declarative block-based UITableView & UICollectionView
-- [ ] Provide abstract AppError
-- [ ] implement Action
+- [x] `Carthage` support
+- [ ] `CocoaPods` support
+- [ ] `Swift PM` support
+- [x] `Reusable` / `NibInitable` / `StoryboardInitable`
+- [x] `SliderAdapter` - declarative block-based `UICollectionView` adapter
+- [x] `EventObserver` / `KeyboardObserver`
+- [x] `SearchController` - declarative block-based `UISearchController` abstraction
+- [x] `Button` - `UIButton` with with preloader, prevents multiple execution
+- [x] `Switch` - `UISwitch` with control of value changing 
+- [x] `Presentation` - abstraction around presenting/dismissing of `UIViewController`s
+- [ ] `FormatController` provides control for inputting of strongly formatted strings
+- [ ] Refactor `UIView` animation convenience
+- [ ] Material-like `UITextField`
+- [ ] Declarative block-based `UITableView` & `UICollectionView`
+- [ ] Provide abstract `AppError`
+- [ ] implement `Action`
 
 ## Repo organization
 
 - [ ] Usage section
-- [ ] Separate UIKit extensions and swift crossplatform features
+- [ ] Separate `UIKit` extensions and `swift` crossplatform features
 - [ ] Documentation in code
 
 ## Usage

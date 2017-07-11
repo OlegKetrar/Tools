@@ -105,7 +105,7 @@ public extension UIImage {
 
 extension UIScreen {
     public var onePixelWidth: CGFloat {
-        return 1.0 / self.scale
+        return 1 / self.scale
     }
     
     public var twoPixelWidth: CGFloat {

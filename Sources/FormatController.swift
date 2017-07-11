@@ -1,5 +1,5 @@
 //
-//  TemplatedFormatter.swift
+//  FormatController.swift
 //  Tools
 //
 //  Created by Oleg Ketrar on 04.07.17.
@@ -12,7 +12,7 @@ import Foundation
 /// Z - any character;
 /// 9 - any digit;
 /// any other symbol in format will be recognized as constant
-public struct TemplatedFormatter {
+public struct FormatController {
 	private let source: String
 	private var format: String = "*"
 
@@ -22,7 +22,7 @@ public struct TemplatedFormatter {
 		source = str
 	}
 
-	public func with(format: String) -> TemplatedFormatter {
+	public func with(format: String) -> FormatController {
 		var copy = self
 		copy.format = format
 		return copy

@@ -1,5 +1,5 @@
 //
-//  Searchable.swift
+//  SearchController.swift
 //  Tools
 //
 //  Created by Oleg Ketrar on 10.02.17.
@@ -39,14 +39,14 @@ public extension Array where Element: Searchable {
 
 // MARK: - SearchHandler
 
-public class SearchHandler: NSObject {
-	fileprivate let searchController: UISearchController
+public class SearchController: NSObject {
+	fileprivate let controller: UISearchController
 
 	public init(_ closure: () -> UISearchController) {
-		self.searchController = closure()
+		self.controller = closure()
 		super.init()
-		self.searchController.delegate = self
-		self.searchController.searchResultsUpdater = self
+		self.controller.delegate = self
+		self.controller.searchResultsUpdater = self
 	}
 	
 	// MARK: Closures
@@ -60,31 +60,31 @@ public class SearchHandler: NSObject {
 	// MARK: Configuring
 	
 	@discardableResult
-	public func onWillAppear(_ closure: @escaping () -> Void) -> SearchHandler {
+	public func onWillAppear(_ closure: @escaping () -> Void) -> SearchController {
 		willAppearClosure = closure
 		return self
 	}
 	
 	@discardableResult
-	public func onDidAppear(_ closure: @escaping () -> Void) -> SearchHandler {
+	public func onDidAppear(_ closure: @escaping () -> Void) -> SearchController {
 		didAppearClosure = closure
 		return self
 	}
 	
 	@discardableResult
-	public func onWillDisappear(_ closure: @escaping () -> Void) -> SearchHandler {
+	public func onWillDisappear(_ closure: @escaping () -> Void) -> SearchController {
 		willDisappearClosure = closure
 		return self
 	}
 	
 	@discardableResult
-	public func onDidDisappear(_ closure: @escaping () -> Void) -> SearchHandler {
+	public func onDidDisappear(_ closure: @escaping () -> Void) -> SearchController {
 		didDisappearClosure = closure
 		return self
 	}
 	
 	@discardableResult
-	public func onUpdate(_ closure: @escaping (String) -> Void) -> SearchHandler {
+	public func onUpdate(_ closure: @escaping (String) -> Void) -> SearchController {
 		updateClosure = closure
 		return self
 	}
@@ -92,15 +92,15 @@ public class SearchHandler: NSObject {
 	// will be called only once
 	
 	@discardableResult
-	@nonobjc public  func configure(with tableView: UITableView) -> SearchHandler {
-		let someView = UIView(frame: searchController.searchBar.bounds)
-		someView.addSubview(searchController.searchBar)
+	@nonobjc public  func configure(with tableView: UITableView) -> SearchController {
+		let someView = UIView(frame: controller.searchBar.bounds)
+		someView.addSubview(controller.searchBar)
 		tableView.tableHeaderView = someView
 		return self
 	}
 	
 	@discardableResult
-	@nonobjc public func configure(with controller: UITableViewController) -> SearchHandler {
+	@nonobjc public func configure(with controller: UITableViewController) -> SearchController {
 		// TODO: add search bar
 		return self
 	}
@@ -109,7 +109,7 @@ public class SearchHandler: NSObject {
 // MARK: - Wrap UISearchControllerDelegate
 // TODO: - add method presentSearchController(_ :UISearchController)
 
-extension SearchHandler: UISearchControllerDelegate {
+extension SearchController: UISearchControllerDelegate {
 	public func willPresentSearchController(_ searchController: UISearchController) { willAppearClosure?()    }
 	public func didPresentSearchController(_ searchController: UISearchController)  { didAppearClosure?()     }
 	public func willDismissSearchController(_ searchController: UISearchController) { willDisappearClosure?() }
@@ -118,7 +118,7 @@ extension SearchHandler: UISearchControllerDelegate {
 
 // MARK: - Wrap UISearchResultsUpdating
 
-extension SearchHandler: UISearchResultsUpdating {
+extension SearchController: UISearchResultsUpdating {
 	public func updateSearchResults(for searchController: UISearchController) {
 		guard let searchString = searchController.searchBar.text else { return }
 		updateClosure?(searchString)
@@ -127,9 +127,9 @@ extension SearchHandler: UISearchResultsUpdating {
 
 // MARK: - Wrap UISearchController attributes
 
-extension SearchHandler {
+extension SearchController {
 	public var isActive: Bool {
-		get { return searchController.isActive }
-		set { searchController.isActive = newValue }
+		get { return controller.isActive }
+		set { controller.isActive = newValue }
 	}
 }
