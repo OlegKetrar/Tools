@@ -63,18 +63,28 @@ public extension UIColor {
 */
 
 public extension UIImage {
-    public convenience init?(color: UIColor, size: CGSize = CGSize(width: 1, height: 1)) {
-        
-        let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
-        UIGraphicsBeginImageContextWithOptions(rect.size, false, 0)
-        color.setFill()
-        UIRectFill(rect)
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-		
-        guard let patternImage = image?.cgImage else { return nil }
-        self.init(cgImage: patternImage)
-    }
+
+	/// Creates image with color with specified size.
+	/// - parameter color: fill color.
+	/// - parameter size: image size, default 1x1.
+	public convenience init?(color: UIColor, size: CGSize = CGSize(width: 1, height: 1)) {
+		let image: UIImage? = {
+			defer { UIGraphicsEndImageContext() }
+
+			let rect = CGRect(origin: .zero, size: size)
+
+			UIGraphicsBeginImageContextWithOptions(rect.size, false, 0)
+			color.setFill()
+			UIRectFill(rect)
+
+			return UIGraphicsGetImageFromCurrentImageContext()
+		}()
+
+		guard let createdImage = image,
+			let patternImage = createdImage.cgImage else { return nil }
+
+		self.init(cgImage: patternImage, scale: createdImage.scale, orientation: createdImage.imageOrientation)
+	}
 
 	/*
 	public func averageColor() -> UIColor {

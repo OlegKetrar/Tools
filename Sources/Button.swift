@@ -27,6 +27,10 @@ public final class Button: UIButton {
 		didSet { preloader.color = preloaderColor }
 	}
 
+	/// Should set hide button image in preloaded state.
+	/// Default `true`.
+	public var shouldAffectImage: Bool = true
+
 	// MARK: - Init
 
 	override public init(frame: CGRect) {
@@ -43,6 +47,10 @@ public final class Button: UIButton {
 		addSubview(preloader)
 		setAttributedTitle(NSAttributedString(string: "", attributes: nil), for: .disabled)
 		setTitle("", for: .disabled)
+
+		if let normalImage = image(for: .normal), image(for: .disabled) == normalImage, shouldAffectImage {
+			setImage(UIImage(color: .clear, size: normalImage.size), for: .disabled)
+		}
 	}
 
 	deinit {
@@ -92,7 +100,6 @@ public final class Button: UIButton {
 	///     // call when work completed
 	///     onCompletion()
 	/// })
-	///
 	/// ```
 	public func start(activity: @escaping (@escaping () -> Void) -> Void) {
 		startPreloader()
