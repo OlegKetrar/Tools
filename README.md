@@ -17,9 +17,8 @@
 - [ ] `FormatController` provides control for inputting of strongly formatted strings
 - [ ] Refactor `UIView` animation convenience
 - [ ] Material-like `UITextField`
-- [ ] Declarative block-based `UITableView` & `UICollectionView`
-- [ ] Provide abstract `AppError`
-- [ ] implement `Action`
+- [ ] Declarative block-based `UITableView` with `Section` abstraction
+- [ ] implement `Error` model 
 
 ## Repo organization
 
@@ -50,7 +49,7 @@ $ brew install carthage
 To integrate NumberPad into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```ogdl
-github "OlegKetrar/Tools"
+github "OlegKetrar/Tools" == 0.3.1
 ```
 Run `carthage update` to build the framework and drag the built `Tools.framework` into your Xcode project.
 
@@ -76,7 +75,7 @@ platform :ios, '10.0'
 use_frameworks!
 
 target '<Your Target Name>' do
-pod 'Tools', :git => 'https://github.com/OlegKetrar/Tools.git', :tag => '0.1.4'
+pod 'Tools', :git => 'https://github.com/OlegKetrar/Tools.git', :tag => '0.3.1'
 end
 ```
 

@@ -24,6 +24,7 @@
 		555CE61C1F14E674006CF341 /* Tools.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 555CE61B1F14E674006CF341 /* Tools.podspec */; };
 		555CE61E1F14E6A1006CF341 /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = 555CE61D1F14E6A1006CF341 /* Cartfile */; };
 		555CE6201F14EC64006CF341 /* AlertDispatcher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555CE61F1F14EC64006CF341 /* AlertDispatcher.framework */; };
+		559F08321F2F5D870062449D /* TableViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559F08311F2F5D870062449D /* TableViewAdapter.swift */; };
 		559F60911E7878E600047487 /* SliderAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559F60901E7878E600047487 /* SliderAdapter.swift */; };
 /* End PBXBuildFile section */
 
@@ -60,6 +61,7 @@
 		555CE61B1F14E674006CF341 /* Tools.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Tools.podspec; sourceTree = "<group>"; };
 		555CE61D1F14E6A1006CF341 /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
 		555CE61F1F14EC64006CF341 /* AlertDispatcher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AlertDispatcher.framework; path = Carthage/Build/iOS/AlertDispatcher.framework; sourceTree = SOURCE_ROOT; };
+		559F08311F2F5D870062449D /* TableViewAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewAdapter.swift; sourceTree = "<group>"; };
 		559F60901E7878E600047487 /* SliderAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SliderAdapter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -146,6 +148,7 @@
 				552C3FDA1F0BA23A003343EB /* Switch.swift */,
 				552C3FDE1F0BA3EA003343EB /* Button.swift */,
 				555CE6191F14E639006CF341 /* Presentation.swift */,
+				559F08311F2F5D870062449D /* TableViewAdapter.swift */,
 			);
 			name = DeclarativeUIKit;
 			sourceTree = "<group>";
@@ -297,6 +300,7 @@
 				555B2D2D1E4DE2A6005E9686 /* StandartLibraryExtensions.swift in Sources */,
 				559F60911E7878E600047487 /* SliderAdapter.swift in Sources */,
 				552C3FDD1F0BA395003343EB /* Router.swift in Sources */,
+				559F08321F2F5D870062449D /* TableViewAdapter.swift in Sources */,
 				555CE61A1F14E639006CF341 /* Presentation.swift in Sources */,
 				552C3FD91F0BA1A8003343EB /* MailComposeViewController.swift in Sources */,
 				552C3FDB1F0BA23A003343EB /* Switch.swift in Sources */,

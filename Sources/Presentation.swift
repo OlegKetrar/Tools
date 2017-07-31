@@ -9,6 +9,8 @@
 import UIKit
 import AlertDispatcher
 
+// TODO: refactor to use protocol and structures
+
 public enum Presentation {
 	case push(into: UINavigationController)
 	case present(on: UIViewController)
