@@ -47,7 +47,7 @@
 		555B2CEF1E4DD587005E9686 /* Tools.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Tools.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		555B2CF81E4DD587005E9686 /* ToolsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ToolsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		555B2CFF1E4DD587005E9686 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		555B2D091E4DD6E9005E9686 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		555B2D091E4DD6E9005E9686 /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
 		555B2D0A1E4DD6E9005E9686 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		555B2D0F1E4DD711005E9686 /* Info-iOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
 		555B2D101E4DD711005E9686 /* Tools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tools.h; sourceTree = "<group>"; };
@@ -58,8 +58,8 @@
 		555B2D201E4DDA22005E9686 /* UIKitExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIKitExtensions.swift; sourceTree = "<group>"; };
 		555B2D2C1E4DE2A6005E9686 /* StandartLibraryExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StandartLibraryExtensions.swift; sourceTree = "<group>"; };
 		555CE6191F14E639006CF341 /* Presentation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Presentation.swift; sourceTree = "<group>"; };
-		555CE61B1F14E674006CF341 /* Tools.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Tools.podspec; sourceTree = "<group>"; };
-		555CE61D1F14E6A1006CF341 /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
+		555CE61B1F14E674006CF341 /* Tools.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Tools.podspec; path = ../Tools.podspec; sourceTree = "<group>"; };
+		555CE61D1F14E6A1006CF341 /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Cartfile; path = ../Cartfile; sourceTree = "<group>"; };
 		555CE61F1F14EC64006CF341 /* AlertDispatcher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AlertDispatcher.framework; path = Carthage/Build/iOS/AlertDispatcher.framework; sourceTree = SOURCE_ROOT; };
 		559F08311F2F5D870062449D /* TableViewAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewAdapter.swift; sourceTree = "<group>"; };
 		559F60901E7878E600047487 /* SliderAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SliderAdapter.swift; sourceTree = "<group>"; };
@@ -115,10 +115,8 @@
 		555B2D0D1E4DD6EC005E9686 /* Metadata */ = {
 			isa = PBXGroup;
 			children = (
-				555B2D091E4DD6E9005E9686 /* LICENSE */,
+				555B2D091E4DD6E9005E9686 /* LICENSE.md */,
 				555B2D0A1E4DD6E9005E9686 /* README.md */,
-				555CE61B1F14E674006CF341 /* Tools.podspec */,
-				555CE61D1F14E6A1006CF341 /* Cartfile */,
 			);
 			name = Metadata;
 			sourceTree = "<group>";
@@ -139,23 +137,33 @@
 			isa = PBXGroup;
 			children = (
 				555B2D141E4DD92A005E9686 /* Reusable.swift */,
+				552C3FDA1F0BA23A003343EB /* Switch.swift */,
+				552C3FDE1F0BA3EA003343EB /* Button.swift */,
 				555B2D201E4DDA22005E9686 /* UIKitExtensions.swift */,
 				559F60901E7878E600047487 /* SliderAdapter.swift */,
-				555B2D1A1E4DD9A7005E9686 /* UIKitAnimationConveniences.swift */,
 				555B2D181E4DD96B005E9686 /* CocoaObservers.swift */,
 				555B2D161E4DD94A005E9686 /* SearchController.swift */,
 				552C3FD81F0BA1A8003343EB /* MailComposeViewController.swift */,
-				552C3FDA1F0BA23A003343EB /* Switch.swift */,
-				552C3FDE1F0BA3EA003343EB /* Button.swift */,
 				555CE6191F14E639006CF341 /* Presentation.swift */,
-				559F08311F2F5D870062449D /* TableViewAdapter.swift */,
+				55FD3DEF1F4058950078B849 /* TODO */,
 			);
 			name = DeclarativeUIKit;
+			sourceTree = "<group>";
+		};
+		55FD3DEF1F4058950078B849 /* TODO */ = {
+			isa = PBXGroup;
+			children = (
+				555B2D1A1E4DD9A7005E9686 /* UIKitAnimationConveniences.swift */,
+				559F08311F2F5D870062449D /* TableViewAdapter.swift */,
+			);
+			name = TODO;
 			sourceTree = "<group>";
 		};
 		BA01DBF91E5084DF00F16755 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				555CE61B1F14E674006CF341 /* Tools.podspec */,
+				555CE61D1F14E6A1006CF341 /* Cartfile */,
 				555B2D0F1E4DD711005E9686 /* Info-iOS.plist */,
 				555B2D101E4DD711005E9686 /* Tools.h */,
 				555CE61F1F14EC64006CF341 /* AlertDispatcher.framework */,
@@ -221,7 +229,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0820;
-				LastUpgradeCheck = 0820;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "Oleg Ketrar";
 				TargetAttributes = {
 					555B2CEE1E4DD587005E9686 = {
@@ -341,7 +349,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -349,7 +359,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -394,7 +408,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -402,7 +418,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;

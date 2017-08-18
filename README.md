@@ -46,7 +46,7 @@ You can install Carthage with [Homebrew](http://brew.sh/) using the following co
 $ brew update
 $ brew install carthage
 ```
-To integrate NumberPad into your Xcode project using Carthage, specify it in your `Cartfile`:
+To integrate Tools into your Xcode project using `Carthage`, specify it in your `Cartfile`:
 
 ```ogdl
 github "OlegKetrar/Tools" == 0.3.1
@@ -68,7 +68,7 @@ or
 $ gem install cocoapods
 ```
 
-To integrate Tools into your Xcode project using CocoaPods, specify it in your `Podfile`:
+To integrate Tools into your Xcode project using `CocoaPods`, specify it in your `Podfile`:
 
 ```ruby
 platform :ios, '10.0'
@@ -84,3 +84,7 @@ Then, run the following command:
 ```bash
 $ pod install
 ```
+
+## License
+
+Tools is released under the MIT license. [See LICENSE](LICENSE.md) for details.
