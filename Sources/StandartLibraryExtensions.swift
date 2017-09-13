@@ -8,123 +8,121 @@
 
 import Foundation
 
-public extension Bool {
-    public mutating func toggleValue() { self = !self }
-    public func toggledValue() -> Bool { return !self }
-}
+// TODO: completely rewrite.
 
-// MARK: - Array/Collection
+// MARK: Array/Collection
 
 public extension Collection {
 
-	/// Map only unique items.
-	public func uniqueMap<T: Hashable>(_ transform: (Iterator.Element) throws -> T) rethrows -> [T] {
-		return Array<T>( Set<T>(try map(transform)) )
-	}
+    /// Map only unique items.
+    public func uniqueMap<T: Hashable>(_ transform: (Iterator.Element) throws -> T) rethrows -> [T] {
+        return Array<T>( Set<T>(try map(transform)) )
+    }
 
-	/// Map only unique items.
-	public func uniqueFlatMap<T: Hashable>(_ transform: (Iterator.Element) throws -> T?) rethrows -> [T] {
-		return Array<T>( Set<T>(try flatMap(transform)) )
-	}
+    /// Map only unique items.
+    public func uniqueFlatMap<T: Hashable>(_ transform: (Iterator.Element) throws -> T?) rethrows -> [T] {
+        return Array<T>( Set<T>(try flatMap(transform)) )
+    }
 }
 
 public extension Array {
-	public func item(at index: Array.Index) -> Element? {
-		guard indices.contains(index) else { return nil }
-		return self[index]
-	}
+    public func item(at index: Array.Index) -> Element? {
+        guard indices.contains(index) else { return nil }
+        return self[index]
+    }
 }
 
-// MARK: - String
+// MARK: String
 
 public extension NSString {
-	public func safeSubstring(with range: NSRange) -> String? {
-		guard range.location < length else { return nil }
-		return substring(with: range)
-	}
+    public func safeSubstring(with range: NSRange) -> String? {
+        guard range.location < length else { return nil }
+        return substring(with: range)
+    }
 }
 
 public extension Optional where Wrapped == String {
-	public var orEmpty: String {
-		guard case let .some(value) = self else { return "" }
-		return value
-	}
+    public var orEmpty: String {
+        guard case let .some(value) = self else { return "" }
+        return value
+    }
 }
 
-// MARK: NSLocalizedString
+// MARK: Convenience Localization API.
 
 public extension String {
-	public var localized: String {
-		return NSLocalizedString(self, comment: "")
-	}
+    public var localized: String {
+        return NSLocalizedString(self, comment: "")
+    }
 
-	public func localized(with bundle: Bundle?) -> String {
-		guard let bundle = bundle else { return localized }
-		return bundle.localizedString(forKey: self, value: "", table: nil)
-	}
+    public func localized(with bundle: Bundle?) -> String {
+        guard let bundle = bundle else { return localized }
+        return bundle.localizedString(forKey: self, value: "", table: nil)
+    }
 }
 
 public extension Bundle {
-	public static var UIKit: Bundle? {
-		return Bundle(identifier: "com.apple.UIKit")
-	}
+    public static var UIKit: Bundle? {
+        return Bundle(identifier: "com.apple.UIKit")
+    }
 }
 
 // MARK: String + Base64 encoding/decoding
 
 public extension String {
 
-	public var encodeBase64: String {
-		return self.data(using: String.Encoding.utf8)?.base64EncodedString(options: []) ?? ""
-	}
+    public var encodeBase64: String {
+        return self.data(using: String.Encoding.utf8)?.base64EncodedString(options: []) ?? ""
+    }
 
-	public var decodeBase64: String {
-		guard let strData = Data(base64Encoded: self, options: []) else { return "" }
-		return (NSString(data: strData, encoding: String.Encoding.utf8.rawValue) ?? "") as String
-	}
+    public var decodeBase64: String {
+        guard let strData = Data(base64Encoded: self, options: []) else { return "" }
+        return (NSString(data: strData, encoding: String.Encoding.utf8.rawValue) ?? "") as String
+    }
 }
 
 public extension Data {
 
-	public init?(urlSafeBase64String: String) {
-		let rem = urlSafeBase64String.characters.count % 4
+    public init?(urlSafeBase64String: String) {
+        let rem = urlSafeBase64String.characters.count % 4
 
-		var ending = ""
-		if rem > 0 {
-			let amount = 4 - rem
-			ending = String(repeating: "=", count: amount)
-		}
+        var ending = ""
+        if rem > 0 {
+            let amount = 4 - rem
+            ending = String(repeating: "=", count: amount)
+        }
 
-		let base64String = urlSafeBase64String.replacingOccurrences(of: "-", with: "+")
-			.replacingOccurrences(of: "_", with: "/") + ending
+        let base64String = urlSafeBase64String.replacingOccurrences(of: "-", with: "+")
+            .replacingOccurrences(of: "_", with: "/") + ending
 
-		self.init(base64Encoded: base64String)
-	}
+        self.init(base64Encoded: base64String)
+    }
 
-	public func urlSafeBase64String() -> String? {
-		let data = self.base64EncodedData(options: [])
-		guard let string = String(data: data, encoding: String.Encoding.utf8) else { return nil }
+    public func urlSafeBase64String() -> String? {
+        let data = self.base64EncodedData(options: [])
+        guard let string = String(data: data, encoding: String.Encoding.utf8) else { return nil }
 
-		return string.replacingOccurrences(of: "+", with: "-", options: [], range: nil)
-			.replacingOccurrences(of: "/", with: "_", options: [], range: nil)
-			.replacingOccurrences(of: "=", with: "", options: [], range: nil)
-	}
+        return string.replacingOccurrences(of: "+", with: "-", options: [], range: nil)
+            .replacingOccurrences(of: "/", with: "_", options: [], range: nil)
+            .replacingOccurrences(of: "=", with: "", options: [], range: nil)
+    }
 }
-
-// MARK: String + Regex
 
 public extension String {
-	public func validate(regex regStr: String) -> Bool {
-		return NSPredicate(format: "SELF MATCHES %@", regStr).evaluate(with: self)
-	}
+
+    /// Validate with `regex`.
+    func validate(regex regStr: String) -> Bool {
+        return NSPredicate(format: "SELF MATCHES %@", regStr).evaluate(with: self)
+    }
 }
 
-// MARK: - Convenience closures
-
+/// Call `closure` after `seconds` on `main` queue.
 public func withDelay(_ seconds: TimeInterval, _ closure: @escaping () -> Void) {
-	DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(Int(seconds * 1000))) { closure() }
+    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(Int(seconds * 1000))) { closure() }
 }
 
+/// Call `closure` after standart time of animation (0.33 seconds).
+/// Closure will be called on `main` queue.
 public func withAnimationDelay(_ closure: @escaping () -> Void) {
-	withDelay(0.33, closure)
+    withDelay(0.33, closure)
 }

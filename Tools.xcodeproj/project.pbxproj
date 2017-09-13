@@ -7,16 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		551158201F691FCD00708E81 /* KeyboardObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5511581F1F691FCD00708E81 /* KeyboardObserver.swift */; };
 		552C3FD91F0BA1A8003343EB /* MailComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552C3FD81F0BA1A8003343EB /* MailComposeViewController.swift */; };
 		552C3FDB1F0BA23A003343EB /* Switch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552C3FDA1F0BA23A003343EB /* Switch.swift */; };
-		552C3FDD1F0BA395003343EB /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552C3FDC1F0BA395003343EB /* Router.swift */; };
+		552C3FDD1F0BA395003343EB /* RoutingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552C3FDC1F0BA395003343EB /* RoutingController.swift */; };
 		552C3FDF1F0BA3EA003343EB /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552C3FDE1F0BA3EA003343EB /* Button.swift */; };
 		552C3FE31F0BBE76003343EB /* FormatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552C3FE21F0BBE76003343EB /* FormatController.swift */; };
 		555B2CF91E4DD587005E9686 /* Tools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555B2CEF1E4DD587005E9686 /* Tools.framework */; };
 		555B2D131E4DD8C6005E9686 /* Tools.h in Headers */ = {isa = PBXBuildFile; fileRef = 555B2D101E4DD711005E9686 /* Tools.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		555B2D151E4DD92A005E9686 /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555B2D141E4DD92A005E9686 /* Reusable.swift */; };
 		555B2D171E4DD94A005E9686 /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555B2D161E4DD94A005E9686 /* SearchController.swift */; };
-		555B2D191E4DD96B005E9686 /* CocoaObservers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555B2D181E4DD96B005E9686 /* CocoaObservers.swift */; };
+		555B2D191E4DD96B005E9686 /* NotificationObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555B2D181E4DD96B005E9686 /* NotificationObserver.swift */; };
 		555B2D1B1E4DD9A7005E9686 /* UIKitAnimationConveniences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555B2D1A1E4DD9A7005E9686 /* UIKitAnimationConveniences.swift */; };
 		555B2D211E4DDA22005E9686 /* UIKitExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555B2D201E4DDA22005E9686 /* UIKitExtensions.swift */; };
 		555B2D2D1E4DE2A6005E9686 /* StandartLibraryExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555B2D2C1E4DE2A6005E9686 /* StandartLibraryExtensions.swift */; };
@@ -26,6 +27,7 @@
 		555CE6201F14EC64006CF341 /* AlertDispatcher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555CE61F1F14EC64006CF341 /* AlertDispatcher.framework */; };
 		559F08321F2F5D870062449D /* TableViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559F08311F2F5D870062449D /* TableViewAdapter.swift */; };
 		559F60911E7878E600047487 /* SliderAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559F60901E7878E600047487 /* SliderAdapter.swift */; };
+		55A5E7B21F47664D005F3B94 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A5E7B11F47664D005F3B94 /* TextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,9 +41,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5511581F1F691FCD00708E81 /* KeyboardObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardObserver.swift; sourceTree = "<group>"; };
 		552C3FD81F0BA1A8003343EB /* MailComposeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MailComposeViewController.swift; sourceTree = "<group>"; };
 		552C3FDA1F0BA23A003343EB /* Switch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Switch.swift; sourceTree = "<group>"; };
-		552C3FDC1F0BA395003343EB /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		552C3FDC1F0BA395003343EB /* RoutingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutingController.swift; sourceTree = "<group>"; };
 		552C3FDE1F0BA3EA003343EB /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		552C3FE21F0BBE76003343EB /* FormatController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormatController.swift; sourceTree = "<group>"; };
 		555B2CEF1E4DD587005E9686 /* Tools.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Tools.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -53,7 +56,7 @@
 		555B2D101E4DD711005E9686 /* Tools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tools.h; sourceTree = "<group>"; };
 		555B2D141E4DD92A005E9686 /* Reusable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
 		555B2D161E4DD94A005E9686 /* SearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
-		555B2D181E4DD96B005E9686 /* CocoaObservers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CocoaObservers.swift; sourceTree = "<group>"; };
+		555B2D181E4DD96B005E9686 /* NotificationObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationObserver.swift; sourceTree = "<group>"; };
 		555B2D1A1E4DD9A7005E9686 /* UIKitAnimationConveniences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIKitAnimationConveniences.swift; sourceTree = "<group>"; };
 		555B2D201E4DDA22005E9686 /* UIKitExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIKitExtensions.swift; sourceTree = "<group>"; };
 		555B2D2C1E4DE2A6005E9686 /* StandartLibraryExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StandartLibraryExtensions.swift; sourceTree = "<group>"; };
@@ -63,6 +66,7 @@
 		555CE61F1F14EC64006CF341 /* AlertDispatcher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AlertDispatcher.framework; path = Carthage/Build/iOS/AlertDispatcher.framework; sourceTree = SOURCE_ROOT; };
 		559F08311F2F5D870062449D /* TableViewAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewAdapter.swift; sourceTree = "<group>"; };
 		559F60901E7878E600047487 /* SliderAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SliderAdapter.swift; sourceTree = "<group>"; };
+		55A5E7B11F47664D005F3B94 /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +89,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		551158211F692B0B00708E81 /* Rewrite */ = {
+			isa = PBXGroup;
+			children = (
+				5511581F1F691FCD00708E81 /* KeyboardObserver.swift */,
+				555CE6191F14E639006CF341 /* Presentation.swift */,
+			);
+			name = Rewrite;
+			sourceTree = "<group>";
+		};
+		551158221F692B8000708E81 /* Improve usability */ = {
+			isa = PBXGroup;
+			children = (
+				555B2D201E4DDA22005E9686 /* UIKitExtensions.swift */,
+				559F60901E7878E600047487 /* SliderAdapter.swift */,
+				555B2D161E4DD94A005E9686 /* SearchController.swift */,
+			);
+			name = "Improve usability";
+			sourceTree = "<group>";
+		};
 		555B2CE51E4DD587005E9686 = {
 			isa = PBXGroup;
 			children = (
@@ -125,7 +148,7 @@
 			isa = PBXGroup;
 			children = (
 				555B2D2C1E4DE2A6005E9686 /* StandartLibraryExtensions.swift */,
-				552C3FDC1F0BA395003343EB /* Router.swift */,
+				552C3FDC1F0BA395003343EB /* RoutingController.swift */,
 				552C3FE21F0BBE76003343EB /* FormatController.swift */,
 				559F60921E7878EB00047487 /* DeclarativeUIKit */,
 				BA01DBF91E5084DF00F16755 /* Supporting Files */,
@@ -139,12 +162,10 @@
 				555B2D141E4DD92A005E9686 /* Reusable.swift */,
 				552C3FDA1F0BA23A003343EB /* Switch.swift */,
 				552C3FDE1F0BA3EA003343EB /* Button.swift */,
-				555B2D201E4DDA22005E9686 /* UIKitExtensions.swift */,
-				559F60901E7878E600047487 /* SliderAdapter.swift */,
-				555B2D181E4DD96B005E9686 /* CocoaObservers.swift */,
-				555B2D161E4DD94A005E9686 /* SearchController.swift */,
+				555B2D181E4DD96B005E9686 /* NotificationObserver.swift */,
 				552C3FD81F0BA1A8003343EB /* MailComposeViewController.swift */,
-				555CE6191F14E639006CF341 /* Presentation.swift */,
+				551158221F692B8000708E81 /* Improve usability */,
+				551158211F692B0B00708E81 /* Rewrite */,
 				55FD3DEF1F4058950078B849 /* TODO */,
 			);
 			name = DeclarativeUIKit;
@@ -153,6 +174,7 @@
 		55FD3DEF1F4058950078B849 /* TODO */ = {
 			isa = PBXGroup;
 			children = (
+				55A5E7B11F47664D005F3B94 /* TextField.swift */,
 				555B2D1A1E4DD9A7005E9686 /* UIKitAnimationConveniences.swift */,
 				559F08311F2F5D870062449D /* TableViewAdapter.swift */,
 			);
@@ -307,13 +329,15 @@
 			files = (
 				555B2D2D1E4DE2A6005E9686 /* StandartLibraryExtensions.swift in Sources */,
 				559F60911E7878E600047487 /* SliderAdapter.swift in Sources */,
-				552C3FDD1F0BA395003343EB /* Router.swift in Sources */,
+				552C3FDD1F0BA395003343EB /* RoutingController.swift in Sources */,
+				55A5E7B21F47664D005F3B94 /* TextField.swift in Sources */,
 				559F08321F2F5D870062449D /* TableViewAdapter.swift in Sources */,
 				555CE61A1F14E639006CF341 /* Presentation.swift in Sources */,
 				552C3FD91F0BA1A8003343EB /* MailComposeViewController.swift in Sources */,
 				552C3FDB1F0BA23A003343EB /* Switch.swift in Sources */,
 				555B2D151E4DD92A005E9686 /* Reusable.swift in Sources */,
-				555B2D191E4DD96B005E9686 /* CocoaObservers.swift in Sources */,
+				555B2D191E4DD96B005E9686 /* NotificationObserver.swift in Sources */,
+				551158201F691FCD00708E81 /* KeyboardObserver.swift in Sources */,
 				555B2D1B1E4DD9A7005E9686 /* UIKitAnimationConveniences.swift in Sources */,
 				555B2D211E4DDA22005E9686 /* UIKitExtensions.swift in Sources */,
 				555B2D171E4DD94A005E9686 /* SearchController.swift in Sources */,
