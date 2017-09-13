@@ -4,7 +4,7 @@
 
 - [Features](#features)
 - [Requirements](#requirements)
-- [Installation](#instalation)
+- [Installation](#installation)
 - [Usage](#usage)
 - [License](#license)
 
@@ -13,13 +13,13 @@
 - [x] `Carthage` support
 - [ ] `CocoaPods` support
 - [ ] `Swift PM` support
-- [x] [Reusable](#reusable) / [NibInitable](#nibinitable) / [StoryboardInitable](#storyboardinitiable)
-- [x] `SliderAdapter` - declarative block-based `UICollectionView` adapter
-- [x] `NotificationObserver` / `KeyboardObserver`
-- [x] `SearchController` - declarative block-based `UISearchController` abstraction
+- [x] [Reusable](#reusable) / [NibInitable](#nibinitable) / [StoryboardInitable](#storyboardinitable)
+- [x] [SliderAdapter](#slideradapter) - declarative block-based `UICollectionView` adapter
+- [x] [NotificationObserver](#notificationobserver) / [KeyboardObserver](#keyboardobserver)
+- [x] [SearchController](#searchcontroller) - declarative block-based `UISearchController` abstraction
 - [x] [Button](#button-with-preloader) - `UIButton` with with preloader, prevents multiple execution
 - [x] [Switch](#switch) - `UISwitch` with control of value changing
-- [x] `Presentation` - abstraction around presenting/dismissing of `UIViewController`s
+- [x] [Presentation](#presentation) - abstraction around presenting/dismissing of `UIViewController`s
 - [ ] `FormatController` provides control for inputting of strongly formatted strings
 - [ ] Refactor `UIView` animation convenience
 - [ ] Material-like [TextField](#material-like-text-field)
@@ -102,10 +102,10 @@ let actionButton = Button(frame: .zero)
 ...
 
 // you can define preloader color.
-// other poperties you can change in the standart way.
+// other poperties you can change in the usual way.
 actionButton.preloaderColor = .white
 
-// you always need to call `finish` closure and call it only on main thread.
+// you always need to call `finish` closure and call it only on main queue.
 actionButton.start(activity: { (finish) in
   doSomethingAsyncronousWithCallback {
     // finish work and stop `preloader` on button
@@ -120,11 +120,11 @@ Also you can explicitly control preloader with `startPreloader()` and `stopPrelo
 Adds control to value changing.
 
 ```swift
-let switch = Switch(frame: .zero)
+let someSwitch = Switch(frame: .zero)
 // setup autolayout
 
 // ask you every time somebody toggle switch.
-switch.onShouldChangeValue { (proposedValue) in
+someSwitch.onShouldChangeValue { (proposedValue) in
 
   // return `true` to change to `proposedValue` or `false` to not.
   return canEnableSmth(proposedValue)
