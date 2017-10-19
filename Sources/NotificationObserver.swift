@@ -9,6 +9,9 @@
 import Foundation
 import UIKit
 
+@available(iOS, deprecated, message: "use NotificationObserver")
+public typealias EventObserver = NotificationObserver
+
 /// Common NotificationCenter observer.
 /// Saves all observers and unsubscribe them on dealloc.
 /// You need to retain observer. Otherwise observers will be unsubscribed.

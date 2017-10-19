@@ -9,10 +9,11 @@
 import Foundation
 import UIKit
 
+/*
 /// TextField.
 public final class TextField: UITextField {
     fileprivate var observer: NotificationObserver?
-    fileprivate var validateClosure: (String, Bool) -> Bool = { _ in true }
+    fileprivate var validateClosure: (String, Bool) -> Bool = { _, _ in true }
 
     ///
 
@@ -250,6 +251,7 @@ extension Validation.Condition {
         )
     }
 }
+*/
 
 // MARK: Predifined styles
 
