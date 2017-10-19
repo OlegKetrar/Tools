@@ -97,6 +97,8 @@ public final class Button: UIButton {
     /// ```
     public func start(activity: @escaping (@escaping () -> Void) -> Void) {
         startPreloader()
-        activity { [weak self] in self?.stopPreloader() }
+        activity { [weak self] in
+            DispatchQueue.main.async { self?.stopPreloader() }
+        }
     }
 }

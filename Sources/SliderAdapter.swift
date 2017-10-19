@@ -17,7 +17,7 @@ where Data: Equatable, Cell: Reusable {
     fileprivate var countClosure: () -> Int                 = { 0 }
     fileprivate var dataClosure: (Int) -> Data?             = { _ in .none }
     fileprivate var cellClosure: (Cell, Data) -> Cell       = { (cell, _) in cell }
-    fileprivate var onSelectionClosure: (Int, Cell) -> Void = { _ in }
+    fileprivate var onSelectionClosure: (Int, Cell) -> Void = { _, _ in }
     fileprivate var onPrefetchingClosure: (Int) -> Void     = { _ in }
 
     fileprivate var itemSizeClosure: ((Int, Data) -> CGSize)?

@@ -14,7 +14,7 @@ import MessageUI
 /// You should not change `delegate` after initialization with `convenience init(_ callback:)`.
 /// But you still can use it as normal `MFMailComposeViewController` by creating with `designated` initializer.
 public final class MailComposeViewController: MFMailComposeViewController, MFMailComposeViewControllerDelegate {
-    private var callbackClosure: (MFMailComposeViewController, MFMailComposeResult, Error?) -> Void = { _ in }
+    private var callbackClosure: (MFMailComposeViewController, MFMailComposeResult, Error?) -> Void = { _, _, _ in }
 
     /// - parameter callback: will be called instead of `mailComposeController(_ controller: didFinishWith:)`.
     public convenience init(_ callback: @escaping (MFMailComposeViewController, MFMailComposeResult, Error?) -> Void) {

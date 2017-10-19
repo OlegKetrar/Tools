@@ -23,10 +23,12 @@ public extension Collection {
     public func uniqueFlatMap<T: Hashable>(_ transform: (Iterator.Element) throws -> T?) rethrows -> [T] {
         return Array<T>( Set<T>(try flatMap(transform)) )
     }
-}
 
-public extension Array {
-    public func item(at index: Array.Index) -> Element? {
+    /// Safelly returns element at index.
+    /// Returns `nil` if out of bounds.
+    /// - parameter index: Element index in collection.
+    /// - returns: Element if index valid, otherwise nil.
+    public func item(at index: Index) -> Element? {
         guard indices.contains(index) else { return nil }
         return self[index]
     }
@@ -72,7 +74,7 @@ public extension Bundle {
 public extension String {
 
     public var encodeBase64: String {
-        return self.data(using: String.Encoding.utf8)?.base64EncodedString(options: []) ?? ""
+        return self.data(using: .utf8)?.base64EncodedString(options: []) ?? ""
     }
 
     public var decodeBase64: String {

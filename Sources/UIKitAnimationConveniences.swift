@@ -157,5 +157,4 @@ private struct Block<T> {
         return copy
     }
 }
-
 */
