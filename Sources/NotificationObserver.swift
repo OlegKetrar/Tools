@@ -33,10 +33,11 @@ public class NotificationObserver {
     /// - parameter queue: Queue on which `closure` will be called.
     /// - parameter closure: Closure which would be called on specified notification.
     @discardableResult
-    public func add(forName name: Notification.Name,
-                    object: AnyObject? = nil,
-                    queue: DispatchQueue = .main,
-                    using closure: @escaping (Notification) -> Void) -> Self {
+    public func add(
+        forName name: Notification.Name,
+        object: AnyObject? = nil,
+        queue: DispatchQueue = .main,
+        using closure: @escaping (Notification) -> Void) -> Self {
 
         observers.append(center.addObserver(forName: name, object: nil, queue: .main, using: closure))
         return self

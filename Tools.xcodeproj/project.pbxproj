@@ -93,7 +93,6 @@
 			isa = PBXGroup;
 			children = (
 				5511581F1F691FCD00708E81 /* KeyboardObserver.swift */,
-				555CE6191F14E639006CF341 /* Presentation.swift */,
 			);
 			name = Rewrite;
 			sourceTree = "<group>";
@@ -164,6 +163,7 @@
 				552C3FDE1F0BA3EA003343EB /* Button.swift */,
 				555B2D181E4DD96B005E9686 /* NotificationObserver.swift */,
 				552C3FD81F0BA1A8003343EB /* MailComposeViewController.swift */,
+				555CE6191F14E639006CF341 /* Presentation.swift */,
 				551158221F692B8000708E81 /* Improve usability */,
 				551158211F692B0B00708E81 /* Rewrite */,
 				55FD3DEF1F4058950078B849 /* TODO */,
@@ -174,7 +174,7 @@
 		55FD3DEF1F4058950078B849 /* TODO */ = {
 			isa = PBXGroup;
 			children = (
-                55A5E7B11F47664D005F3B94 /* TextField.swift */,
+				55A5E7B11F47664D005F3B94 /* TextField.swift */,
 				555B2D1A1E4DD9A7005E9686 /* UIKitAnimationConveniences.swift */,
 				559F08311F2F5D870062449D /* TableViewAdapter.swift */,
 			);

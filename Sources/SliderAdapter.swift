@@ -32,7 +32,10 @@ where Data: Equatable, Cell: Reusable {
         return countClosure()
     }
 
-    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+
         let cell = collectionView.dequeueCell(for: indexPath) as Cell
 
         guard let data = dataClosure(indexPath.row) else { return cell }
@@ -48,9 +51,10 @@ where Data: Equatable, Cell: Reusable {
 
     // MARK: UICollectionViewDelegateFlowLayout
 
-    public func collectionView(_ collectionView: UICollectionView,
-                               layout collectionViewLayout: UICollectionViewLayout,
-                               sizeForItemAt indexPath: IndexPath) -> CGSize {
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath) -> CGSize {
 
         guard let closure = itemSizeClosure, let data = dataClosure(indexPath.row) else {
             return (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.itemSize ?? .zero

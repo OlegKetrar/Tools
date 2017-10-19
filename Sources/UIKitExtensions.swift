@@ -24,7 +24,10 @@ public extension UIColor {
     }
     
     public convenience init(hexColor: Int) {
-        self.init(red: (hexColor >> 16) & 0xff, green: (hexColor >> 8) & 0xff, blue: hexColor & 0xff)
+        self.init(
+            red: (hexColor >> 16) & 0xff,
+            green: (hexColor >> 8) & 0xff,
+            blue: hexColor & 0xff)
     }
     
     public func hexCode() -> Int {
@@ -255,13 +258,22 @@ public extension UIEdgeInsets {
 public extension UIView {
 
     @discardableResult
-    public func addPinConstraint(toSubview subview: UIView,
-                                 attribute: NSLayoutAttribute,
-                                 withSpacing spacing: CGFloat) -> NSLayoutConstraint {
+    public func addPinConstraint(
+        toSubview subview: UIView,
+        attribute: NSLayoutAttribute,
+        withSpacing spacing: CGFloat) -> NSLayoutConstraint {
 
         subview.translatesAutoresizingMaskIntoConstraints = false
-        let constraint = NSLayoutConstraint(item: subview, attribute: attribute, relatedBy: .equal,
-                                            toItem: self, attribute: attribute, multiplier: 1.0, constant: spacing)
+
+        let constraint = NSLayoutConstraint(
+            item: subview,
+            attribute: attribute,
+            relatedBy: .equal,
+            toItem: self,
+            attribute: attribute,
+            multiplier: 1.0,
+            constant: spacing)
+
         addConstraint(constraint)
         return constraint
     }
