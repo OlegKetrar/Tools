@@ -90,7 +90,7 @@ private struct ModalPresentaton: PresentationType {
 /// Represents push/pop inside navigation controller.
 private final class PushPresentaton: PresentationType {
 
-    private weak var pushedViewController: UIViewController?
+    private weak var startedViewController: UIViewController?
     private weak var navigationController: UINavigationController?
 
     init(into navigationController: UINavigationController) {
@@ -98,15 +98,16 @@ private final class PushPresentaton: PresentationType {
     }
 
     func show(_ viewController: UIViewController, animated: Bool, completion: @escaping () -> Void) -> Bool {
-        guard let nc = navigationController else { return false }
+        guard let nc = navigationController,
+            let currentVC = nc.topViewController else { return false }
 
-        pushedViewController = viewController
+        startedViewController = currentVC
         nc.push(viewController, animated: animated, completion: completion)
         return true
     }
 
     func hide(animated: Bool, completion: @escaping () -> Void) -> Bool {
-        guard let vc = pushedViewController,
+        guard let vc = startedViewController,
             let nc = navigationController else { return true }
 
         nc.pop(to: vc, animated: animated, completion: completion)
