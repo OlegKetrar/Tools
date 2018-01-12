@@ -86,7 +86,7 @@ public extension String {
 public extension Data {
 
     public init?(urlSafeBase64String: String) {
-        let rem = urlSafeBase64String.characters.count % 4
+        let rem = urlSafeBase64String.utf8.count % 4
 
         var ending = ""
         if rem > 0 {

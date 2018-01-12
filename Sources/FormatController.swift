@@ -55,12 +55,12 @@ public struct FormatController {
         }
 
         // validate length
-        guard (source as NSString).replacingCharacters(in: range, with: string).characters.count <= format.characters.count else {
+        guard (source as NSString).replacingCharacters(in: range, with: string).utf8.count <= format.utf8.count else {
             return source
         }
 
         // FIXME: enable pasting more that 1 character
-        guard string.characters.count == 1 else { return source }
+        guard string.utf8.count == 1 else { return source }
 
         let formatRange: NSRange = {
             guard range.length > 0 else { return NSRange(location: range.location, length: 1) }
