@@ -1,5 +1,5 @@
 //
-//  StandartLibraryExtensions.swift
+//  Extensions.swift
 //  Tools
 //
 //  Created by Oleg Ketrar on 10.02.17.
@@ -8,9 +8,7 @@
 
 import Foundation
 
-// TODO: completely rewrite.
-
-// MARK: Array/Collection
+// MARK: - Array/Collection
 
 public extension Collection {
 
@@ -20,7 +18,7 @@ public extension Collection {
     }
 
     /// Map only unique items.
-    func uniqueFlatMap<T: Hashable>(_ transform: (Iterator.Element) throws -> T?) rethrows -> [T] {
+    func uniqueCompactMap<T: Hashable>(_ transform: (Iterator.Element) throws -> T?) rethrows -> [T] {
         return Array<T>( Set<T>(try compactMap(transform)) )
     }
 
@@ -34,54 +32,7 @@ public extension Collection {
     }
 }
 
-// MARK: String
-
-public extension NSString {
-    func safeSubstring(with range: NSRange) -> String? {
-        guard range.location < length else { return nil }
-        return substring(with: range)
-    }
-}
-
-public extension Optional where Wrapped == String {
-    var orEmpty: String {
-        guard case let .some(value) = self else { return "" }
-        return value
-    }
-}
-
-// MARK: Convenience Localization API.
-
-public extension String {
-    var localized: String {
-        return NSLocalizedString(self, comment: "")
-    }
-
-    func localized(with bundle: Bundle?) -> String {
-        guard let bundle = bundle else { return localized }
-        return bundle.localizedString(forKey: self, value: "", table: nil)
-    }
-}
-
-public extension Bundle {
-    static var UIKit: Bundle? {
-        return Bundle(identifier: "com.apple.UIKit")
-    }
-}
-
-// MARK: String + Base64 encoding/decoding
-
-public extension String {
-
-    var encodeBase64: String {
-        return self.data(using: .utf8)?.base64EncodedString(options: []) ?? ""
-    }
-
-    var decodeBase64: String {
-        guard let strData = Data(base64Encoded: self, options: []) else { return "" }
-        return (NSString(data: strData, encoding: String.Encoding.utf8.rawValue) ?? "") as String
-    }
-}
+// MARK: - Base64 encoding/decoding
 
 public extension Data {
 
@@ -107,14 +58,6 @@ public extension Data {
         return string.replacingOccurrences(of: "+", with: "-", options: [], range: nil)
             .replacingOccurrences(of: "/", with: "_", options: [], range: nil)
             .replacingOccurrences(of: "=", with: "", options: [], range: nil)
-    }
-}
-
-public extension String {
-
-    /// Validate with `regex`.
-    func validate(regex regStr: String) -> Bool {
-        return NSPredicate(format: "SELF MATCHES %@", regStr).evaluate(with: self)
     }
 }
 

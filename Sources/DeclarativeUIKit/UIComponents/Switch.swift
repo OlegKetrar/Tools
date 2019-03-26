@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+// TODO: refactor
 // TODO: add preloader for async enabling/disabling
 
 /// Provides control on value changing.
@@ -19,7 +20,7 @@ public final class Switch: UISwitch {
         return UIButton(frame: .zero)
     }()
 
-    // MARK: Overrides
+    // MARK: - Overrides
 
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -41,7 +42,7 @@ public final class Switch: UISwitch {
         emptyButton.frame = bounds
     }
 
-    // MARK: Actions
+    // MARK: - Actions
 
     @objc private func actionTouchUpInside() {
         let newValue = !isOn

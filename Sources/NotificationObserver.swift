@@ -1,5 +1,5 @@
 //
-//  CocoaObservers.swift
+//  NotificationObserver.swift
 //  Tools
 //
 //  Created by Oleg Ketrar on 10.02.17.
@@ -7,10 +7,6 @@
 //
 
 import Foundation
-import UIKit
-
-@available(iOS, deprecated, message: "use NotificationObserver")
-public typealias EventObserver = NotificationObserver
 
 /// Common NotificationCenter observer.
 /// Saves all observers and unsubscribe them on dealloc.

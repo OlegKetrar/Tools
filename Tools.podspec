@@ -4,7 +4,7 @@ Pod::Spec.new do |s|
 	s.license = 'MIT'
 	s.summary = 'Some ios development tools'
 	s.homepage = 'https://github.com/OlegKetrar/Tools'
-	s.authors = { 'OlegKetrar' => 'oleg.ketrar.dev@yandex.com' }
+	s.authors = { 'OlegKetrar' => 'oleg.ketrar.dev@icloud.com' }
 
 	s.source = { :git => 'https://github.com/OlegKetrar/Tools.git', :tag => s.version }
 	s.source_files = 'Sources/*.swift'

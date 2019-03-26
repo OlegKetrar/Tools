@@ -6,14 +6,17 @@
 //  Copyright © 2017 Oleg Ketrar. All rights reserved.
 //
 
+import Foundation
 import UIKit
 
 /// Encapsulate presenting/pushing and
 /// appropriate dismissing/popping view controllers.
 public struct Presentation: PresentationType {
-
     private var wrapped: PresentationType
-    private init<T: PresentationType>(wrap presentation: T) { wrapped = presentation }
+
+    private init<T: PresentationType>(wrap presentation: T) {
+        wrapped = presentation
+    }
 
     /// - parameter viewController: The view controller to display.
     /// - parameter animated: Pass `true` to animate the presentation; otherwise, pass `false`.
@@ -35,55 +38,83 @@ public struct Presentation: PresentationType {
     }
 }
 
-extension Presentation {
+public extension Presentation {
 
     /// Creates presentation which presents modally over specified `viewController`.
     /// - parameter viewController: Parent view controller.
-    public static func present(over viewController: UIViewController) -> Presentation {
-        return Presentation(wrap: ModalPresentaton(over: viewController))
-    }
+    static func present(
+        over viewController: UIViewController,
+        inside navigationController: UINavigationController? = nil) -> Presentation {
 
-    /// Creates presentation which presents modally over currently topmost view controller.
-    public static func presentOverTop() -> Presentation {
-        return Presentation(wrap: ModalPresentaton(over: .topViewController))
+        return Presentation(wrap: ModalPresentaton(
+            over: viewController,
+            inside: navigationController))
     }
 
     /// Creates presentation which push view controller into specified `navigationController`.
     /// - parameter navigationController: Navigation controller.
-    public static func push(into navigationController: UINavigationController) -> Presentation {
+    static func push(into navigationController: UINavigationController) -> Presentation {
         return Presentation(wrap: PushPresentaton(into: navigationController))
     }
 }
 
+// MARK: -
+
 /// Internal Presentation interface.
 private protocol PresentationType {
-    func show(_ viewController: UIViewController, animated: Bool, completion: @escaping () -> Void) -> Bool
+
+    func show(
+        _ viewController: UIViewController,
+        animated: Bool,
+        completion: @escaping () -> Void) -> Bool
+
     func hide(animated: Bool, completion: @escaping () -> Void) -> Bool
 }
 
+// MARK: -
+
 /// Modal presentation.
 /// Represents present/dismiss.
-private struct ModalPresentaton: PresentationType {
+private final class ModalPresentaton: PresentationType {
+    private var navigationController: UINavigationController?
     private weak var parentViewController: UIViewController?
 
-    init(over viewController: UIViewController) {
+    init(over viewController: UIViewController, inside nc: UINavigationController?) {
         parentViewController = viewController
     }
 
-    func show(_ viewController: UIViewController, animated: Bool, completion: @escaping () -> Void) -> Bool {
+    func show(
+        _ viewController: UIViewController,
+        animated: Bool,
+        completion: @escaping () -> Void) -> Bool {
+
         guard let parentVC = parentViewController else { return false }
 
-        parentVC.present(viewController, animated: animated, completion: completion)
+        let presentedVC: UIViewController = {
+            guard let nc = navigationController else { return viewController }
+
+            nc.setViewControllers([viewController], animated: false)
+            return nc
+        }()
+
+        navigationController = nil
+
+        parentVC.present(presentedVC, animated: animated, completion: completion)
         return true
     }
 
     func hide(animated: Bool, completion: @escaping () -> Void) -> Bool {
-        guard let presentedVC = parentViewController?.presentedViewController else { return false }
 
-        presentedVC.dismiss(animated: animated, completion: completion)
-        return true
+        if let presentedVC = parentViewController?.presentedViewController {
+            presentedVC.dismiss(animated: animated, completion: completion)
+            return true
+        } else {
+            return false
+        }
     }
 }
+
+// MARK: -
 
 /// PushPresentaton.
 /// Represents push/pop inside navigation controller.
@@ -96,27 +127,39 @@ private final class PushPresentaton: PresentationType {
         self.navigationController = navigationController
     }
 
-    func show(_ viewController: UIViewController, animated: Bool, completion: @escaping () -> Void) -> Bool {
+    func show(
+        _ viewController: UIViewController,
+        animated: Bool,
+        completion: @escaping () -> Void) -> Bool {
+
         guard let nc = navigationController,
-            let currentVC = nc.topViewController else { return false }
+            let currentVC = nc.topViewController else { completion(); return false }
 
         startedViewController = currentVC
         nc.push(viewController, animated: animated, completion: completion)
+
         return true
     }
 
     func hide(animated: Bool, completion: @escaping () -> Void) -> Bool {
+
         guard let vc = startedViewController,
-            let nc = navigationController else { return true }
+            let nc = navigationController else { completion(); return true }
 
         nc.pop(to: vc, animated: animated, completion: completion)
+
         return true
     }
 }
 
 /// Convenience Push/Pop with completion closure.
 private extension UINavigationController {
-    func push(_ viewController: UIViewController, animated: Bool, completion: @escaping () -> Void) {
+
+    func push(
+        _ viewController: UIViewController,
+        animated: Bool,
+        completion: @escaping () -> Void) {
+
         pushViewController(viewController, animated: animated)
 
         guard animated, let coordinator = transitionCoordinator else {
@@ -127,7 +170,11 @@ private extension UINavigationController {
         coordinator.animate(alongsideTransition: nil) { _ in completion() }
     }
 
-    func pop(to viewController: UIViewController, animated: Bool, completion: @escaping () -> Void) {
+    func pop(
+        to viewController: UIViewController,
+        animated: Bool,
+        completion: @escaping () -> Void) {
+
         popToViewController(viewController, animated: animated)
 
         guard animated, let coordinator = transitionCoordinator else {
@@ -136,26 +183,5 @@ private extension UINavigationController {
         }
 
         coordinator.animate(alongsideTransition: nil) { _ in completion() }
-    }
-}
-
-private extension UIViewController {
-
-    /// Recursivelly find top `UIViewController`.
-    static var topViewController: UIViewController {
-
-        guard let rootVC = UIApplication.shared.keyWindow?.rootViewController else {
-            fatalError("UIApplication.keyWindow does not have rootViewController")
-        }
-
-        func presentedVC(to parent: UIViewController) -> UIViewController {
-            if let modal = parent.presentedViewController {
-                return presentedVC(to: modal)
-            } else {
-                return parent
-            }
-        }
-
-        return presentedVC(to: rootVC)
     }
 }

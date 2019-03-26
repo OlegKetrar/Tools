@@ -6,23 +6,27 @@
 //  Copyright © 2017 Oleg Ketrar. All rights reserved.
 //
 
+import Foundation
 import UIKit
 
 // TODO: add docs.
 
-public final class SliderAdapter<Data, Cell: UICollectionViewCell>: NSObject, UICollectionViewDataSource,
-    UICollectionViewDelegate, UICollectionViewDataSourcePrefetching, UICollectionViewDelegateFlowLayout
+public final class SliderAdapter<Data, Cell: UICollectionViewCell>: NSObject,
+    UICollectionViewDataSource,
+    UICollectionViewDelegate,
+    UICollectionViewDataSourcePrefetching,
+    UICollectionViewDelegateFlowLayout
 where Data: Equatable, Cell: Reusable {
 
-    fileprivate var countClosure: () -> Int                 = { 0 }
-    fileprivate var dataClosure: (Int) -> Data?             = { _ in .none }
-    fileprivate var cellClosure: (Cell, Data) -> Cell       = { (cell, _) in cell }
-    fileprivate var onSelectionClosure: (Int, Cell) -> Void = { _, _ in }
-    fileprivate var onPrefetchingClosure: (Int) -> Void     = { _ in }
+    private var countClosure: () -> Int                 = { 0 }
+    private var dataClosure: (Int) -> Data?             = { _ in .none }
+    private var cellClosure: (Cell, Data) -> Cell       = { (cell, _) in cell }
+    private var onSelectionClosure: (Int, Cell) -> Void = { _, _ in }
+    private var onPrefetchingClosure: (Int) -> Void     = { _ in }
 
-    fileprivate var itemSizeClosure: ((Int, Data) -> CGSize)?
+    private var itemSizeClosure: ((Int, Data) -> CGSize)?
 
-    // MARK: UICollectionViewDataSource
+    // MARK: - UICollectionViewDataSource
 
     public func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -42,14 +46,14 @@ where Data: Equatable, Cell: Reusable {
         return cellClosure(cell, data)
     }
 
-    // MARK: UICollectionViewDelegate
+    // MARK: - UICollectionViewDelegate
 
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? Cell else { return }
         onSelectionClosure(indexPath.row, cell)
     }
 
-    // MARK: UICollectionViewDelegateFlowLayout
+    // MARK: - UICollectionViewDelegateFlowLayout
 
     public func collectionView(
         _ collectionView: UICollectionView,
@@ -63,7 +67,7 @@ where Data: Equatable, Cell: Reusable {
         return closure(indexPath.row, data)
     }
 
-    // MARK: UICollectionViewDataSourcePrefetching
+    // MARK: - UICollectionViewDataSourcePrefetching
 
     public func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         guard let index = indexPaths.first?.row else { return }
@@ -71,7 +75,7 @@ where Data: Equatable, Cell: Reusable {
     }
 }
 
-// MARK: Configure
+// MARK: - Configure
 
 extension SliderAdapter {
 
@@ -112,7 +116,7 @@ extension SliderAdapter {
     }
 }
 
-// MARK: UICollectionView Convenience
+// MARK: - UICollectionView Convenience
 
 public extension UICollectionView {
 

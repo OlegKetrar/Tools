@@ -14,7 +14,7 @@ public final class RoutingController {
     public typealias RouteHandler = ([String : Any]) -> Bool
 
     private let scheme: String
-    private(set) fileprivate var registeredRoutes: [String : RouteHandler] = [:]
+    private(set) var registeredRoutes: [String : RouteHandler] = [:]
 
     /// - parameter scheme: usually app name.
     public init(scheme: String) {
@@ -46,6 +46,7 @@ public final class RoutingController {
     /// Used with `UIApplication.shared.open(url:)` method.
     @discardableResult
     public func open(url: URL) -> Bool {
+
         guard isRegistered(url: url),
             let route = route(from: url),
             let handler = registeredRoutes[route] else { return false }
@@ -54,6 +55,7 @@ public final class RoutingController {
     }
 
     private func route(from url: URL) -> String? {
+
         guard let urlScheme = url.scheme,
             urlScheme == scheme else { return nil }
 
@@ -66,9 +68,10 @@ private extension URL {
     /// Map query params and values to Disctionary.
     var queryParams: [String : Any] {
         guard let queryString = query else { return [:] }
+
         var params = Dictionary<String, Any>()
 
-        queryString.components(separatedBy: "&").forEach { (pairStr) in
+        queryString.components(separatedBy: "&").forEach { pairStr in
             let keyValuePair = pairStr.components(separatedBy: "=")
             guard keyValuePair.count == 2 else { return }
             params.updateValue(keyValuePair[1], forKey: keyValuePair[0])

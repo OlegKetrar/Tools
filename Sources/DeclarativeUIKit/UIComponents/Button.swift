@@ -9,12 +9,15 @@
 import Foundation
 import UIKit
 
+// TODO: refactor
+
 /// `Button` with animated preloader.
 /// Use to notify about performing async work.
 /// `Button` use `disabled` state to show preloader, do not set any parameters to `disabled` state
 public final class Button: UIButton {
-    fileprivate lazy var preloader: UIActivityIndicatorView = {
-        let indicator   = UIActivityIndicatorView(activityIndicatorStyle: .white)
+
+    private lazy var preloader: UIActivityIndicatorView = {
+        let indicator   = UIActivityIndicatorView(style: .white)
         indicator.color = self.preloaderColor
         indicator.frame = .zero
         indicator.hidesWhenStopped = true

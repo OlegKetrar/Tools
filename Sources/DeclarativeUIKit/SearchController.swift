@@ -11,7 +11,7 @@ import UIKit
 
 // TODO: refactor docs
 
-// MARK: Searchable (entities)
+// MARK: - Searchable (entities)
 
 public protocol Searchable {
     var searchTags: [String] { get }
@@ -31,7 +31,7 @@ public extension Searchable {
     }
 }
 
-// MARK: Convenience for searchable entity collection
+// MARK: - Convenience for searchable entity collection
 
 public extension Array where Element: Searchable {
     func match(predicate: String, caseInsensitive: Bool = true) -> Array {
@@ -39,7 +39,7 @@ public extension Array where Element: Searchable {
     }
 }
 
-// MARK: SearchHandler
+// MARK: - SearchHandler
 
 public class SearchController: NSObject {
     fileprivate let controller: UISearchController
@@ -53,11 +53,11 @@ public class SearchController: NSObject {
 
     // MARK: Closures
 
-    fileprivate var willAppearClosure:    (() -> Void)?
-    fileprivate var didAppearClosure:     (() -> Void)?
-    fileprivate var willDisappearClosure: (() -> Void)?
-    fileprivate var didDisappearClosure:  (() -> Void)?
-    fileprivate var updateClosure:        ((String) -> Void)?
+    private var willAppearClosure:    (() -> Void)?
+    private var didAppearClosure:     (() -> Void)?
+    private var willDisappearClosure: (() -> Void)?
+    private var didDisappearClosure:  (() -> Void)?
+    private var updateClosure:        ((String) -> Void)?
 
     // MARK: Configuring
 
@@ -107,7 +107,7 @@ public class SearchController: NSObject {
     }
 }
 
-// MARK: Wrap UISearchControllerDelegate
+// MARK: - Wrap UISearchControllerDelegate
 
 // TODO: add method presentSearchController(_ :UISearchController)
 
@@ -118,7 +118,7 @@ extension SearchController: UISearchControllerDelegate {
     public func didDismissSearchController(_ searchController: UISearchController)  { didDisappearClosure?()  }
 }
 
-// MARK: Wrap UISearchResultsUpdating
+// MARK: - Wrap UISearchResultsUpdating
 
 extension SearchController: UISearchResultsUpdating {
     public func updateSearchResults(for searchController: UISearchController) {
@@ -127,10 +127,10 @@ extension SearchController: UISearchResultsUpdating {
     }
 }
 
-// MARK: Wrap UISearchController attributes
+// MARK: - Wrap UISearchController attributes
 
-extension SearchController {
-    public var isActive: Bool {
+public extension SearchController {
+    var isActive: Bool {
         get { return controller.isActive }
         set { controller.isActive = newValue }
     }

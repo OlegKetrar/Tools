@@ -6,6 +6,7 @@
 //  Copyright © 2017 Oleg Ketrar. All rights reserved.
 //
 
+import Foundation
 import UIKit
 
 /// Type which have `reuseIdentifier`.
@@ -50,7 +51,7 @@ public extension UIView {
     }
 }
 
-// MARK: Reusable UIView (loaded from nib)
+// MARK: - Reusable UIView (loaded from nib)
 
 public extension NibInitable where Self: UIView {
 
@@ -94,14 +95,19 @@ public extension NibInitable where Self: UIView {
     }
 }
 
-// MARK: Reusable UITableViewCell & UICollectionViewCell
+// MARK: - Reusable UITableViewCell & UICollectionViewCell
 
 public extension UITableView {
 
-    func dequeueCell<T: UITableViewCell>(for indexPath: IndexPath) -> T where T: Reusable {
-        guard let cell = self.dequeueReusableCell(withIdentifier: T.reuseIdentifier, for: indexPath) as? T else {
+    func dequeueCell<T>(for indexPath: IndexPath) -> T where T: UITableViewCell & Reusable {
+
+        guard let cell = dequeueReusableCell(
+            withIdentifier: T.reuseIdentifier,
+            for: indexPath) as? T
+        else {
             fatalError("Can't dequeue reusable cell \(T.self) with identifier \(T.reuseIdentifier)")
         }
+
         return cell
     }
 
@@ -112,47 +118,64 @@ public extension UITableView {
         return dequeueCell(for: indexPath) as T
     }
 
-    func dequeueHeaderFooterView<T: UITableViewHeaderFooterView>() -> T where T: Reusable {
-        guard let headerFooterView = self.dequeueReusableHeaderFooterView(withIdentifier: T.reuseIdentifier) as? T else {
+    func dequeueHeaderFooterView<T>() -> T where T: UITableViewHeaderFooterView & Reusable {
+
+        guard let headerFooterView = dequeueReusableHeaderFooterView(withIdentifier: T.reuseIdentifier) as? T else {
             fatalError("Can't dequeue reusable header/footer \(T.self) with identifier \(T.reuseIdentifier)")
         }
+
         return headerFooterView
     }
 
-    func dequeue<T: UITableViewHeaderFooterView & Reusable>(headerFooter type: T.Type) -> T {
+    func dequeue<T>(headerFooter type: T.Type) -> T where T: UITableViewHeaderFooterView & Reusable {
         return dequeueHeaderFooterView() as T
     }
 
-    func register<T: UITableViewCell>(nib: T.Type) where T: NibInitable {
+    func register<T>(nib: T.Type) where T: UITableViewCell & NibInitable {
         register(T.nib, forCellReuseIdentifier: T.reuseIdentifier)
     }
 
-    func register<T: UITableViewCell>(class: T.Type) where T: Reusable {
+    func register<T>(class: T.Type) where T: UITableViewCell & Reusable {
         register(T.self, forCellReuseIdentifier: T.reuseIdentifier)
     }
 
-    func register<T: UITableViewHeaderFooterView>(headerFooterViewNib: T.Type) where T: NibInitable {
+    func register<T>(headerFooterViewNib: T.Type) where T: UITableViewHeaderFooterView & NibInitable {
         register(T.nib, forHeaderFooterViewReuseIdentifier: T.reuseIdentifier)
     }
 
-    func register<T: UITableViewHeaderFooterView>(headerFooterViewClass: T.Type) where T: Reusable {
+    func register<T>(headerFooterViewClass: T.Type) where T: UITableViewHeaderFooterView & Reusable {
         register(T.self, forHeaderFooterViewReuseIdentifier: T.reuseIdentifier)
     }
 }
 
 public extension UICollectionView {
 
-    func dequeueSupplementaryView<T: UICollectionReusableView>(ofKind kind: String, for indexPath: IndexPath) -> T where T: Reusable {
-        guard let view = dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: T.reuseIdentifier, for: indexPath) as? T else {
+    func dequeueSupplementaryView<T: UICollectionReusableView>(
+        ofKind kind: String,
+        for indexPath: IndexPath) -> T where T: Reusable {
+
+        let viewOrNil = dequeueReusableSupplementaryView(
+            ofKind: kind,
+            withReuseIdentifier: T.reuseIdentifier,
+            for: indexPath) as? T
+
+        guard let view = viewOrNil else {
             fatalError("Can't dequeue reusable view of kind \(kind) with identifier \(T.reuseIdentifier)")
         }
+
         return view
     }
 
     func dequeueCell<T: UICollectionViewCell>(for indexPath: IndexPath) -> T where T: Reusable {
-        guard let cell = self.dequeueReusableCell(withReuseIdentifier: T.reuseIdentifier, for: indexPath) as? T else {
+
+        let cellOrNil = dequeueReusableCell(
+            withReuseIdentifier: T.reuseIdentifier,
+            for: indexPath) as? T
+
+        guard let cell = cellOrNil else {
             fatalError("Can't dequeue reusable cell \(T.self) with identifier \(T.reuseIdentifier)")
         }
+
         return cell
     }
 
@@ -171,24 +194,36 @@ public extension UICollectionView {
         register(T.self, forCellWithReuseIdentifier: T.reuseIdentifier)
     }
 
-    func register<T: UICollectionReusableView>(nib: T.Type, forSupplementaryViewOfKind kind: String) where T: NibInitable {
-        register(T.nib, forSupplementaryViewOfKind: kind, withReuseIdentifier: T.reuseIdentifier)
+    func register<T: UICollectionReusableView>(
+        nib: T.Type,
+        forSupplementaryViewOfKind kind: String) where T: NibInitable {
+        
+        register(
+            T.nib,
+            forSupplementaryViewOfKind: kind,
+            withReuseIdentifier: T.reuseIdentifier)
     }
 
-    func register<T: UICollectionReusableView>(class: T.Type, forSupplementaryViewOfKind kind: String) where T: Reusable {
-        register(T.self, forSupplementaryViewOfKind: kind, withReuseIdentifier: T.reuseIdentifier)
+    func register<T: UICollectionReusableView>(
+        class: T.Type,
+        forSupplementaryViewOfKind kind: String) where T: Reusable {
+
+        register(
+            T.self,
+            forSupplementaryViewOfKind: kind,
+            withReuseIdentifier: T.reuseIdentifier)
     }
 }
 
-// MARK: Reusable UIViewController
+// MARK: - Reusable UIViewController
 
 public extension UIStoryboard {
 
     /// Instantiate appropriate view controller.
     /// View controller `StoryboardID` must be the same
     /// as a view controller class name.
-    func instantiateViewController<T: UIViewController>() -> T where T: Reusable {
-        guard let vc = self.instantiateViewController(withIdentifier: T.reuseIdentifier) as? T else {
+    func instantiateViewController<T>() -> T where T: UIViewController & Reusable {
+        guard let vc = instantiateViewController(withIdentifier: T.reuseIdentifier) as? T else {
             fatalError("Can't instantiate view controller \(T.self) with identifier \(T.reuseIdentifier)")
         }
         return vc
@@ -212,7 +247,11 @@ public extension StoryboardInitable where Self: UIViewController {
     /// View controller Storyboard ID must be the same
     /// as a view controller class name.
     static func instantiateViaStoryboard() -> Self {
-        let storyboard = UIStoryboard(name: storyboardName, bundle: storyboardBundle)
+
+        let storyboard = UIStoryboard(
+            name: storyboardName,
+            bundle: storyboardBundle)
+
         return storyboard.instantiateViewController() as Self
     }
 }
