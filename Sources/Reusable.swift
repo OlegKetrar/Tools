@@ -44,7 +44,7 @@ public extension NibInitable {
 public extension UIView {
 
     /// Layout strategy for `replaceWithNib` method.
-    public enum LayoutStrategy {
+    enum LayoutStrategy {
         case autoLayout
         case autoresizingMask
     }
@@ -75,7 +75,7 @@ public extension NibInitable where Self: UIView {
     /// }
     ///
     /// ```
-    public func replaceWithNib(with strategy: UIView.LayoutStrategy = .autoLayout) {
+    func replaceWithNib(with strategy: UIView.LayoutStrategy = .autoLayout) {
 
         // load appropriate view from Nib
         if let reusableView = Self.nib.instantiate(withOwner: self, options: nil)[0] as? UIView {
@@ -98,66 +98,84 @@ public extension NibInitable where Self: UIView {
 
 public extension UITableView {
 
-    public func dequeueCell<T: UITableViewCell>(for indexPath: IndexPath) -> T where T: Reusable {
+    func dequeueCell<T: UITableViewCell>(for indexPath: IndexPath) -> T where T: Reusable {
         guard let cell = self.dequeueReusableCell(withIdentifier: T.reuseIdentifier, for: indexPath) as? T else {
             fatalError("Can't dequeue reusable cell \(T.self) with identifier \(T.reuseIdentifier)")
         }
         return cell
     }
 
-    public func dequeueHeaderFooterView<T: UITableViewHeaderFooterView>() -> T where T: Reusable {
+    func dequeue<T>(
+        cell type: T.Type,
+        for indexPath: IndexPath) -> T where T: UITableViewCell & Reusable {
+
+        return dequeueCell(for: indexPath) as T
+    }
+
+    func dequeueHeaderFooterView<T: UITableViewHeaderFooterView>() -> T where T: Reusable {
         guard let headerFooterView = self.dequeueReusableHeaderFooterView(withIdentifier: T.reuseIdentifier) as? T else {
             fatalError("Can't dequeue reusable header/footer \(T.self) with identifier \(T.reuseIdentifier)")
         }
         return headerFooterView
     }
 
-    public func register<T: UITableViewCell>(nib: T.Type) where T: NibInitable {
+    func dequeue<T: UITableViewHeaderFooterView & Reusable>(headerFooter type: T.Type) -> T {
+        return dequeueHeaderFooterView() as T
+    }
+
+    func register<T: UITableViewCell>(nib: T.Type) where T: NibInitable {
         register(T.nib, forCellReuseIdentifier: T.reuseIdentifier)
     }
 
-    public func register<T: UITableViewCell>(class: T.Type) where T: Reusable {
+    func register<T: UITableViewCell>(class: T.Type) where T: Reusable {
         register(T.self, forCellReuseIdentifier: T.reuseIdentifier)
     }
 
-    public func register<T: UITableViewHeaderFooterView>(headerFooterViewNib: T.Type) where T: NibInitable {
+    func register<T: UITableViewHeaderFooterView>(headerFooterViewNib: T.Type) where T: NibInitable {
         register(T.nib, forHeaderFooterViewReuseIdentifier: T.reuseIdentifier)
     }
 
-    public func register<T: UITableViewHeaderFooterView>(headerFooterViewClass: T.Type) where T: Reusable {
+    func register<T: UITableViewHeaderFooterView>(headerFooterViewClass: T.Type) where T: Reusable {
         register(T.self, forHeaderFooterViewReuseIdentifier: T.reuseIdentifier)
     }
 }
 
 public extension UICollectionView {
 
-    public func dequeueSupplementaryView<T: UICollectionReusableView>(ofKind kind: String, for indexPath: IndexPath) -> T where T: Reusable {
+    func dequeueSupplementaryView<T: UICollectionReusableView>(ofKind kind: String, for indexPath: IndexPath) -> T where T: Reusable {
         guard let view = dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: T.reuseIdentifier, for: indexPath) as? T else {
             fatalError("Can't dequeue reusable view of kind \(kind) with identifier \(T.reuseIdentifier)")
         }
         return view
     }
 
-    public func dequeueCell<T: UICollectionViewCell>(for indexPath: IndexPath) -> T where T: Reusable {
+    func dequeueCell<T: UICollectionViewCell>(for indexPath: IndexPath) -> T where T: Reusable {
         guard let cell = self.dequeueReusableCell(withReuseIdentifier: T.reuseIdentifier, for: indexPath) as? T else {
             fatalError("Can't dequeue reusable cell \(T.self) with identifier \(T.reuseIdentifier)")
         }
         return cell
     }
 
-    public func register<T: UICollectionViewCell>(nib: T.Type) where T: NibInitable {
+    func dequeue<T>(
+        cell type: T.Type,
+        for indexPath: IndexPath) -> T where T: UICollectionViewCell & Reusable {
+
+        return dequeueCell(for: indexPath) as T
+    }
+
+    func register<T: UICollectionViewCell>(nib: T.Type) where T: NibInitable {
         register(T.nib, forCellWithReuseIdentifier: T.reuseIdentifier)
     }
 
-    public func register<T: UICollectionViewCell>(class: T.Type) where T: Reusable {
+    func register<T: UICollectionViewCell>(class: T.Type) where T: Reusable {
         register(T.self, forCellWithReuseIdentifier: T.reuseIdentifier)
     }
 
-    public func register<T: UICollectionReusableView>(nib: T.Type, forSupplementaryViewOfKind kind: String) where T: NibInitable {
+    func register<T: UICollectionReusableView>(nib: T.Type, forSupplementaryViewOfKind kind: String) where T: NibInitable {
         register(T.nib, forSupplementaryViewOfKind: kind, withReuseIdentifier: T.reuseIdentifier)
     }
 
-    public func register<T: UICollectionReusableView>(class: T.Type, forSupplementaryViewOfKind kind: String) where T: Reusable {
+    func register<T: UICollectionReusableView>(class: T.Type, forSupplementaryViewOfKind kind: String) where T: Reusable {
         register(T.self, forSupplementaryViewOfKind: kind, withReuseIdentifier: T.reuseIdentifier)
     }
 }
@@ -169,7 +187,7 @@ public extension UIStoryboard {
     /// Instantiate appropriate view controller.
     /// View controller `StoryboardID` must be the same
     /// as a view controller class name.
-    public func instantiateViewController<T: UIViewController>() -> T where T: Reusable {
+    func instantiateViewController<T: UIViewController>() -> T where T: Reusable {
         guard let vc = self.instantiateViewController(withIdentifier: T.reuseIdentifier) as? T else {
             fatalError("Can't instantiate view controller \(T.self) with identifier \(T.reuseIdentifier)")
         }

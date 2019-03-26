@@ -18,16 +18,11 @@
 		555B2D151E4DD92A005E9686 /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555B2D141E4DD92A005E9686 /* Reusable.swift */; };
 		555B2D171E4DD94A005E9686 /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555B2D161E4DD94A005E9686 /* SearchController.swift */; };
 		555B2D191E4DD96B005E9686 /* NotificationObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555B2D181E4DD96B005E9686 /* NotificationObserver.swift */; };
-		555B2D1B1E4DD9A7005E9686 /* UIKitAnimationConveniences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555B2D1A1E4DD9A7005E9686 /* UIKitAnimationConveniences.swift */; };
 		555B2D211E4DDA22005E9686 /* UIKitExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555B2D201E4DDA22005E9686 /* UIKitExtensions.swift */; };
 		555B2D2D1E4DE2A6005E9686 /* StandartLibraryExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555B2D2C1E4DE2A6005E9686 /* StandartLibraryExtensions.swift */; };
 		555CE61A1F14E639006CF341 /* Presentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555CE6191F14E639006CF341 /* Presentation.swift */; };
 		555CE61C1F14E674006CF341 /* Tools.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 555CE61B1F14E674006CF341 /* Tools.podspec */; };
-		555CE61E1F14E6A1006CF341 /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = 555CE61D1F14E6A1006CF341 /* Cartfile */; };
-		555CE6201F14EC64006CF341 /* AlertDispatcher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555CE61F1F14EC64006CF341 /* AlertDispatcher.framework */; };
-		559F08321F2F5D870062449D /* TableViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559F08311F2F5D870062449D /* TableViewAdapter.swift */; };
 		559F60911E7878E600047487 /* SliderAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559F60901E7878E600047487 /* SliderAdapter.swift */; };
-		55A5E7B21F47664D005F3B94 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A5E7B11F47664D005F3B94 /* TextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,16 +52,11 @@
 		555B2D141E4DD92A005E9686 /* Reusable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
 		555B2D161E4DD94A005E9686 /* SearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
 		555B2D181E4DD96B005E9686 /* NotificationObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationObserver.swift; sourceTree = "<group>"; };
-		555B2D1A1E4DD9A7005E9686 /* UIKitAnimationConveniences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIKitAnimationConveniences.swift; sourceTree = "<group>"; };
 		555B2D201E4DDA22005E9686 /* UIKitExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIKitExtensions.swift; sourceTree = "<group>"; };
 		555B2D2C1E4DE2A6005E9686 /* StandartLibraryExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StandartLibraryExtensions.swift; sourceTree = "<group>"; };
 		555CE6191F14E639006CF341 /* Presentation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Presentation.swift; sourceTree = "<group>"; };
 		555CE61B1F14E674006CF341 /* Tools.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Tools.podspec; path = ../Tools.podspec; sourceTree = "<group>"; };
-		555CE61D1F14E6A1006CF341 /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Cartfile; path = ../Cartfile; sourceTree = "<group>"; };
-		555CE61F1F14EC64006CF341 /* AlertDispatcher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AlertDispatcher.framework; path = Carthage/Build/iOS/AlertDispatcher.framework; sourceTree = SOURCE_ROOT; };
-		559F08311F2F5D870062449D /* TableViewAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewAdapter.swift; sourceTree = "<group>"; };
 		559F60901E7878E600047487 /* SliderAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SliderAdapter.swift; sourceTree = "<group>"; };
-		55A5E7B11F47664D005F3B94 /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,7 +64,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				555CE6201F14EC64006CF341 /* AlertDispatcher.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -166,29 +155,16 @@
 				555CE6191F14E639006CF341 /* Presentation.swift */,
 				551158221F692B8000708E81 /* Improve usability */,
 				551158211F692B0B00708E81 /* Rewrite */,
-				55FD3DEF1F4058950078B849 /* TODO */,
 			);
 			name = DeclarativeUIKit;
-			sourceTree = "<group>";
-		};
-		55FD3DEF1F4058950078B849 /* TODO */ = {
-			isa = PBXGroup;
-			children = (
-				55A5E7B11F47664D005F3B94 /* TextField.swift */,
-				555B2D1A1E4DD9A7005E9686 /* UIKitAnimationConveniences.swift */,
-				559F08311F2F5D870062449D /* TableViewAdapter.swift */,
-			);
-			name = TODO;
 			sourceTree = "<group>";
 		};
 		BA01DBF91E5084DF00F16755 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
 				555CE61B1F14E674006CF341 /* Tools.podspec */,
-				555CE61D1F14E6A1006CF341 /* Cartfile */,
 				555B2D0F1E4DD711005E9686 /* Info-iOS.plist */,
 				555B2D101E4DD711005E9686 /* Tools.h */,
-				555CE61F1F14EC64006CF341 /* AlertDispatcher.framework */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -251,7 +227,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0820;
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = "Oleg Ketrar";
 				TargetAttributes = {
 					555B2CEE1E4DD587005E9686 = {
@@ -291,7 +267,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				555CE61E1F14E6A1006CF341 /* Cartfile in Resources */,
 				555CE61C1F14E674006CF341 /* Tools.podspec in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -330,15 +305,12 @@
 				555B2D2D1E4DE2A6005E9686 /* StandartLibraryExtensions.swift in Sources */,
 				559F60911E7878E600047487 /* SliderAdapter.swift in Sources */,
 				552C3FDD1F0BA395003343EB /* RoutingController.swift in Sources */,
-				55A5E7B21F47664D005F3B94 /* TextField.swift in Sources */,
-				559F08321F2F5D870062449D /* TableViewAdapter.swift in Sources */,
 				555CE61A1F14E639006CF341 /* Presentation.swift in Sources */,
 				552C3FD91F0BA1A8003343EB /* MailComposeViewController.swift in Sources */,
 				552C3FDB1F0BA23A003343EB /* Switch.swift in Sources */,
 				555B2D151E4DD92A005E9686 /* Reusable.swift in Sources */,
 				555B2D191E4DD96B005E9686 /* NotificationObserver.swift in Sources */,
 				551158201F691FCD00708E81 /* KeyboardObserver.swift in Sources */,
-				555B2D1B1E4DD9A7005E9686 /* UIKitAnimationConveniences.swift in Sources */,
 				555B2D211E4DDA22005E9686 /* UIKitExtensions.swift in Sources */,
 				555B2D171E4DD94A005E9686 /* SearchController.swift in Sources */,
 				552C3FDF1F0BA3EA003343EB /* Button.swift in Sources */,
@@ -368,6 +340,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -377,6 +350,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -384,6 +358,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -417,6 +392,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -427,6 +403,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -436,6 +413,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -443,6 +421,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -468,6 +447,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";

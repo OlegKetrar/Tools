@@ -15,20 +15,20 @@ import Foundation
 public extension Collection {
 
     /// Map only unique items.
-    public func uniqueMap<T: Hashable>(_ transform: (Iterator.Element) throws -> T) rethrows -> [T] {
+    func uniqueMap<T: Hashable>(_ transform: (Iterator.Element) throws -> T) rethrows -> [T] {
         return Array<T>( Set<T>(try map(transform)) )
     }
 
     /// Map only unique items.
-    public func uniqueFlatMap<T: Hashable>(_ transform: (Iterator.Element) throws -> T?) rethrows -> [T] {
-        return Array<T>( Set<T>(try flatMap(transform)) )
+    func uniqueFlatMap<T: Hashable>(_ transform: (Iterator.Element) throws -> T?) rethrows -> [T] {
+        return Array<T>( Set<T>(try compactMap(transform)) )
     }
 
     /// Safelly returns element at index.
     /// Returns `nil` if out of bounds.
     /// - parameter index: Element index in collection.
     /// - returns: Element if index valid, otherwise nil.
-    public func item(at index: Index) -> Element? {
+    func item(at index: Index) -> Element? {
         guard indices.contains(index) else { return nil }
         return self[index]
     }
@@ -37,14 +37,14 @@ public extension Collection {
 // MARK: String
 
 public extension NSString {
-    public func safeSubstring(with range: NSRange) -> String? {
+    func safeSubstring(with range: NSRange) -> String? {
         guard range.location < length else { return nil }
         return substring(with: range)
     }
 }
 
 public extension Optional where Wrapped == String {
-    public var orEmpty: String {
+    var orEmpty: String {
         guard case let .some(value) = self else { return "" }
         return value
     }
@@ -53,18 +53,18 @@ public extension Optional where Wrapped == String {
 // MARK: Convenience Localization API.
 
 public extension String {
-    public var localized: String {
+    var localized: String {
         return NSLocalizedString(self, comment: "")
     }
 
-    public func localized(with bundle: Bundle?) -> String {
+    func localized(with bundle: Bundle?) -> String {
         guard let bundle = bundle else { return localized }
         return bundle.localizedString(forKey: self, value: "", table: nil)
     }
 }
 
 public extension Bundle {
-    public static var UIKit: Bundle? {
+    static var UIKit: Bundle? {
         return Bundle(identifier: "com.apple.UIKit")
     }
 }
@@ -73,11 +73,11 @@ public extension Bundle {
 
 public extension String {
 
-    public var encodeBase64: String {
+    var encodeBase64: String {
         return self.data(using: .utf8)?.base64EncodedString(options: []) ?? ""
     }
 
-    public var decodeBase64: String {
+    var decodeBase64: String {
         guard let strData = Data(base64Encoded: self, options: []) else { return "" }
         return (NSString(data: strData, encoding: String.Encoding.utf8.rawValue) ?? "") as String
     }
@@ -85,7 +85,7 @@ public extension String {
 
 public extension Data {
 
-    public init?(urlSafeBase64String: String) {
+    init?(urlSafeBase64String: String) {
         let rem = urlSafeBase64String.utf8.count % 4
 
         var ending = ""
@@ -100,7 +100,7 @@ public extension Data {
         self.init(base64Encoded: base64String)
     }
 
-    public func urlSafeBase64String() -> String? {
+    func urlSafeBase64String() -> String? {
         let data = self.base64EncodedData(options: [])
         guard let string = String(data: data, encoding: String.Encoding.utf8) else { return nil }
 

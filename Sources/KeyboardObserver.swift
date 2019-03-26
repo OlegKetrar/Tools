@@ -68,7 +68,7 @@ public class KeyboardObserver {
 }
 
 public extension Notification {
-    public var keyboardFrame: CGRect? {
+    var keyboardFrame: CGRect? {
         return (userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
     }
 }

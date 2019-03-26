@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AlertDispatcher
 
 /// Encapsulate presenting/pushing and
 /// appropriate dismissing/popping view controllers.
@@ -46,7 +45,7 @@ extension Presentation {
 
     /// Creates presentation which presents modally over currently topmost view controller.
     public static func presentOverTop() -> Presentation {
-        return Presentation(wrap: ModalPresentaton(over: Alert.topViewController))
+        return Presentation(wrap: ModalPresentaton(over: .topViewController))
     }
 
     /// Creates presentation which push view controller into specified `navigationController`.
@@ -137,5 +136,26 @@ private extension UINavigationController {
         }
 
         coordinator.animate(alongsideTransition: nil) { _ in completion() }
+    }
+}
+
+private extension UIViewController {
+
+    /// Recursivelly find top `UIViewController`.
+    static var topViewController: UIViewController {
+
+        guard let rootVC = UIApplication.shared.keyWindow?.rootViewController else {
+            fatalError("UIApplication.keyWindow does not have rootViewController")
+        }
+
+        func presentedVC(to parent: UIViewController) -> UIViewController {
+            if let modal = parent.presentedViewController {
+                return presentedVC(to: modal)
+            } else {
+                return parent
+            }
+        }
+
+        return presentedVC(to: rootVC)
     }
 }

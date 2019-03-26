@@ -19,7 +19,7 @@ public protocol Searchable {
 }
 
 public extension Searchable {
-    public func match(predicateStr: String, caseInsensitive: Bool = true) -> Bool {
+    func match(predicateStr: String, caseInsensitive: Bool = true) -> Bool {
         guard !predicateStr.isEmpty else { return true }
         let whithoutWhitespaces = predicateStr.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 
@@ -34,7 +34,7 @@ public extension Searchable {
 // MARK: Convenience for searchable entity collection
 
 public extension Array where Element: Searchable {
-    public func match(predicate: String, caseInsensitive: Bool = true) -> Array {
+    func match(predicate: String, caseInsensitive: Bool = true) -> Array {
         return filter { $0.match(predicateStr: predicate, caseInsensitive: caseInsensitive) }
     }
 }

@@ -116,10 +116,10 @@ extension SliderAdapter {
 
 public extension UICollectionView {
 
-    public typealias Adapter = UICollectionViewDataSource & UICollectionViewDelegate & UICollectionViewDataSourcePrefetching
+    typealias Adapter = UICollectionViewDataSource & UICollectionViewDelegate & UICollectionViewDataSourcePrefetching
 
     @discardableResult
-    public func with(adapter: Adapter) -> Self {
+    func with(adapter: Adapter) -> Self {
         dataSource = adapter
         delegate   = adapter
 
@@ -130,64 +130,3 @@ public extension UICollectionView {
         return self
     }
 }
-
-/*
- // MARK: - Updater
-
- struct Updater {
-
- enum ChangeSet {
- case initial
- case update(deleted: [Int], inserted: [Int], modified: [Int])
- case error(Error)
- }
-
- let changes: ChangeSet
- }
-
- extension Updater {
-
- func update(tableView: UITableView?) {
- guard let tableView = tableView else { return }
-
- switch changes {
- case .initial:
- tableView.reloadData()
-
- case let .update(deletions, insertions, modifications):
- tableView.beginUpdates()
-
- tableView.deleteRows(at: deletions.map { IndexPath(row: $0, section: 0) }, with: .fade)
- tableView.insertRows(at: insertions.map { IndexPath(row: $0, section: 0) }, with: .bottom)
- tableView.reloadRows(at: modifications.map { IndexPath(row: $0, section: 0) }, with: .fade)
-
- tableView.endUpdates()
-
- default:
- break
- }
- }
- }
-
- extension Updater {
- func update(collectionView: UICollectionView?) {
- }
- }
-
- // MARK: -
-
- extension Updater.ChangeSet {
- init<T>(_ realmChanges: RealmCollectionChange<T>) {
- switch realmChanges {
- case .initial:
- self = .initial
-
- case let .update(_, deletions: deletions, insertions: insertions, modifications: modification):
- self = .update(deleted: deletions, inserted: insertions, modified: modification)
-
- case let .error(error):
- self = .error(error)
- }
- }
- }
- */
