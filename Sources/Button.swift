@@ -45,10 +45,6 @@ public final class Button: UIButton {
         addSubview(preloader)
         setAttributedTitle(NSAttributedString(string: "", attributes: nil), for: .disabled)
         setTitle("", for: .disabled)
-
-        if let normalImage = image(for: .normal), image(for: .disabled) == normalImage, shouldAffectImage {
-            setImage(UIImage(color: .clear, size: normalImage.size), for: .disabled)
-        }
     }
 
     deinit {
@@ -71,8 +67,15 @@ public final class Button: UIButton {
         guard isEnabled == start else { return }
 
         if start {
+            if shouldAffectImage,
+                let normalImage = image(for: .normal) {
+
+                setImage(UIImage(color: .clear, size: normalImage.size), for: .disabled)
+            }
+
             preloader.startAnimating()
             isEnabled = false
+            isSelected = false
         } else {
             preloader.stopAnimating()
             isEnabled = true
