@@ -1,6 +1,6 @@
 //
 //  UIView+AutoLayout.swift
-//  Tools
+//  ToolsUIKit
 //
 //  Created by Oleg Ketrar on 12.01.18.
 //  Copyright © 2018 Oleg Ketrar. All rights reserved.
@@ -75,6 +75,7 @@ public extension UIView {
             pinToSuperview(attribute: .top, spacing: insets.top),
             pinToSuperview(attribute: .right, spacing: -insets.right),
             pinToSuperview(attribute: .bottom, spacing: -insets.bottom)
-        ].compactMap { $0 }
+        ]
+        .compactMap { $0 }
     }
 }

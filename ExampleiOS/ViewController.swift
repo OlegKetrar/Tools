@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Tools
+import ToolsUIKit
 
 final class ViewController: UIViewController {
 

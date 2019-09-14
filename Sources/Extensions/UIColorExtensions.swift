@@ -1,6 +1,6 @@
 //
 //  UIColorExtensions.swift
-//  Tools
+//  ToolsUIKit
 //
 //  Created by Oleg Ketrar on 23/12/2018.
 //  Copyright © 2018 Oleg Ketrar. All rights reserved.

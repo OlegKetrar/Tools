@@ -1,6 +1,6 @@
 //
 //  PreloadableContainerView.swift
-//  Tools
+//  ToolsUIKit
 //
 //  Created by Oleg Ketrar on 04.12.17.
 //  Copyright © 2017 Oleg Ketrar. All rights reserved.

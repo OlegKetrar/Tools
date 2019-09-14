@@ -1,15 +1,25 @@
-//
-//  Package.swift
-//  Tools
-//
-//  Created by Oleg Ketrar on 12.02.17.
-//  Copyright © 2017 Oleg Ketrar. All rights reserved.
-//
-
+// swift-tools-version:5.0
 import PackageDescription
 
 let package = Package(
-    name: "Tools",
-    dependencies : [],
-    exclude: ["ToolsTests"]
+    name: "ToolsUIKit",
+    platforms: [
+        .iOS(.v9),
+    ],
+    products: [
+        .library(
+            name: "ToolsUIKit",
+            type: .dynamic,
+            targets: ["ToolsUIKit"]),
+    ],
+    dependencies: [
+        .package(url: "https://github.com/OlegKetrar/ToolsFoundation", .branch("master")),
+    ],
+    targets: [
+        .target(
+            name: "ToolsUIKit",
+            dependencies: ["ToolsFoundation"],
+            path: "Sources"),
+    ],
+    swiftLanguageVersions: [.v5]
 )

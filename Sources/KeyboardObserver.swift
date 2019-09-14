@@ -1,6 +1,6 @@
 //
 //  KeyboardObserver.swift
-//  Tools
+//  ToolsUIKit
 //
 //  Created by Oleg Ketrar on 13.09.17.
 //  Copyright © 2017 Oleg Ketrar. All rights reserved.
@@ -8,13 +8,14 @@
 
 import Foundation
 import UIKit
+import ToolsFoundation
 
 /// Add block observers and release them.
 public class KeyboardObserver {
     private let shouldPreserveMultipleShowEvents: Bool
 
     private let observer = NotificationObserver()
-    private var isShown  = false
+    private var isShown = false
 
     public init(preserveMultipleShowEvents: Bool = true) {
         shouldPreserveMultipleShowEvents = preserveMultipleShowEvents
@@ -36,7 +37,7 @@ public class KeyboardObserver {
 
                 closure(notification)
                 strongSelf.isShown = true
-        })
+            })
 
         return self
     }
@@ -56,7 +57,7 @@ public class KeyboardObserver {
 
                 closure(notification)
                 strongSelf.isShown = false
-        })
+            })
 
         return self
     }

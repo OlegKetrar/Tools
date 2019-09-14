@@ -1,12 +1,13 @@
 //
 //  UIKitExtension.swift
-//  Tools
+//  ToolsUIKit
 //
 //  Created by Oleg Ketrar on 10.02.17.
 //  Copyright © 2017 Oleg Ketrar. All rights reserved.
 //
 
 import Foundation
+import ToolsFoundation
 import UIKit
 
 // TODO: add docs.
@@ -63,5 +64,31 @@ public extension UIEdgeInsets {
         self.left += left
         self.bottom += bottom
         self.right += right
+    }
+}
+
+public extension Bundle {
+
+    static var UIKit: Bundle? {
+        return Bundle(identifier: "com.apple.UIKit")
+    }
+}
+
+public extension Array where Element: _SectionType {
+
+    func item(at indexPath: IndexPath) -> Element.SectionItem? {
+        return item(at: indexPath.startIndex)?.item(at: indexPath.row)
+    }
+
+    func absoluteIndex(of indexPath: IndexPath) -> Int {
+        let section = indexPath.section - 1
+
+        guard section >= 0 else { return indexPath.row }
+
+        let indexOffset: Int = (0...section).reduce(0) { sum, sectionIndex in
+            return sum + self[sectionIndex].items.count
+        }
+
+        return indexPath.row + indexOffset
     }
 }

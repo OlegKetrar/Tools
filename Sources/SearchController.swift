@@ -1,6 +1,6 @@
 //
 //  SearchController.swift
-//  Tools
+//  ToolsUIKit
 //
 //  Created by Oleg Ketrar on 10.02.17.
 //  Copyright © 2017 Oleg Ketrar. All rights reserved.
@@ -19,14 +19,18 @@ public protocol Searchable {
 }
 
 public extension Searchable {
+
     func match(predicateStr: String, caseInsensitive: Bool = true) -> Bool {
         guard !predicateStr.isEmpty else { return true }
-        let whithoutWhitespaces = predicateStr.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+
+        let withoutWhitespaces = predicateStr.trimmingCharacters(in: .whitespacesAndNewlines)
 
         if caseInsensitive {
-            return searchTags.filter { $0.lowercased().contains(whithoutWhitespaces.lowercased()) }.count > 0
+            return searchTags
+                .filter { $0.lowercased().contains(withoutWhitespaces.lowercased()) }
+                .count > 0
         } else {
-            return searchTags.filter { $0.contains(whithoutWhitespaces) }.count > 0
+            return searchTags.filter { $0.contains(withoutWhitespaces) }.count > 0
         }
     }
 }
@@ -34,6 +38,7 @@ public extension Searchable {
 // MARK: - Convenience for searchable entity collection
 
 public extension Array where Element: Searchable {
+
     func match(predicate: String, caseInsensitive: Bool = true) -> Array {
         return filter { $0.match(predicateStr: predicate, caseInsensitive: caseInsensitive) }
     }
@@ -53,11 +58,11 @@ public class SearchController: NSObject {
 
     // MARK: Closures
 
-    private var willAppearClosure:    (() -> Void)?
-    private var didAppearClosure:     (() -> Void)?
+    private var willAppearClosure: (() -> Void)?
+    private var didAppearClosure: (() -> Void)?
     private var willDisappearClosure: (() -> Void)?
-    private var didDisappearClosure:  (() -> Void)?
-    private var updateClosure:        ((String) -> Void)?
+    private var didDisappearClosure: (() -> Void)?
+    private var updateClosure: ((String) -> Void)?
 
     // MARK: Configuring
 
@@ -112,15 +117,28 @@ public class SearchController: NSObject {
 // TODO: add method presentSearchController(_ :UISearchController)
 
 extension SearchController: UISearchControllerDelegate {
-    public func willPresentSearchController(_ searchController: UISearchController) { willAppearClosure?()    }
-    public func didPresentSearchController(_ searchController: UISearchController)  { didAppearClosure?()     }
-    public func willDismissSearchController(_ searchController: UISearchController) { willDisappearClosure?() }
-    public func didDismissSearchController(_ searchController: UISearchController)  { didDisappearClosure?()  }
+
+    public func willPresentSearchController(_ searchController: UISearchController) {
+        willAppearClosure?()
+    }
+
+    public func didPresentSearchController(_ searchController: UISearchController) {
+        didAppearClosure?()
+    }
+
+    public func willDismissSearchController(_ searchController: UISearchController) {
+        willDisappearClosure?()
+    }
+
+    public func didDismissSearchController(_ searchController: UISearchController) {
+        didDisappearClosure?()
+    }
 }
 
 // MARK: - Wrap UISearchResultsUpdating
 
 extension SearchController: UISearchResultsUpdating {
+
     public func updateSearchResults(for searchController: UISearchController) {
         guard let searchString = searchController.searchBar.text else { return }
         updateClosure?(searchString)
@@ -130,6 +148,7 @@ extension SearchController: UISearchResultsUpdating {
 // MARK: - Wrap UISearchController attributes
 
 public extension SearchController {
+
     var isActive: Bool {
         get { return controller.isActive }
         set { controller.isActive = newValue }

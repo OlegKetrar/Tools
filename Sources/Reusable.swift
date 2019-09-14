@@ -1,6 +1,6 @@
 //
 //  Reusable.swift
-//  Tools
+//  ToolsUIKit
 //
 //  Created by Oleg Ketrar on 10.02.17.
 //  Copyright © 2017 Oleg Ketrar. All rights reserved.
@@ -33,6 +33,7 @@ public protocol NibInitable: Reusable {
 }
 
 public extension NibInitable {
+
     static var nibName: String {
         return String(describing: Self.self)
     }
@@ -81,8 +82,8 @@ public extension NibInitable where Self: UIView {
         // load appropriate view from Nib
         if let reusableView = Self.nib.instantiate(withOwner: self, options: nil)[0] as? UIView {
             reusableView.backgroundColor = .clear
-            reusableView.isOpaque        = false
-            reusableView.clipsToBounds   = true
+            reusableView.isOpaque = false
+            reusableView.clipsToBounds = true
 
             if case .autoLayout = strategy {
                 addPinnedSubview(reusableView)
@@ -101,7 +102,8 @@ public extension UITableView {
 
     func dequeueCell<T>(for indexPath: IndexPath) -> T where T: UITableViewCell & Reusable {
 
-        guard let cell = dequeueReusableCell(
+        guard
+            let cell = dequeueReusableCell(
             withIdentifier: T.reuseIdentifier,
             for: indexPath) as? T
         else {

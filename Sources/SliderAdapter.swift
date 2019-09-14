@@ -1,6 +1,6 @@
 //
 //  SliderAdapter.swift
-//  Tools
+//  ToolsUIKit
 //
 //  Created by Oleg Ketrar on 05.03.17.
 //  Copyright © 2017 Oleg Ketrar. All rights reserved.
@@ -18,11 +18,11 @@ public final class SliderAdapter<Data, Cell: UICollectionViewCell>: NSObject,
     UICollectionViewDelegateFlowLayout
 where Data: Equatable, Cell: Reusable {
 
-    private var countClosure: () -> Int                 = { 0 }
-    private var dataClosure: (Int) -> Data?             = { _ in .none }
-    private var cellClosure: (Cell, Data) -> Cell       = { (cell, _) in cell }
+    private var countClosure: () -> Int = { 0 }
+    private var dataClosure: (Int) -> Data? = { _ in .none }
+    private var cellClosure: (Cell, Data) -> Cell = { (cell, _) in cell }
     private var onSelectionClosure: (Int, Cell) -> Void = { _, _ in }
-    private var onPrefetchingClosure: (Int) -> Void     = { _ in }
+    private var onPrefetchingClosure: (Int) -> Void = { _ in }
 
     private var itemSizeClosure: ((Int, Data) -> CGSize)?
 
@@ -32,7 +32,10 @@ where Data: Equatable, Cell: Reusable {
         return 1
     }
 
-    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int) -> Int {
+
         return countClosure()
     }
 
@@ -48,7 +51,10 @@ where Data: Equatable, Cell: Reusable {
 
     // MARK: - UICollectionViewDelegate
 
-    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath) {
+
         guard let cell = collectionView.cellForItem(at: indexPath) as? Cell else { return }
         onSelectionClosure(indexPath.row, cell)
     }
@@ -60,8 +66,12 @@ where Data: Equatable, Cell: Reusable {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath) -> CGSize {
 
-        guard let closure = itemSizeClosure, let data = dataClosure(indexPath.row) else {
-            return (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.itemSize ?? .zero
+        guard
+            let closure = itemSizeClosure,
+            let data = dataClosure(indexPath.row)
+        else {
+            return (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?
+                .itemSize ?? .zero
         }
 
         return closure(indexPath.row, data)
@@ -69,7 +79,10 @@ where Data: Equatable, Cell: Reusable {
 
     // MARK: - UICollectionViewDataSourcePrefetching
 
-    public func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        prefetchItemsAt indexPaths: [IndexPath]) {
+
         guard let index = indexPaths.first?.row else { return }
         onPrefetchingClosure(index)
     }
@@ -125,7 +138,7 @@ public extension UICollectionView {
     @discardableResult
     func with(adapter: Adapter) -> Self {
         dataSource = adapter
-        delegate   = adapter
+        delegate = adapter
 
         if #available(iOS 10.0, *) {
             prefetchDataSource = adapter

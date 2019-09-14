@@ -1,6 +1,6 @@
 //
 //  Presentation.swift
-//  Tools
+//  ToolsUIKit
 //
 //  Created by Oleg Ketrar on 11.07.17.
 //  Copyright © 2017 Oleg Ketrar. All rights reserved.

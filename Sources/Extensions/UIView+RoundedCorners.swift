@@ -1,6 +1,6 @@
 //
 //  UIView+RoundedCorners.swift
-//  Tools
+//  ToolsUIKit
 //
 //  Created by Oleg Ketrar on 27/03/2019.
 //  Copyright © 2019 Oleg Ketrar. All rights reserved.
@@ -22,7 +22,7 @@ public extension UIView {
             layer.maskedCorners = radius > 0 ? corners.cornerMask : []
             layer.masksToBounds = radius > 0
         } else {
-            layer.mask          = mask(by: corners, radius: radius)
+            layer.mask = mask(by: corners, radius: radius)
             layer.masksToBounds = layer.mask != nil
         }
     }
@@ -42,13 +42,13 @@ private extension UIView {
 
         guard radius != 0 else { return nil }
 
-        let maskLayer  = CAShapeLayer()
+        let maskLayer = CAShapeLayer()
         maskLayer.path = UIBezierPath(
             roundedRect: bounds,
             byRoundingCorners: roundingCorners,
             cornerRadii: CGSize(width: radius, height: radius)).cgPath
 
-        maskLayer.fillColor       = UIColor.black.cgColor
+        maskLayer.fillColor = UIColor.black.cgColor
         maskLayer.backgroundColor = UIColor.white.cgColor
 
         return maskLayer
