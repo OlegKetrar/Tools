@@ -12,8 +12,8 @@
 		5502A13F232D897900D5FAF1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5502A13D232D897900D5FAF1 /* Main.storyboard */; };
 		5502A141232D897B00D5FAF1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5502A140232D897B00D5FAF1 /* Assets.xcassets */; };
 		5502A144232D897B00D5FAF1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5502A142232D897B00D5FAF1 /* LaunchScreen.storyboard */; };
-		5502A14E232D8CC700D5FAF1 /* ToolsUIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5502A14D232D8CC700D5FAF1 /* ToolsUIKit */; };
-		5502A14F232D8CC700D5FAF1 /* ToolsUIKit in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 5502A14D232D8CC700D5FAF1 /* ToolsUIKit */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		557FFD9324DB65AE006103F2 /* Tools in Frameworks */ = {isa = PBXBuildFile; productRef = 557FFD9224DB65AE006103F2 /* Tools */; };
+		557FFD9424DB65AE006103F2 /* Tools in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 557FFD9224DB65AE006103F2 /* Tools */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -23,7 +23,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				5502A14F232D8CC700D5FAF1 /* ToolsUIKit in Embed Frameworks */,
+				557FFD9424DB65AE006103F2 /* Tools in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -38,7 +38,7 @@
 		5502A140232D897B00D5FAF1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5502A143232D897B00D5FAF1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5502A145232D897B00D5FAF1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5502A14B232D8C9B00D5FAF1 /* Tools */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Tools; path = ..; sourceTree = "<group>"; };
+		553889D824DB643500B8F86C /* Tools */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Tools; path = ..; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,7 +46,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5502A14E232D8CC700D5FAF1 /* ToolsUIKit in Frameworks */,
+				557FFD9324DB65AE006103F2 /* Tools in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,8 +58,8 @@
 			children = (
 				5502A136232D897900D5FAF1 /* ExampleIOS */,
 				5502A135232D897900D5FAF1 /* Products */,
-				5502A14B232D8C9B00D5FAF1 /* Tools */,
 				5502A14C232D8CC700D5FAF1 /* Frameworks */,
+				553889D824DB643500B8F86C /* Tools */,
 			);
 			sourceTree = "<group>";
 		};
@@ -109,7 +109,7 @@
 			);
 			name = ExampleIOS;
 			packageProductDependencies = (
-				5502A14D232D8CC700D5FAF1 /* ToolsUIKit */,
+				557FFD9224DB65AE006103F2 /* Tools */,
 			);
 			productName = ExampleIOS;
 			productReference = 5502A134232D897900D5FAF1 /* ExampleIOS.app */;
@@ -311,6 +311,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = K3JVG969PH;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
@@ -318,8 +319,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = app.test;
+				PRODUCT_BUNDLE_IDENTIFIER = tools.example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -329,6 +331,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = K3JVG969PH;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
@@ -336,8 +339,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = app.test;
+				PRODUCT_BUNDLE_IDENTIFIER = tools.example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -367,9 +371,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		5502A14D232D8CC700D5FAF1 /* ToolsUIKit */ = {
+		557FFD9224DB65AE006103F2 /* Tools */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = ToolsUIKit;
+			productName = Tools;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

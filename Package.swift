@@ -1,25 +1,35 @@
-// swift-tools-version:5.0
+// swift-tools-version:5.1
 import PackageDescription
 
 let package = Package(
-    name: "ToolsUIKit",
+    name: "Tools",
     platforms: [
         .iOS(.v9),
     ],
     products: [
         .library(
-            name: "ToolsUIKit",
+            name: "Tools",
             type: .dynamic,
-            targets: ["ToolsUIKit"]),
+            targets: ["Tools"]),
+
+        .library(
+            name: "ToolsFoundation",
+            type: .static,
+            targets: ["ToolsFoundation"]),
+
+        .library(
+            name: "Reusable",
+            type: .static,
+            targets: ["Reusable"]),
     ],
-    dependencies: [
-        .package(url: "https://github.com/OlegKetrar/ToolsFoundation", .branch("master")),
-    ],
+    dependencies: [],
     targets: [
         .target(
-            name: "ToolsUIKit",
-            dependencies: ["ToolsFoundation"],
-            path: "Sources"),
+            name: "Tools",
+            dependencies: ["ToolsFoundation", "Reusable"]),
+
+        .target(name: "ToolsFoundation"),
+        .target(name: "Reusable"),
     ],
     swiftLanguageVersions: [.v5]
 )
