@@ -1,4 +1,4 @@
-// swift-tools-version:5.1
+// swift-tools-version:5.2
 import PackageDescription
 
 let package = Package(
@@ -13,23 +13,26 @@ let package = Package(
             targets: ["Tools"]),
 
         .library(
-            name: "ToolsFoundation",
-            type: .static,
-            targets: ["ToolsFoundation"]),
+            name: "Reusable",
+            type: .dynamic,
+            targets: ["Reusable"]),
 
         .library(
-            name: "Reusable",
-            type: .static,
-            targets: ["Reusable"]),
+            name: "ToolsFoundation",
+            type: .dynamic,
+            targets: ["ToolsFoundation"]),
     ],
     dependencies: [],
     targets: [
         .target(
             name: "Tools",
-            dependencies: ["ToolsFoundation", "Reusable"]),
+            dependencies: [
+                .byName(name: "Reusable"),
+                .byName(name: "ToolsFoundation"),
+            ]),
 
-        .target(name: "ToolsFoundation"),
         .target(name: "Reusable"),
+        .target(name: "ToolsFoundation"),
     ],
     swiftLanguageVersions: [.v5]
 )

@@ -52,6 +52,58 @@ public final class PreloadableContainerView: UIView {
         container.frame = bounds
         container.subviews.first?.frame = container.bounds
     }
+
+    /// Hides subviews and shows animated preloader.
+    public func setPreloaderHidden(_ hidden: Bool, animated: Bool) {
+
+        if !hidden {
+            bringSubviewToFront(container)
+        }
+
+        setContentHidden(!hidden, animated: animated)
+
+        guard animated else {
+            container.isHidden = hidden
+            return
+        }
+
+        UIView.transition(
+            with: container,
+            duration: 0.15,
+            options: [.transitionCrossDissolve, .beginFromCurrentState],
+            animations: { self.container.isHidden = hidden },
+            completion: nil)
+    }
+
+    @discardableResult
+    public func provideLoader(_ newLoaderType: LoaderType) -> Self {
+
+        switch (loaderType, newLoaderType) {
+        case let (.preloader, .preloader(newStyle, newColor)):
+
+            if let currentPreloader = container.subviews.first as? UIActivityIndicatorView {
+                currentPreloader.style = newStyle
+                currentPreloader.color = newColor
+            }
+
+        default:
+            container.subviews.forEach { $0.removeFromSuperview() }
+            addLoader(type: newLoaderType)
+        }
+
+        return self
+    }
+
+    /// Subviews will be replaced with preloader animated till
+    /// `completion` parameter will be called inside `activity` closure.
+    /// - parameter activity: Closure means async work. Must call `completion` on end.
+    public func start(activity: @escaping (@escaping () -> Void) -> Void) {
+        setPreloaderHidden(false, animated: false)
+
+        activity { [weak self] in
+            self?.setPreloaderHidden(true, animated: true)
+        }
+    }
 }
 
 private extension PreloadableContainerView {
@@ -100,61 +152,6 @@ private extension PreloadableContainerView {
                 options: [.transitionCrossDissolve, .beginFromCurrentState],
                 animations: { view.isHidden = hidden },
                 completion: nil)
-        }
-    }
-}
-
-public extension PreloadableContainerView {
-
-    /// Hides subviews and shows animated preloader.
-    func setPreloaderHidden(_ hidden: Bool, animated: Bool) {
-
-        if !hidden {
-            bringSubviewToFront(container)
-        }
-
-        setContentHidden(!hidden, animated: animated)
-
-        guard animated else {
-            container.isHidden = hidden
-            return
-        }
-
-        UIView.transition(
-            with: container,
-            duration: 0.15,
-            options: [.transitionCrossDissolve, .beginFromCurrentState],
-            animations: { self.container.isHidden = hidden },
-            completion: nil)
-    }
-
-    @discardableResult
-    func provideLoader(_ newLoaderType: LoaderType) -> Self {
-
-        switch (loaderType, newLoaderType) {
-        case let (.preloader, .preloader(newStyle, newColor)):
-
-            if let currentPreloader = container.subviews.first as? UIActivityIndicatorView {
-                currentPreloader.style = newStyle
-                currentPreloader.color = newColor
-            }
-
-        default:
-            container.subviews.forEach { $0.removeFromSuperview() }
-            addLoader(type: newLoaderType)
-        }
-
-        return self
-    }
-
-    /// Subviews will be replaced with preloader animated till
-    /// `completion` parameter will be called inside `activity` closure.
-    /// - parameter activity: Closure means async work. Must call `completion` on end.
-    func start(activity: @escaping (@escaping () -> Void) -> Void) {
-        setPreloaderHidden(false, animated: false)
-
-        activity { [weak self] in
-            self?.setPreloaderHidden(true, animated: true)
         }
     }
 }

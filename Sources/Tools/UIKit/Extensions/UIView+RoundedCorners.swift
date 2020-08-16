@@ -9,9 +9,9 @@
 import Foundation
 import UIKit
 
-public extension UIView {
+extension UIView {
 
-    func round(
+    public func round(
         corners: UIRectCorner = [.allCorners],
         radius radiusOrNil: CGFloat? = nil) {
 
@@ -27,7 +27,7 @@ public extension UIView {
         }
     }
 
-    func removeRoundedCorners() {
+    public func removeRoundedCorners() {
         round(radius: 0)
     }
 }

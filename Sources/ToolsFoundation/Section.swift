@@ -3,9 +3,9 @@
 //  ToolsFoundation
 //
 //  Created by Oleg Ketrar on 27/03/2019.
-//  Copyright © 2019 Oleg Ketrar. All rights reserved.
 //
 
+/// Private protocol.
 public protocol _SectionType {
     associatedtype SectionInfo
     associatedtype SectionItem
@@ -14,13 +14,14 @@ public protocol _SectionType {
     var items: [SectionItem] { get }
 }
 
-public extension _SectionType {
+extension _SectionType {
 
-    func item(at index: Int) -> SectionItem? {
+    public func item(at index: Int) -> SectionItem? {
         return items.item(at: index)
     }
 }
 
+/// Array of `items` with shared `info`.
 public struct Section<Info, Item>: _SectionType {
     public var info: Info
     public var items: [Item]
@@ -31,9 +32,26 @@ public struct Section<Info, Item>: _SectionType {
     }
 }
 
-public extension Array where Element: _SectionType {
+extension Section: Equatable where Info: Equatable, Item: Equatable {
 
-    func info(forSectionAt index: Int) -> Element.SectionInfo? {
+    public static func ==(lfs: Section, rhs: Section) -> Bool {
+        return lfs.info == rhs.info && lfs.items == rhs.items
+    }
+}
+
+/// Collections of items with shared `name`.
+public typealias NamedSection<T> = Section<String, T>
+
+extension Section where Info == String {
+
+    /// Shared name of section.
+    public var name: String { info }
+}
+
+extension Collection where Element: _SectionType, Index == Int {
+
+    /// Get `info` of a single section at `index`.
+    public func info(forSectionAt index: Int) -> Element.SectionInfo? {
         return item(at: index)?.info
     }
 }

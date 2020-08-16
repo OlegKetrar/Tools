@@ -6,26 +6,26 @@
 //  Copyright © 2017 Oleg Ketrar. All rights reserved.
 //
 
-public extension Collection {
+extension Collection {
 
     /// Safelly returns element at index.
     /// Returns `nil` if out of bounds.
     /// - parameter index: Element index in collection.
     /// - returns: Element if index valid, otherwise nil.
-    func item(at index: Index) -> Element? {
+    public func item(at index: Index) -> Element? {
         guard indices.contains(index) else { return nil }
         return self[index]
     }
 
     /// Map only unique items.
-    func uniqueMap<T: Hashable>(
+    public func uniqueMap<T: Hashable>(
         _ transform: (Iterator.Element) throws -> T) rethrows -> [T] {
 
         return Array<T>( Set<T>(try map(transform)) )
     }
 
     /// Map only unique items.
-    func uniqueCompactMap<T: Hashable>(
+    public func uniqueCompactMap<T: Hashable>(
         _ transform: (Iterator.Element) throws -> T?) rethrows -> [T] {
 
         return Array<T>( Set<T>(try compactMap(transform)) )
@@ -34,7 +34,7 @@ public extension Collection {
 
 extension RandomAccessCollection where Self: MutableCollection {
 
-    mutating func sort<T: Comparable>(
+    public mutating func sort<T: Comparable>(
         by keyPath: KeyPath<Element, T>,
         ascending: Bool = true) {
 
@@ -43,7 +43,9 @@ extension RandomAccessCollection where Self: MutableCollection {
         })
     }
 
-    mutating func sort(by keyPath: KeyPath<Element, Bool>, ascending: Bool = true) {
+    public mutating func sort(
+        by keyPath: KeyPath<Element, Bool>,
+        ascending: Bool = true) {
 
         sort(by: {
             let left = $0[keyPath: keyPath] ? 1 : 0

@@ -12,12 +12,12 @@ import UIKit
 
 // TODO: add docs.
 
-public extension UIImage {
+extension UIImage {
 
     /// Creates image with color with specified size.
     /// - parameter color: fill color.
     /// - parameter size: image size, default 1x1.
-    convenience init?(color: UIColor, size: CGSize = .init(width: 1, height: 1)) {
+    public convenience init?(color: UIColor, size: CGSize = .init(width: 1, height: 1)) {
 
         let image: UIImage? = {
             defer { UIGraphicsEndImageContext() }
@@ -41,20 +41,20 @@ public extension UIImage {
     }
 }
 
-public extension UIScreen {
+extension UIScreen {
 
-    var onePixelWidth: CGFloat {
+    public var onePixelWidth: CGFloat {
         return 1 / self.scale
     }
     
-    var twoPixelWidth: CGFloat {
+    public var twoPixelWidth: CGFloat {
         return 2 * onePixelWidth
     }
 }
 
-public extension UIEdgeInsets {
+extension UIEdgeInsets {
 
-    mutating func insetedBy(
+    public mutating func insetedBy(
         top: CGFloat = 0,
         left: CGFloat = 0,
         bottom: CGFloat = 0,
@@ -67,20 +67,20 @@ public extension UIEdgeInsets {
     }
 }
 
-public extension Bundle {
+extension Bundle {
 
-    static var UIKit: Bundle? {
+    public static var UIKit: Bundle? {
         return Bundle(identifier: "com.apple.UIKit")
     }
 }
 
-public extension Array where Element: _SectionType {
+extension Array where Element: _SectionType {
 
-    func item(at indexPath: IndexPath) -> Element.SectionItem? {
+    public func item(at indexPath: IndexPath) -> Element.SectionItem? {
         return item(at: indexPath.startIndex)?.item(at: indexPath.row)
     }
 
-    func absoluteIndex(of indexPath: IndexPath) -> Int {
+    public func absoluteIndex(of indexPath: IndexPath) -> Int {
         let section = indexPath.section - 1
 
         guard section >= 0 else { return indexPath.row }

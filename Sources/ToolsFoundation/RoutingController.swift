@@ -47,17 +47,20 @@ public final class RoutingController {
     @discardableResult
     public func open(url: URL) -> Bool {
 
-        guard isRegistered(url: url),
+        guard
             let route = route(from: url),
-            let handler = registeredRoutes[route] else { return false }
+            let handler = registeredRoutes[route]
+        else { return false }
 
         return handler(url.queryParams)
     }
 
     private func route(from url: URL) -> String? {
 
-        guard let urlScheme = url.scheme,
-            urlScheme == scheme else { return nil }
+        guard
+            let urlScheme = url.scheme,
+            urlScheme == scheme
+        else { return nil }
 
         return (url.host ?? "") + url.path
     }

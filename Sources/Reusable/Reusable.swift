@@ -3,7 +3,6 @@
 //  Reusable
 //
 //  Created by Oleg Ketrar on 10.02.17.
-//  Copyright © 2017 Oleg Ketrar. All rights reserved.
 //
 
 import Foundation

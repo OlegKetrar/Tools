@@ -1,29 +1,28 @@
 //
-//  Localization.swift
+//  String+Base64.swift
 //  ToolsFoundation
 //
 //  Created by Oleg Ketrar on 26/03/2019.
-//  Copyright © 2019 Oleg Ketrar. All rights reserved.
 //
 
 import Foundation
 
-public extension String {
+extension String {
 
-    var encodeBase64: String {
+    public var encodeBase64: String {
         return self.data(using: .utf8)?.base64EncodedString(options: []) ?? ""
     }
 
-    var decodeBase64: String {
+    public var decodeBase64: String {
         return Data(base64Encoded: self, options: [])
             .flatMap { NSString(data: $0, encoding: String.Encoding.utf8.rawValue) }
             .map { $0 as String } ?? ""
     }
 }
 
-public extension Data {
+extension Data {
 
-    init?(urlSafeBase64String: String) {
+    public init?(urlSafeBase64String: String) {
         let rem = urlSafeBase64String.utf8.count % 4
 
         var ending = ""
@@ -39,7 +38,7 @@ public extension Data {
         self.init(base64Encoded: base64String)
     }
 
-    func urlSafeBase64String() -> String? {
+    public func urlSafeBase64String() -> String? {
         let data = self.base64EncodedData(options: [])
         guard let string = String(data: data, encoding: .utf8) else { return nil }
 

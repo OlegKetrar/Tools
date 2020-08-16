@@ -9,9 +9,9 @@
 import Foundation
 import UIKit
 
-public extension UIColor {
+extension UIColor {
 
-    convenience init(red: Int, green: Int, blue: Int) {
+    public convenience init(red: Int, green: Int, blue: Int) {
 
         assert(red >= 0 && red <= 255, "Invalid red component")
         assert(green >= 0 && green <= 255, "Invalid green component")
@@ -24,19 +24,19 @@ public extension UIColor {
             alpha: 1.0)
     }
 
-    convenience init(hexColor: Int) {
+    public convenience init(hexColor: Int) {
         self.init(
             red: (hexColor >> 16) & 0xff,
             green: (hexColor >> 8) & 0xff,
             blue: hexColor & 0xff)
     }
 
-    convenience init?(hexString: String) {
+    public convenience init?(hexString: String) {
         guard let int = Int(hexString, radix: 16) else { return nil }
         self.init(hexColor: int)
     }
 
-    var hexCode: Int {
+    public var hexCode: Int {
         let coreImageColor = CIColor(color: self)
 
         let r = Int(coreImageColor.red * 255 + 0.5)
@@ -46,7 +46,7 @@ public extension UIColor {
         return (r << 16) | (g << 8) | b
     }
 
-    var hexString: String {
+    public var hexString: String {
         return String(hexCode, radix: 16, uppercase: true)
     }
 
@@ -54,13 +54,13 @@ public extension UIColor {
 
     /// Producing new color as a result of
     /// rendering `self` with `alpha` on background `bgColor`.
-    func with(alpha: CGFloat, on bgColor: UIColor) -> UIColor {
+    public func with(alpha: CGFloat, on bgColor: UIColor) -> UIColor {
         return bgColor.add(overlay: self.withAlphaComponent(alpha))
     }
 
     // FIXME: rename
 
-    func add(overlay: UIColor) -> UIColor {
+    public func add(overlay: UIColor) -> UIColor {
         var bgR: CGFloat = 0
         var bgG: CGFloat = 0
         var bgB: CGFloat = 0

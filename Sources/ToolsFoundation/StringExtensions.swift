@@ -3,32 +3,13 @@
 //  ToolsFoundation
 //
 //  Created by Oleg Ketrar on 25/12/2018.
-//  Copyright © 2018 Oleg Ketrar. All rights reserved.
 //
 
 import Foundation
 
-public extension String {
+extension String {
 
-    var localized: String {
-        return NSLocalizedString(self, comment: "")
-    }
-
-    func localized(with bundle: Bundle?) -> String {
-        guard let bundle = bundle else { return localized }
-        return bundle.localizedString(forKey: self, value: "", table: nil)
-    }
-
-    /// Validate with `regex`.
-    func validate(regex regStr: String) -> Bool {
-        return NSPredicate(format: "SELF MATCHES %@", regStr).evaluate(with: self)
-    }
-
-    var ns: NSString {
-        return self as NSString
-    }
-
-    func removingSuffix(_ suffix: String) -> String {
+    public func removingSuffix(_ suffix: String) -> String {
         guard !suffix.isEmpty, hasSuffix(suffix) else { return self }
 
         var copy = self
@@ -40,7 +21,7 @@ public extension String {
         return copy
     }
 
-    func removingPrefix(_ prefix: String) -> String {
+    public func removingPrefix(_ prefix: String) -> String {
         guard !prefix.isEmpty, hasPrefix(prefix) else { return self }
 
         var copy = self
@@ -53,17 +34,40 @@ public extension String {
     }
 }
 
-public extension NSString {
+extension String {
 
-    func safeSubstring(with range: NSRange) -> String? {
+    public var localized: String {
+        return NSLocalizedString(self, comment: "")
+    }
+
+    public func localized(with bundle: Bundle?) -> String {
+        guard let bundle = bundle else { return localized }
+        return bundle.localizedString(forKey: self, value: "", table: nil)
+    }
+}
+
+// MARK: - NSString
+
+extension String {
+
+    public var ns: NSString {
+        return self as NSString
+    }
+}
+
+extension NSString {
+
+    public func safeSubstring(with range: NSRange) -> String? {
         guard range.location < length else { return nil }
         return substring(with: range)
     }
 }
 
-public extension Optional where Wrapped == String {
+// MARK: - Optional<String>
 
-    var orEmpty: String {
+extension Optional where Wrapped == String {
+
+    public var orEmpty: String {
         return self ?? ""
     }
 }

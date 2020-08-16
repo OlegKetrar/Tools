@@ -3,13 +3,12 @@
 //  ToolsFoundation
 //
 //  Created by Oleg Ketrar on 10.02.17.
-//  Copyright © 2017 Oleg Ketrar. All rights reserved.
 //
 
 import Foundation
 
 /// Common NotificationCenter observer.
-/// Saves all observers and unsubscribe them on dealloc.
+/// Saves all observers and unsubscribe them on deinit.
 /// You need to retain observer. Otherwise observers will be unsubscribed.
 public class NotificationObserver {
     private var center: NotificationCenter

@@ -9,10 +9,10 @@
 import Foundation
 import UIKit
 
-public extension UIView {
+extension UIView {
 
     @discardableResult
-    func addPinConstraint(
+    public func addPinConstraint(
         toSubview subview: UIView,
         attribute: NSLayoutConstraint.Attribute,
         withSpacing spacing: CGFloat) -> NSLayoutConstraint {
@@ -33,7 +33,7 @@ public extension UIView {
     }
 
     @discardableResult
-    func addPinConstraints(
+    public func addPinConstraints(
         toSubview subview: UIView,
         withSpacing spacing: CGFloat = 0.0) -> [NSLayoutConstraint] {
 
@@ -45,20 +45,20 @@ public extension UIView {
         ]
     }
 
-    func addPinnedSubview(_ subview: UIView, withSpacing spacing: CGFloat = 0.0) {
+    public func addPinnedSubview(_ subview: UIView, withSpacing spacing: CGFloat = 0.0) {
         addSubview(subview)
         translatesAutoresizingMaskIntoConstraints = false
         addPinConstraints(toSubview: subview, withSpacing: spacing)
     }
 
-    func addPinnedSubview(_ subview: UIView, withInsets insets: UIEdgeInsets) {
+    public func addPinnedSubview(_ subview: UIView, withInsets insets: UIEdgeInsets) {
         addSubview(subview)
         translatesAutoresizingMaskIntoConstraints = false
         subview.pinToSuperview(insets: insets)
     }
 
     @discardableResult
-    func pinToSuperview(
+    public func pinToSuperview(
         attribute: NSLayoutConstraint.Attribute,
         spacing: CGFloat = 0) -> NSLayoutConstraint? {
 
@@ -69,7 +69,7 @@ public extension UIView {
     }
 
     @discardableResult
-    func pinToSuperview(insets: UIEdgeInsets) -> [NSLayoutConstraint] {
+    public func pinToSuperview(insets: UIEdgeInsets) -> [NSLayoutConstraint] {
         return [
             pinToSuperview(attribute: .left, spacing: insets.left),
             pinToSuperview(attribute: .top, spacing: insets.top),

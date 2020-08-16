@@ -1,5 +1,5 @@
 //
-//  MailComposeViewController.swift
+//  MailSender.swift
 //  ToolsUIKit
 //
 //  Created by Oleg Ketrar on 04.07.17.
