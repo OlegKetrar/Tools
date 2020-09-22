@@ -16,8 +16,10 @@ public final class SliderAdapter<Data, Cell: UICollectionViewCell>: NSObject,
     UICollectionViewDelegate,
     UICollectionViewDataSourcePrefetching,
     UICollectionViewDelegateFlowLayout
-where Data: Equatable, Cell: Reusable {
-
+where
+    Data: Equatable,
+    Cell: Reusable
+{
     private var countClosure: () -> Int = { 0 }
     private var dataClosure: (Int) -> Data? = { _ in .none }
     private var cellClosure: (Cell, Data) -> Cell = { (cell, _) in cell }
@@ -131,12 +133,14 @@ extension SliderAdapter {
 
 // MARK: - UICollectionView Convenience
 
-public extension UICollectionView {
+extension UICollectionView {
 
-    typealias Adapter = UICollectionViewDataSource & UICollectionViewDelegate & UICollectionViewDataSourcePrefetching
+    public typealias Adapter = UICollectionViewDataSource
+        & UICollectionViewDelegate
+        & UICollectionViewDataSourcePrefetching
 
     @discardableResult
-    func with(adapter: Adapter) -> Self {
+    public func with(adapter: Adapter) -> Self {
         dataSource = adapter
         delegate = adapter
 

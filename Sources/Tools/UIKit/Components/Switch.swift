@@ -13,6 +13,7 @@ import UIKit
 // TODO: add preloader for async enabling/disabling
 
 /// Provides control on value changing.
+@objc(ToolsSwitch)
 public final class Switch: UISwitch {
     private var shouldChangeValueClosure: (Bool) -> Bool = { _ in true }
 
