@@ -39,7 +39,7 @@ public class NotificationObserver {
 
         observers.append(center.addObserver(
             forName: name,
-            object: nil,
+            object: object,
             queue: queue,
             using: closure))
 
