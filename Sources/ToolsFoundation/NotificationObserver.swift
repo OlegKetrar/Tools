@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Dispatch
 
 /// Common NotificationCenter observer.
 /// Saves all observers and unsubscribe them on deinit.
@@ -34,14 +35,16 @@ public class NotificationObserver {
     public func add(
         forName name: Notification.Name,
         object: AnyObject? = nil,
-        queue: OperationQueue = .main,
+        queue: DispatchQueue = .main,
         using closure: @escaping (Notification) -> Void) -> Self {
 
         observers.append(center.addObserver(
             forName: name,
             object: object,
-            queue: queue,
-            using: closure))
+            queue: OperationQueue(),
+            using: { notif in
+                queue.async { closure(notif) }
+            }))
 
         return self
     }
