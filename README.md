@@ -10,27 +10,41 @@
 
 ## Features
 
-- [x] `Carthage` support
-- [ ] `Swift PM` support
-- [x] [Reusable](#reusable) / [NibInitable](#nibinitable) / [StoryboardInitable](#storyboardinitable)
-- [x] [SliderAdapter](#slideradapter) - declarative block-based `UICollectionView` adapter
-- [x] [NotificationObserver](#notificationobserver) / [KeyboardObserver](#keyboardobserver)
-- [x] [SearchController](#searchcontroller) - declarative block-based `UISearchController` abstraction
-- [x] [Button](#button-with-preloader) - `UIButton` with with preloader, prevents multiple execution
-- [x] [Switch](#switch) - `UISwitch` with control of value changing
-- [x] [Presentation](#presentation) - abstraction around presenting/dismissing of `UIViewController`s
-- [ ] Material-like [TextField](#material-like-text-field)
-- [ ] [live complex validation](#validationcondition) with [styling](#styling)
-- [ ] Declarative block-based `UITableView` with `Section` abstraction
-- [ ] implement `Error` model
+### Reusable package
+- `Reusable` 
+- `NibInitable`
+- `StoryboardInitable` 
+
+### ToolsFoundation package
+- `NotificationObserver` - convenience auto-unsubscribed observer.
+- `Section<Into, Item>`
+- `HasApply` protocol
+- [RoutingController](#RoutingController)
+- various `String` extensions
+
+### Tools package
+- `KeyboardObserver`
+- `SliderAdapter` - declarative block-based `UICollectionView` adapter
+- `SearchController` - declarative block-based `UISearchController` abstraction
+- [Button](#button-with-preloader) - `UIButton` with with preloader, prevents multiple execution
+- [Switch](#switch) - `UISwitch` with control of value changing
+- [Presentation](#presentation) - abstraction around presenting/dismissing of `UIViewController`s
+- `UIColor` extensions
+- AutoLayout extensions
 
 ## Requirements
 
-- Swift 4.2+
-- xCode 10.1+
-- iOS 8.0+
+- Swift 5.2+
+- xCode 11.7+
+- iOS 9.0+
 
 ## Installation
+
+### Swift Package Manager
+
+```swift
+.package(url: "https://github.com/OlegKetrar/Tools", .exact("0.6")),
+```
 
 ### Carthage
 
@@ -48,14 +62,6 @@ To integrate Tools into your Xcode project using `Carthage`, specify it in your 
 github "OlegKetrar/Tools" == 0.6
 ```
 Run `carthage update` to build the framework and drag the built `Tools.framework` into your Xcode project.
-
-## Usage
-
-### Reusable
-
-### NibInitable
-
-### StoryboardInitable
 
 ### Button with preloader
 Used `disabled` state to show preloader on button. Disallow all touchs and hides `title` and `attributedTitle`
@@ -95,23 +101,6 @@ someSwitch.onShouldChangeValue { (proposedValue) in
   return canEnableSmth(proposedValue)
 }
 ```
-
-### Material-like text field
-Brings new level of validation abstraction.
-
-#### Styling
-
-#### ValidationCondition
-
-### NotificationObserver
-Convenience auto-unsubscribed observer.
-
-### KeyboardObserver
-
-### SearchController
-
-### SliderAdapter
-Block-base adapter for `UICollectionView`.
 
 ### RoutingController
 Allows you to define your custom app routes and hanlde them with `open(url:)` method.
