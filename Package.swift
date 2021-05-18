@@ -9,17 +9,14 @@ let package = Package(
     products: [
         .library(
             name: "Tools",
-            type: .dynamic,
             targets: ["Tools"]),
 
         .library(
             name: "Reusable",
-            type: .dynamic,
             targets: ["Reusable"]),
 
         .library(
             name: "ToolsFoundation",
-            type: .dynamic,
             targets: ["ToolsFoundation"]),
     ],
     dependencies: [],
