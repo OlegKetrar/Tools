@@ -39,6 +39,13 @@ extension Section: Equatable where Info: Equatable, Item: Equatable {
     }
 }
 
+extension Section: Hashable where Info: Hashable, Item: Hashable {
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(info.hashValue)
+    }
+}
+
 /// Collections of items with shared `name`.
 public typealias NamedSection<T> = Section<String, T>
 
