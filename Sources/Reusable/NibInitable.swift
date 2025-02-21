@@ -15,6 +15,7 @@ import UIKit
 /// which declare its UI in a separate `NIB`.
 public protocol NibInitable: Reusable {
     static var nibName: String { get }
+    static var nibBundle: Bundle? { get }
 }
 
 public extension NibInitable {
@@ -23,8 +24,12 @@ public extension NibInitable {
         return String(describing: Self.self)
     }
 
+    static var nibBundle: Bundle? {
+        Bundle(for: self)
+    }
+
     static var nib: UINib {
-        return UINib(nibName: nibName, bundle: Bundle(for: self))
+        return UINib(nibName: nibName, bundle: nibBundle)
     }
 }
 
